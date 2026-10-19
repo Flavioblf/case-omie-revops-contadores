@@ -1,13 +1,37 @@
 /// Tier do Desafio 1c (view dbo.vw_tiers_prospects, matriz Fit x Engajamento): 303 endereçáveis.
 table tiers_1c
-	lineageTag: 452cb304-ad06-4643-b3ae-14cccdf6abc0
 	isHidden
+	lineageTag: 452cb304-ad06-4643-b3ae-14cccdf6abc0
 
 	column id_contador
 		dataType: string
 		lineageTag: 6def50ab-e148-42d5-8011-c3d123d20b40
 		summarizeBy: none
 		sourceColumn: id_contador
+
+		annotation SummarizationSetBy = User
+
+	column score_prioridade
+		dataType: int64
+		lineageTag: e88f6271-32e8-4c36-b2f1-cee9eff3dfbf
+		summarizeBy: none
+		sourceColumn: score_prioridade
+
+		annotation SummarizationSetBy = User
+
+	column tier_prioridade
+		dataType: string
+		lineageTag: 3291bdb7-d8df-4013-bad1-645c879dac69
+		summarizeBy: none
+		sourceColumn: tier_prioridade
+
+		annotation SummarizationSetBy = User
+
+	column estagio_aberto
+		dataType: string
+		lineageTag: 8d6f418a-f362-436e-bec5-59c710f64714
+		summarizeBy: none
+		sourceColumn: estagio_aberto
 
 		annotation SummarizationSetBy = User
 
@@ -47,30 +71,6 @@ table tiers_1c
 
 		annotation SummarizationSetBy = User
 
-	column score_prioridade
-		dataType: int64
-		lineageTag: e88f6271-32e8-4c36-b2f1-cee9eff3dfbf
-		summarizeBy: none
-		sourceColumn: score_prioridade
-
-		annotation SummarizationSetBy = User
-
-	column tier_prioridade
-		dataType: string
-		lineageTag: 3291bdb7-d8df-4013-bad1-645c879dac69
-		summarizeBy: none
-		sourceColumn: tier_prioridade
-
-		annotation SummarizationSetBy = User
-
-	column estagio_aberto
-		dataType: string
-		lineageTag: 8d6f418a-f362-436e-bec5-59c710f64714
-		summarizeBy: none
-		sourceColumn: estagio_aberto
-
-		annotation SummarizationSetBy = User
-
 	partition tiers_1c = m
 		mode: import
 		source =
@@ -83,3 +83,4 @@ table tiers_1c
 				    Colunas
 
 	annotation PBI_ResultType = Table
+

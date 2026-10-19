@@ -13,3 +13,4 @@ relationship f43d0d2d-693b-41b2-8f76-37652c020b16
 relationship 647520af-0247-4b21-a328-ca5501c8a803
 	fromColumn: execucao_comercial.id_franquia
 	toColumn: franquias.id_franquia
+

@@ -35,6 +35,8 @@ table clientes_ativos
 
 		annotation SummarizationSetBy = User
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column plano
 		dataType: string
 		lineageTag: 51687d36-c531-45ce-83ac-c5c016a59546
@@ -76,6 +78,8 @@ table clientes_ativos
 
 		annotation SummarizationSetBy = User
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column meses_ativo
 		dataType: int64
 		lineageTag: 7b6cf3a3-dd08-42fd-8132-b0747aa80c19
@@ -101,8 +105,7 @@ table clientes_ativos
 		annotation SummarizationSetBy = User
 
 	/// Porte do contador (para o ticket por porte)
-	column porte =
-			RELATED(mercado_contadores[porte])
+	column porte = RELATED(mercado_contadores[porte])
 		dataType: string
 		lineageTag: 97c5b0b3-066e-4e4c-b4dd-3dde68a4caa8
 		summarizeBy: none
@@ -120,3 +123,4 @@ table clientes_ativos
 				    SemLinhaOrigem
 
 	annotation PBI_ResultType = Table
+

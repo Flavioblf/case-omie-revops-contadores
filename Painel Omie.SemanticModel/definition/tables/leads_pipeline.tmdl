@@ -43,6 +43,8 @@ table leads_pipeline
 
 		annotation SummarizationSetBy = User
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column status_lead
 		dataType: string
 		lineageTag: 27651400-516d-4c5d-8c05-3c43bbfdc8a9
@@ -59,6 +61,8 @@ table leads_pipeline
 		sourceColumn: data_conversao
 
 		annotation SummarizationSetBy = User
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	column mrr_inicial
 		dataType: double
@@ -93,33 +97,30 @@ table leads_pipeline
 		annotation SummarizationSetBy = User
 
 	/// 1 = lead Ganho
-	column ganho =
-			IF(leads_pipeline[status_lead] = "Ganho", 1, 0)
+	column ganho = IF(leads_pipeline[status_lead] = "Ganho", 1, 0)
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: c0be8861-fff1-4084-a816-878d3c4fa7ba
-		summarizeBy: none
-		isHidden
-
-		annotation SummarizationSetBy = User
-
-	/// Trimestre do Ganho (data_conversao)
-	column trimestre_ganho =
-			IF(leads_pipeline[status_lead] = "Ganho", FORMAT(YEAR(leads_pipeline[data_conversao]), "0") & " T" & FORMAT(QUARTER(leads_pipeline[data_conversao]), "0"))
-		dataType: string
-		lineageTag: d954877a-94b0-43dd-b6ab-ef3c1f62a4f9
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
 
 	/// 1 = lead encerrado (Ganho ou Perdido)
-	column com_desfecho =
-			IF(leads_pipeline[status_lead] IN {"Ganho", "Perdido"}, 1, 0)
+	column com_desfecho = IF(leads_pipeline[status_lead] IN {"Ganho", "Perdido"}, 1, 0)
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: f2b2e714-0d2a-41d9-ba4a-e57bca7d4692
 		summarizeBy: none
-		isHidden
+
+		annotation SummarizationSetBy = User
+
+	/// Trimestre do Ganho (data_conversao)
+	column trimestre_ganho = IF(leads_pipeline[status_lead] = "Ganho", FORMAT(YEAR(leads_pipeline[data_conversao]), "0") & " T" & FORMAT(QUARTER(leads_pipeline[data_conversao]), "0"))
+		dataType: string
+		lineageTag: d954877a-94b0-43dd-b6ab-ef3c1f62a4f9
+		summarizeBy: none
 
 		annotation SummarizationSetBy = User
 
@@ -134,3 +135,4 @@ table leads_pipeline
 				    SemLinhaOrigem
 
 	annotation PBI_ResultType = Table
+

@@ -3,39 +3,106 @@ table _Medidas
 	lineageTag: 7cd57f7a-5d25-4881-ba4b-69bcfbda3eec
 
 	/// Nº de contadores no contexto
-	measure Contadores =
-			COUNTROWS(mercado_contadores)
+	measure Contadores = COUNTROWS(mercado_contadores)
 		formatString: #,0
 		displayFolder: 1. Base
 		lineageTag: 5e2244f4-8297-42d9-892c-901b75f95b62
 
 	/// Contadores com converteu_omie = 1
-	measure Convertidos =
-			SUM(mercado_contadores[converteu_omie])
+	measure Convertidos = SUM(mercado_contadores[converteu_omie])
 		formatString: #,0
 		displayFolder: 1. Base
 		lineageTag: 7be2ea94-429c-4da3-b14d-6f1436439cd1
 
 	/// Convertidos ÷ contadores
-	measure 'Taxa de Conversão' =
-			DIVIDE([Convertidos], [Contadores])
+	measure 'Taxa de Conversão' = DIVIDE([Convertidos], [Contadores])
 		formatString: 0.0%
 		displayFolder: 1. Base
 		lineageTag: 75d1129e-cb3b-4c41-9b35-89ea632a74dc
 
-	/// Taxa dos 600 contadores
-	measure 'Taxa Média' =
-			CALCULATE([Taxa de Conversão], REMOVEFILTERS(mercado_contadores))
-		formatString: 0.0%
-		displayFolder: 1. Base
-		lineageTag: fe68c05e-2819-4e26-a93f-2e0431b52cb3
-
 	/// Taxa do grupo ÷ taxa média
-	measure 'Lift vs Média' =
-			DIVIDE([Taxa de Conversão], [Taxa Média])
+	measure 'Lift vs Média' = DIVIDE([Taxa de Conversão], [Taxa Média])
 		formatString: 0.0"x"
 		displayFolder: 1. Base
 		lineageTag: 6f9dcdc2-2274-4096-bf31-c1743d429207
+
+	/// Leads no pipeline
+	measure Leads = COUNTROWS(leads_pipeline)
+		formatString: #,0
+		displayFolder: 3. Resultado Real
+		lineageTag: 26c29cc6-9319-43a4-adfb-ab2e98632159
+
+	/// Leads Ganho + Perdido
+	measure 'Leads com Desfecho' = SUM(leads_pipeline[com_desfecho])
+		formatString: #,0
+		displayFolder: 3. Resultado Real
+		lineageTag: 5772086a-f7fd-4bc1-a929-45a8597664e5
+
+	/// Leads Ganho
+	measure 'Ganhos (Real)' = SUM(leads_pipeline[ganho])
+		formatString: #,0
+		displayFolder: 3. Resultado Real
+		lineageTag: be45271a-6e54-4e21-b65b-5091d8f193d7
+
+	/// Ganho ÷ (Ganho + Perdido): o fechamento comercial de verdade
+	measure 'Win Rate Real' = DIVIDE([Ganhos (Real)], [Leads com Desfecho])
+		formatString: 0.0%
+		displayFolder: 3. Resultado Real
+		lineageTag: b62476ec-d6f7-42e2-b53c-ecf32c8fc32f
+
+	/// Contadores endereçáveis (regra do Desafio 1a)
+	measure Endereçáveis = CALCULATE([Contadores], mercado_contadores[enderecavel] = "Sim")
+		formatString: #,0
+		displayFolder: 4. Priorização
+		lineageTag: 46e5941d-5b49-41fd-8411-f54fbdc35cfb
+
+	/// Endereçáveis com perfil ICP
+	measure 'ICP Endereçáveis' = CALCULATE([Endereçáveis], mercado_contadores[icp] = "Sim")
+		formatString: #,0
+		displayFolder: 4. Priorização
+		lineageTag: b24f2f50-4132-4a63-b9b0-cdac01b3c4c9
+
+	/// Clientes finais nas carteiras dos endereçáveis
+	measure 'Carteira Endereçável' = CALCULATE(SUM(mercado_contadores[num_clientes_ativos]), mercado_contadores[enderecavel] = "Sim")
+		formatString: #,0
+		displayFolder: 4. Priorização
+		lineageTag: eadd63a5-02bd-40bf-b520-d88c75b58f3e
+
+	/// nMRR oficial mensal (R$) das franquias abaixo da meta
+	measure 'Realizado Franquias Abaixo da Meta' = SUMX(FILTER(ALLNOBLANKROW(franquias), franquias[realizado_nmrr_mes] < franquias[meta_nmrr_mes]), franquias[realizado_nmrr_mes])
+		formatString: #,0
+		displayFolder: 5. Impacto
+		lineageTag: a34d5b37-fc6c-4156-9f33-d5db76f59f1d
+
+	/// Parte da capacidade dos ECs levada ao topo da propensão
+	measure '% Capacidade Redirecionada' = SELECTEDVALUE(Param_Cenarios[pct_redirecionado])
+		formatString: 0%
+		displayFolder: 5. Impacto
+		lineageTag: 739fd55e-d31c-46a0-89fa-04c91b85e332
+
+	/// Fração do lift que vira Ganho real (o target diverge do real)
+	measure 'Fator de Realização' = SELECTEDVALUE(Param_Cenarios[fator_realizacao])
+		formatString: 0%
+		displayFolder: 5. Impacto
+		lineageTag: 612f6387-ec9d-4b0f-8964-3374d51e3265
+
+	/// % capacidade × (lift do top 30% do score − 1) × fator de realização
+	measure 'Uplift nMRR' = [% Capacidade Redirecionada] * ([Lift Top 30%] - 1) * [Fator de Realização]
+		formatString: +0.0%
+		displayFolder: 5. Impacto
+		lineageTag: 2b755979-772b-44f3-8c34-b975c7d0ad74
+
+	/// Uplift aplicado ao nMRR oficial dessas franquias (R$/mês)
+	measure 'nMRR Incremental (Franquias Abaixo da Meta)' = [Uplift nMRR] * [Realizado Franquias Abaixo da Meta]
+		formatString: #,0
+		displayFolder: 5. Impacto
+		lineageTag: e9a4d3bb-a7c7-4def-85a8-7473408cc3cf
+
+	/// Taxa dos 600 contadores
+	measure 'Taxa Média' = CALCULATE([Taxa de Conversão], REMOVEFILTERS(mercado_contadores))
+		formatString: 0.0%
+		displayFolder: 1. Base
+		lineageTag: fe68c05e-2819-4e26-a93f-2e0431b52cb3
 
 	/// Maior − menor taxa de conversão entre as categorias (30+ contadores): quanto a característica separa quem converte
 	measure 'Amplitude (p.p.)' =
@@ -72,220 +139,254 @@ table _Medidas
 		lineageTag: 80eb6af6-a45a-488d-a1a6-f2625a4dd73e
 
 	/// 1 = driver mais forte
-	measure 'Ranking do Driver' =
-			RANKX(ALL(Param_Variaveis), [Amplitude (p.p.)])
+	measure 'Ranking do Driver' = RANKX(ALL(Param_Variaveis), [Amplitude (p.p.)])
 		formatString: 0
 		displayFolder: 2. Drivers
 		lineageTag: c8c0b1ab-4621-4831-8de8-97aacf48de6e
 
 	/// Taxa do ICP
-	measure 'Taxa de Conversão ICP' =
-			CALCULATE([Taxa de Conversão], mercado_contadores[icp] = "Sim")
+	measure 'Taxa de Conversão ICP' = CALCULATE([Taxa de Conversão], mercado_contadores[icp] = "Sim")
 		formatString: 0.0%
 		displayFolder: 2. Drivers
 		lineageTag: e46ba513-18e7-468d-814e-5e9f8e4c47d4
 
 	/// Taxa do ICP ÷ taxa média
-	measure 'Lift do ICP' =
-			DIVIDE([Taxa de Conversão ICP], [Taxa Média])
+	measure 'Lift do ICP' = DIVIDE([Taxa de Conversão ICP], [Taxa Média])
 		formatString: 0.0"x"
 		displayFolder: 2. Drivers
 		lineageTag: b33250d6-9fc6-477e-9688-ba0e25f7a402
 
-	/// Taxa de conversão (target) da faixa Alta de propensão
-	measure 'Conversão Top 30%' =
-			CALCULATE([Taxa de Conversão], REMOVEFILTERS(mercado_contadores), mercado_contadores[faixa_propensao] = "Alta")
-		formatString: 0%
-		displayFolder: 2. Drivers
-		lineageTag: 70acc320-e60a-48c4-a9d8-19f8f45e4aa2
-
-	/// Conversão do top 30% ÷ média
-	measure 'Lift Top 30%' =
-			DIVIDE([Conversão Top 30%], [Taxa Média])
-		formatString: 0.0"x"
-		displayFolder: 2. Drivers
-		lineageTag: b3822de7-0303-4492-b50e-366f2f4516b8
-
-	/// % dos convertidos que estão no top 30% do score
-	measure 'Captura Top 30%' =
-			DIVIDE(CALCULATE([Convertidos], REMOVEFILTERS(mercado_contadores), mercado_contadores[faixa_propensao] = "Alta"), CALCULATE([Convertidos], REMOVEFILTERS(mercado_contadores)))
-		formatString: 0%
-		displayFolder: 2. Drivers
-		lineageTag: 37169965-dcf6-4545-9c6b-6cb59eb79436
-
-	/// Leads no pipeline
-	measure Leads =
-			COUNTROWS(leads_pipeline)
-		formatString: #,0
-		displayFolder: 3. Resultado Real
-		lineageTag: 26c29cc6-9319-43a4-adfb-ab2e98632159
-
-	/// Leads Ganho + Perdido
-	measure 'Leads com Desfecho' =
-			SUM(leads_pipeline[com_desfecho])
-		formatString: #,0
-		displayFolder: 3. Resultado Real
-		lineageTag: 5772086a-f7fd-4bc1-a929-45a8597664e5
-
-	/// Leads Ganho
-	measure 'Ganhos (Real)' =
-			SUM(leads_pipeline[ganho])
-		formatString: #,0
-		displayFolder: 3. Resultado Real
-		lineageTag: be45271a-6e54-4e21-b65b-5091d8f193d7
-
-	/// Ganho ÷ (Ganho + Perdido): o fechamento comercial de verdade
-	measure 'Win Rate Real' =
-			DIVIDE([Ganhos (Real)], [Leads com Desfecho])
-		formatString: 0.0%
-		displayFolder: 3. Resultado Real
-		lineageTag: b62476ec-d6f7-42e2-b53c-ecf32c8fc32f
-
 	/// Win rate real do ICP
-	measure 'Win Rate Real ICP' =
-			CALCULATE([Win Rate Real], mercado_contadores[icp] = "Sim")
+	measure 'Win Rate Real ICP' = CALCULATE([Win Rate Real], mercado_contadores[icp] = "Sim")
 		formatString: 0.0%
 		displayFolder: 3. Resultado Real
 		lineageTag: 7e0b37c1-24f1-475d-958b-9e2863794629
 
 	/// Win rate real de quem não é ICP
-	measure 'Win Rate Real Fora do ICP' =
-			CALCULATE([Win Rate Real], mercado_contadores[icp] = "Não")
+	measure 'Win Rate Real Fora do ICP' = CALCULATE([Win Rate Real], mercado_contadores[icp] = "Não")
 		formatString: 0.0%
 		displayFolder: 3. Resultado Real
 		lineageTag: 61e5de3c-f97b-4bda-8529-f9305e2312cd
 
+	/// Endereçáveis no tier Alta do Desafio 1c
+	measure 'Tier Alta' = CALCULATE([Endereçáveis], mercado_contadores[tier_prioridade] = "Alta")
+		formatString: #,0
+		displayFolder: 4. Priorização
+		lineageTag: 40ebeb4b-e833-48b3-ad85-46ac52be6a0f
+
+	/// Nº de franquias abaixo da meta
+	measure 'Franquias Abaixo da Meta' = COUNTROWS(FILTER(ALLNOBLANKROW(franquias), franquias[realizado_nmrr_mes] < franquias[meta_nmrr_mes]))
+		formatString: 0
+		displayFolder: 6. Desafio 3
+		lineageTag: a5fc6000-ff89-45d2-b00a-3be779a97e79
+
+	/// Gap de meta no contexto (R$/mês)
+	measure 'Gap (R$)' = SUM(franquias[gap])
+		formatString: #,0
+		displayFolder: 6. Desafio 3
+		lineageTag: a85bc0cd-01fe-4901-8c45-9b5da45857c7
+
+	/// Atingimento quando abaixo de 100%
+	measure 'Atingimento (abaixo da meta)' = VAR a = DIVIDE(SUM(franquias[realizado_nmrr_mes]), SUM(franquias[meta_nmrr_mes])) RETURN IF(a < 1, a)
+		formatString: 0%
+		displayFolder: 6. Desafio 3
+		lineageTag: 45ff0306-b0ef-4ae0-98fa-ee67e63bcfb4
+
+	/// Atingimento quando 100% ou mais
+	measure 'Atingimento (na meta)' = VAR a = DIVIDE(SUM(franquias[realizado_nmrr_mes]), SUM(franquias[meta_nmrr_mes])) RETURN IF(a >= 1, a)
+		formatString: 0%
+		displayFolder: 6. Desafio 3
+		lineageTag: 1d7c2456-9ed1-43fc-b34e-7a184874a52b
+
+	/// Nº de ECs
+	measure ECs = SUM(franquias[num_executivos])
+		formatString: 0
+		displayFolder: 6. Desafio 3
+		lineageTag: 182a1549-5ca2-4fb0-90dc-c569652eb4f2
+
+	/// Endereçáveis do território da franquia
+	measure 'Prospects no Território' = COUNTROWS(FILTER(ALL(mercado_contadores), mercado_contadores[franquia_responsavel] = SELECTEDVALUE(franquias[id_franquia]) && mercado_contadores[enderecavel] = "Sim"))
+		formatString: 0
+		displayFolder: 6. Desafio 3
+		lineageTag: 319631ce-b712-47ba-870f-7b2141e41c10
+
+	/// Endereçáveis do tier Alta no território
+	measure 'Tier Alta no Território' = COUNTROWS(FILTER(ALL(mercado_contadores), mercado_contadores[franquia_responsavel] = SELECTEDVALUE(franquias[id_franquia]) && mercado_contadores[tier_prioridade] = "Alta"))
+		formatString: 0
+		displayFolder: 6. Desafio 3
+		lineageTag: 5cf82f57-0cf0-4958-bd82-fbefdf08f943
+
+	/// nMRR oficial por EC
+	measure 'Realizado por EC' = DIVIDE(SUM(franquias[realizado_nmrr_mes]), [ECs])
+		formatString: #,0
+		displayFolder: 6. Desafio 3
+		lineageTag: dc005f51-35b5-4f48-935e-4de2f4a21fb6
+
+	/// 1 = franquia com mais fechamentos potenciais por EC (onde alocar o EC adicional)
+	measure 'Ranking EC Adicional' = IF(HASONEVALUE(franquias[id_franquia]), RANKX(ALLNOBLANKROW(franquias), [Fechamentos Potenciais por EC]))
+		formatString: 0
+		displayFolder: 6. Desafio 3
+		lineageTag: bbb8d75d-f844-4bcc-b034-a34d139ba1a9
+
+	/// Franquia com mais fechamentos potenciais por EC
+	measure 'Franquia Recomendada' = SUBSTITUTE(MAXX(TOPN(1, ALLNOBLANKROW(franquias), [Fechamentos Potenciais por EC]), franquias[nome_franquia]), "Franquia ", "")
+		displayFolder: 6. Desafio 3
+		lineageTag: 32fa5b92-596d-4eb7-82f0-219003037160
+
+	/// Taxa de conversão (target) da faixa Alta de propensão
+	measure 'Conversão Top 30%' = CALCULATE([Taxa de Conversão], REMOVEFILTERS(mercado_contadores), mercado_contadores[faixa_propensao] = "Alta")
+		formatString: 0%
+		displayFolder: 2. Drivers
+		lineageTag: 70acc320-e60a-48c4-a9d8-19f8f45e4aa2
+
+	/// Conversão do top 30% ÷ média
+	measure 'Lift Top 30%' = DIVIDE([Conversão Top 30%], [Taxa Média])
+		formatString: 0.0"x"
+		displayFolder: 2. Drivers
+		lineageTag: b3822de7-0303-4492-b50e-366f2f4516b8
+
+	/// % dos convertidos que estão no top 30% do score
+	measure 'Captura Top 30%' = DIVIDE(CALCULATE([Convertidos], REMOVEFILTERS(mercado_contadores), mercado_contadores[faixa_propensao] = "Alta"), CALCULATE([Convertidos], REMOVEFILTERS(mercado_contadores)))
+		formatString: 0%
+		displayFolder: 2. Drivers
+		lineageTag: 37169965-dcf6-4545-9c6b-6cb59eb79436
+
 	/// Win rate real do top 30% do score
-	measure 'Win Rate Real Faixa Alta' =
-			CALCULATE([Win Rate Real], REMOVEFILTERS(mercado_contadores), mercado_contadores[faixa_propensao] = "Alta")
+	measure 'Win Rate Real Faixa Alta' = CALCULATE([Win Rate Real], REMOVEFILTERS(mercado_contadores), mercado_contadores[faixa_propensao] = "Alta")
 		formatString: 0%
 		displayFolder: 3. Resultado Real
 		lineageTag: 6baeb99d-4622-4215-b438-b874b9d8a820
 
 	/// Win rate real das faixas Média e Baixa
-	measure 'Win Rate Real Demais Faixas' =
-			CALCULATE([Win Rate Real], REMOVEFILTERS(mercado_contadores), mercado_contadores[faixa_propensao] <> "Alta")
+	measure 'Win Rate Real Demais Faixas' = CALCULATE([Win Rate Real], REMOVEFILTERS(mercado_contadores), mercado_contadores[faixa_propensao] <> "Alta")
 		formatString: 0%
 		displayFolder: 3. Resultado Real
 		lineageTag: efe2f0e7-d786-4ec5-a421-c20f43f8b634
 
-	/// Contadores endereçáveis (regra do Desafio 1a)
-	measure 'Endereçáveis' =
-			CALCULATE([Contadores], mercado_contadores[enderecavel] = "Sim")
-		formatString: #,0
-		displayFolder: 4. Priorização
-		lineageTag: 46e5941d-5b49-41fd-8411-f54fbdc35cfb
-
-	/// Endereçáveis no tier Alta do Desafio 1c
-	measure 'Tier Alta' =
-			CALCULATE([Endereçáveis], mercado_contadores[tier_prioridade] = "Alta")
-		formatString: #,0
-		displayFolder: 4. Priorização
-		lineageTag: 40ebeb4b-e833-48b3-ad85-46ac52be6a0f
-
-	/// Endereçáveis com perfil ICP
-	measure 'ICP Endereçáveis' =
-			CALCULATE([Endereçáveis], mercado_contadores[icp] = "Sim")
-		formatString: #,0
-		displayFolder: 4. Priorização
-		lineageTag: b24f2f50-4132-4a63-b9b0-cdac01b3c4c9
-
 	/// Endereçáveis no tier Média do Desafio 1c
-	measure 'Tier Média' =
-			CALCULATE([Endereçáveis], mercado_contadores[tier_prioridade] = "Média")
+	measure 'Tier Média' = CALCULATE([Endereçáveis], mercado_contadores[tier_prioridade] = "Média")
 		formatString: #,0
 		displayFolder: 4. Priorização
 		lineageTag: a9ae15e4-d9fd-43d4-8571-21bf1e916365
 
 	/// Endereçáveis no tier Baixa do Desafio 1c
-	measure 'Tier Baixa' =
-			CALCULATE([Endereçáveis], mercado_contadores[tier_prioridade] = "Baixa")
+	measure 'Tier Baixa' = CALCULATE([Endereçáveis], mercado_contadores[tier_prioridade] = "Baixa")
 		formatString: #,0
 		displayFolder: 4. Priorização
 		lineageTag: 6554a6b4-1be1-474a-80ec-8dde562addc3
 
 	/// Endereçáveis com lead em Reunião/Proposta nos últimos 90 dias
-	measure Quente =
-			CALCULATE([Endereçáveis], mercado_contadores[engajamento] = "Quente")
+	measure Quente = CALCULATE([Endereçáveis], mercado_contadores[engajamento] = "Quente")
 		formatString: #,0
 		displayFolder: 4. Priorização
 		lineageTag: 4eb98da7-4ce0-4a27-8d1f-8a687d673f08
 
 	/// Endereçáveis com lead Novo/Em Contato nos últimos 90 dias
-	measure Morno =
-			CALCULATE([Endereçáveis], mercado_contadores[engajamento] = "Morno")
+	measure Morno = CALCULATE([Endereçáveis], mercado_contadores[engajamento] = "Morno")
 		formatString: #,0
 		displayFolder: 4. Priorização
 		lineageTag: fd4f7308-d8bd-422b-9f45-56ad6bdbcf7f
 
 	/// Endereçáveis sem lead ativo (inclui parados há mais de 90 dias)
-	measure Frio =
-			CALCULATE([Endereçáveis], mercado_contadores[engajamento] = "Frio")
+	measure Frio = CALCULATE([Endereçáveis], mercado_contadores[engajamento] = "Frio")
 		formatString: #,0
 		displayFolder: 4. Priorização
 		lineageTag: b73dd0da-bd6a-4519-b1cf-18b3ec7601f3
 
 	/// Soma do MRR esperado dos endereçáveis
-	measure 'MRR Esperado' =
-			SUM(mercado_contadores[mrr_esperado])
+	measure 'MRR Esperado' = SUM(mercado_contadores[mrr_esperado])
 		formatString: #,0
 		displayFolder: 4. Priorização
 		lineageTag: d165eaeb-07a2-4e2e-98b3-8aa015758bd9
 
 	/// Endereçáveis nas ondas 1 (fechar) e 2 (prospectar tier Alta)
-	measure 'Contadores Ondas 1 e 2' =
-			CALCULATE([Endereçáveis], mercado_contadores[onda] <= 2)
+	measure 'Contadores Ondas 1 e 2' = CALCULATE([Endereçáveis], mercado_contadores[onda] <= 2)
 		formatString: #,0
 		displayFolder: 4. Priorização
 		lineageTag: 1c47f4c7-ac50-4611-8044-80f63d82ce85
 
 	/// Canal com menos tentativas de contato por fechamento (Desafio 1b)
-	measure 'Melhor ROI de Esforço' =
-			MAXX(FILTER(d1b_conversao, d1b_conversao[ranking_roi_esforco] = 1), d1b_conversao[canal_origem])
+	measure 'Melhor ROI de Esforço' = MAXX(FILTER(d1b_conversao, d1b_conversao[ranking_roi_esforco] = 1), d1b_conversao[canal_origem])
 		displayFolder: 4. Priorização
 		lineageTag: f0faf18f-5e9c-4747-9a1a-78120b697dca
 
-	/// Clientes finais nas carteiras dos endereçáveis
-	measure 'Carteira Endereçável' =
-			CALCULATE(SUM(mercado_contadores[num_clientes_ativos]), mercado_contadores[enderecavel] = "Sim")
-		formatString: #,0
-		displayFolder: 4. Priorização
-		lineageTag: eadd63a5-02bd-40bf-b520-d88c75b58f3e
+	/// Endereçáveis do território ÷ ECs
+	measure 'Prospects por EC' = DIVIDE([Prospects no Território], [ECs])
+		formatString: 0.0
+		displayFolder: 6. Desafio 3
+		lineageTag: 07571e60-642a-4a40-9d71-8706b7703356
 
-	/// nMRR oficial mensal (R$) das franquias abaixo da meta
-	measure 'Realizado Franquias Abaixo da Meta' =
-			SUMX(FILTER(ALLNOBLANKROW(franquias), franquias[realizado_nmrr_mes] < franquias[meta_nmrr_mes]), franquias[realizado_nmrr_mes])
+	/// Meta de nMRR por EC
+	measure 'Meta por EC' = DIVIDE(SUM(franquias[meta_nmrr_mes]), [ECs])
 		formatString: #,0
-		displayFolder: 5. Impacto
-		lineageTag: a34d5b37-fc6c-4156-9f33-d5db76f59f1d
+		displayFolder: 6. Desafio 3
+		lineageTag: 8af66086-6e09-4fdc-9baf-9cd7ad2e0416
 
-	/// Parte da capacidade dos ECs levada ao topo da propensão
-	measure '% Capacidade Redirecionada' =
-			SELECTEDVALUE(Param_Cenarios[pct_redirecionado])
+	/// Meta de nMRR (R$/mês)
+	measure 'Meta (R$)' = SUM(franquias[meta_nmrr_mes])
+		formatString: #,0
+		displayFolder: 6. Desafio 3
+		lineageTag: 2d35df6b-00a7-4fce-a2ee-1f9ac9c6e664
+
+	/// Realizado de nMRR (R$/mês)
+	measure 'Realizado (R$)' = SUM(franquias[realizado_nmrr_mes])
+		formatString: #,0
+		displayFolder: 6. Desafio 3
+		lineageTag: 30761b75-d845-4e35-b75e-cfc0fd88ef37
+
+	/// Fechamentos ÷ leads trabalhados (execucao_comercial, 2024)
+	measure 'Conversão do Funil' = DIVIDE(SUM(execucao_comercial[fechamentos]), SUM(execucao_comercial[leads_trabalhados]))
+		formatString: 0.0%
+		displayFolder: 6. Desafio 3
+		lineageTag: e411cfd2-26af-4240-92e6-3ba8c95ea527
+
+	/// Endereçáveis por EC × conversão do funil da franquia
+	measure 'Fechamentos Potenciais por EC' = [Prospects por EC] * [Conversão do Funil]
+		formatString: 0.00
+		displayFolder: 6. Desafio 3
+		lineageTag: e9fe3605-982a-42ec-b045-9e2c115bd8e7
+
+	/// Parte do realizado que preenche a meta (barra de progresso)
+	measure 'Realizado até a Meta' = IF(NOT ISBLANK([Meta (R$)]), MIN([Realizado (R$)], [Meta (R$)]))
+		formatString: #,0
+		displayFolder: 6. Desafio 3
+		lineageTag: 2ed71ba1-8a6a-46ca-aa3d-d5839151f71e
+
+	/// O que falta para bater a meta
+	measure 'Falta para a Meta' = IF(NOT ISBLANK([Meta (R$)]), MAX([Meta (R$)] - [Realizado (R$)], 0))
+		formatString: #,0
+		displayFolder: 6. Desafio 3
+		lineageTag: aee65603-8bd1-4537-93ae-98363f5800bf
+
+	/// O que passou da meta
+	measure 'Acima da Meta' = IF(NOT ISBLANK([Meta (R$)]), MAX([Realizado (R$)] - [Meta (R$)], 0))
+		formatString: #,0
+		displayFolder: 6. Desafio 3
+		lineageTag: 9945a52e-b187-47ed-8772-d029924f160b
+
+	/// Realizado ÷ meta no contexto (franquia ou região)
+	measure Atingimento = DIVIDE([Realizado (R$)], [Meta (R$)])
 		formatString: 0%
-		displayFolder: 5. Impacto
-		lineageTag: 739fd55e-d31c-46a0-89fa-04c91b85e332
+		displayFolder: 6. Desafio 3
+		lineageTag: e84cef02-5fe5-4139-96c0-17b1793e5ad7
 
-	/// Fração do lift que vira Ganho real (o target diverge do real)
-	measure 'Fator de Realização' =
-			SELECTEDVALUE(Param_Cenarios[fator_realizacao])
+	/// Realizado por EC ÷ realizado por EC da rede
+	measure 'Realizado por EC vs Rede' = DIVIDE([Realizado por EC], DIVIDE(SUMX(ALLNOBLANKROW(franquias), franquias[realizado_nmrr_mes]), SUMX(ALLNOBLANKROW(franquias), franquias[num_executivos])))
 		formatString: 0%
-		displayFolder: 5. Impacto
-		lineageTag: 612f6387-ec9d-4b0f-8964-3374d51e3265
+		displayFolder: 6. Desafio 3
+		lineageTag: 3da218b7-8783-4dcd-9342-0b76045aaa5e
 
-	/// % capacidade × (lift do top 30% do score − 1) × fator de realização
-	measure 'Uplift nMRR' =
-			[% Capacidade Redirecionada] * ([Lift Top 30%] - 1) * [Fator de Realização]
-		formatString: +0.0%
-		displayFolder: 5. Impacto
-		lineageTag: 2b755979-772b-44f3-8c34-b975c7d0ad74
+	/// Média de fechamentos por EC por mês (execucao_comercial)
+	measure 'Fechamentos por EC-mês' = AVERAGE(execucao_comercial[fechamentos])
+		formatString: 0.00
+		displayFolder: 6. Desafio 3
+		lineageTag: 79ef764c-7072-4b84-917e-a2129ea6292e
 
-	/// Uplift aplicado ao nMRR oficial dessas franquias (R$/mês)
-	measure 'nMRR Incremental (Franquias Abaixo da Meta)' =
-			[Uplift nMRR] * [Realizado Franquias Abaixo da Meta]
-		formatString: #,0
-		displayFolder: 5. Impacto
-		lineageTag: e9a4d3bb-a7c7-4def-85a8-7473408cc3cf
+	/// % dos EC-mês sem nenhum fechamento (dispersão entre ECs)
+	measure '% EC-mês sem Fechamento' = DIVIDE(COUNTROWS(FILTER(execucao_comercial, execucao_comercial[fechamentos] = 0)), COUNTROWS(execucao_comercial))
+		formatString: 0%
+		displayFolder: 6. Desafio 3
+		lineageTag: 90c8de7d-a981-4e12-850c-f3a1bfb4c11a
 
 	/// Chance de o lead fechar a partir do estágio atual: produto das taxas do funil que faltam (execucao_comercial)
 	measure 'Chance de Fechar' =
@@ -298,43 +399,37 @@ table _Medidas
 		lineageTag: 555bd644-57e5-4d26-ae35-3930a561a893
 
 	/// Leads abertos no estágio, com até 90 dias
-	measure 'Leads Abertos até 90 Dias' =
-			CALCULATE(COUNTROWS(leads_pipeline), leads_pipeline[status_lead] = SELECTEDVALUE(Param_Estagios[estagio]), leads_pipeline[tempo_ciclo_dias] <= 90)
+	measure 'Leads Abertos até 90 Dias' = CALCULATE(COUNTROWS(leads_pipeline), leads_pipeline[status_lead] = SELECTEDVALUE(Param_Estagios[estagio]), leads_pipeline[tempo_ciclo_dias] <= 90)
 		formatString: 0
 		displayFolder: 5. Impacto
 		lineageTag: 5fdc33a1-141f-4d1f-88b8-fbdd4957a034
 
 	/// Leads abertos há mais de 90 dias: nenhum Ganho da base fechou depois de 89 dias
-	measure 'Leads Parados (> 90 dias)' =
-			CALCULATE(COUNTROWS(leads_pipeline), leads_pipeline[status_lead] = SELECTEDVALUE(Param_Estagios[estagio]), leads_pipeline[tempo_ciclo_dias] > 90)
+	measure 'Leads Parados (> 90 dias)' = CALCULATE(COUNTROWS(leads_pipeline), leads_pipeline[status_lead] = SELECTEDVALUE(Param_Estagios[estagio]), leads_pipeline[tempo_ciclo_dias] > 90)
 		formatString: 0
 		displayFolder: 5. Impacto
 		lineageTag: dacb372e-7d56-4374-8828-f83f74be1043
 
 	/// Leads abertos até 90 dias × chance de fechar
-	measure 'Ganhos Esperados' =
-			[Leads Abertos até 90 Dias] * [Chance de Fechar]
+	measure 'Ganhos Esperados' = [Leads Abertos até 90 Dias] * [Chance de Fechar]
 		formatString: 0.0
 		displayFolder: 5. Impacto
 		lineageTag: fe4a5bc7-d7bf-43e9-8c37-3ddab825ad69
 
 	/// Método 1: soma dos Ganhos esperados do pipeline aberto (próximo trimestre)
-	measure 'Ganhos Previstos (Pipeline)' =
-			SUMX(Param_Estagios, [Ganhos Esperados])
+	measure 'Ganhos Previstos (Pipeline)' = SUMX(Param_Estagios, [Ganhos Esperados])
 		formatString: 0.0
 		displayFolder: 5. Impacto
 		lineageTag: 75fc98dc-f8e5-48af-9635-648b800ba0c6
 
 	/// mrr_inicial médio dos Ganhos
-	measure 'Ticket Médio do Ganho' =
-			CALCULATE(AVERAGE(leads_pipeline[mrr_inicial]), leads_pipeline[status_lead] = "Ganho")
+	measure 'Ticket Médio do Ganho' = CALCULATE(AVERAGE(leads_pipeline[mrr_inicial]), leads_pipeline[status_lead] = "Ganho")
 		formatString: #,0
 		displayFolder: 5. Impacto
 		lineageTag: c06b0e59-3433-4e6b-9b96-59d0f7e62bab
 
 	/// Ganhos previstos × ticket médio × (1 − churn), escala do CRM
-	measure 'nMRR Previsto (Pipeline)' =
-			[Ganhos Previstos (Pipeline)] * [Ticket Médio do Ganho] * (1 - DIVIDE(COUNTROWS(FILTER(ALL(clientes_ativos), clientes_ativos[status_cliente] = "Churned")), COUNTROWS(ALL(clientes_ativos))))
+	measure 'nMRR Previsto (Pipeline)' = [Ganhos Previstos (Pipeline)] * [Ticket Médio do Ganho] * (1 - DIVIDE(COUNTROWS(FILTER(ALL(clientes_ativos), clientes_ativos[status_cliente] = "Churned")), COUNTROWS(ALL(clientes_ativos))))
 		formatString: #,0
 		displayFolder: 5. Impacto
 		lineageTag: 63844bd4-2d60-4f42-8ad0-acb68444d623
@@ -349,25 +444,16 @@ table _Medidas
 		lineageTag: 970432d6-3a02-4cab-8c40-c4fb9067f0b4
 
 	/// Método 2: Ganhos do CRM por mês × 3
-	measure 'Ganhos por Trimestre (Run-rate)' =
-			DIVIDE(CALCULATE(COUNTROWS(leads_pipeline), leads_pipeline[status_lead] = "Ganho"), [Meses de Histórico de Ganhos]) * 3
+	measure 'Ganhos por Trimestre (Run-rate)' = DIVIDE(CALCULATE(COUNTROWS(leads_pipeline), leads_pipeline[status_lead] = "Ganho"), [Meses de Histórico de Ganhos]) * 3
 		formatString: 0.0
 		displayFolder: 5. Impacto
 		lineageTag: 0c2e784e-0ea5-4b1e-9a56-97832a4afcb4
 
 	/// nMRR mensal dos Ganhos do CRM ÷ nMRR oficial da rede (tabela franquias)
-	measure 'CRM ÷ nMRR Oficial' =
-			DIVIDE(DIVIDE(CALCULATE(SUM(leads_pipeline[mrr_inicial]), leads_pipeline[status_lead] = "Ganho"), [Meses de Histórico de Ganhos]), SUM(franquias[realizado_nmrr_mes]))
+	measure 'CRM ÷ nMRR Oficial' = DIVIDE(DIVIDE(CALCULATE(SUM(leads_pipeline[mrr_inicial]), leads_pipeline[status_lead] = "Ganho"), [Meses de Histórico de Ganhos]), SUM(franquias[realizado_nmrr_mes]))
 		formatString: 0.0%
 		displayFolder: 5. Impacto
 		lineageTag: 5a3ccf3a-00ac-4048-82e0-216f3a2dd648
-
-	/// Nº de franquias abaixo da meta
-	measure 'Franquias Abaixo da Meta' =
-			COUNTROWS(FILTER(ALLNOBLANKROW(franquias), franquias[realizado_nmrr_mes] < franquias[meta_nmrr_mes]))
-		formatString: 0
-		displayFolder: 6. Desafio 3
-		lineageTag: a5fc6000-ff89-45d2-b00a-3be779a97e79
 
 	/// Correlação de Pearson entre nº de ECs da franquia e atingimento (≈ 0,64)
 	measure 'Correlação Nº de ECs × Atingimento' =
@@ -382,165 +468,11 @@ table _Medidas
 		displayFolder: 6. Desafio 3
 		lineageTag: dd4f6159-7501-415c-9339-175ab113cad9
 
-	/// Gap de meta no contexto (R$/mês)
-	measure 'Gap (R$)' =
-			SUM(franquias[gap])
-		formatString: #,0
-		displayFolder: 6. Desafio 3
-		lineageTag: a85bc0cd-01fe-4901-8c45-9b5da45857c7
-
-	/// Atingimento quando abaixo de 100%
-	measure 'Atingimento (abaixo da meta)' =
-			VAR a = DIVIDE(SUM(franquias[realizado_nmrr_mes]), SUM(franquias[meta_nmrr_mes])) RETURN IF(a < 1, a)
-		formatString: 0%
-		displayFolder: 6. Desafio 3
-		lineageTag: 45ff0306-b0ef-4ae0-98fa-ee67e63bcfb4
-
-	/// Atingimento quando 100% ou mais
-	measure 'Atingimento (na meta)' =
-			VAR a = DIVIDE(SUM(franquias[realizado_nmrr_mes]), SUM(franquias[meta_nmrr_mes])) RETURN IF(a >= 1, a)
-		formatString: 0%
-		displayFolder: 6. Desafio 3
-		lineageTag: 1d7c2456-9ed1-43fc-b34e-7a184874a52b
-
-	/// Nº de ECs
-	measure ECs =
-			SUM(franquias[num_executivos])
-		formatString: 0
-		displayFolder: 6. Desafio 3
-		lineageTag: 182a1549-5ca2-4fb0-90dc-c569652eb4f2
-
-	/// Endereçáveis do território da franquia
-	measure 'Prospects no Território' =
-			COUNTROWS(FILTER(ALL(mercado_contadores), mercado_contadores[franquia_responsavel] = SELECTEDVALUE(franquias[id_franquia]) && mercado_contadores[enderecavel] = "Sim"))
-		formatString: 0
-		displayFolder: 6. Desafio 3
-		lineageTag: 319631ce-b712-47ba-870f-7b2141e41c10
-
-	/// Endereçáveis do tier Alta no território
-	measure 'Tier Alta no Território' =
-			COUNTROWS(FILTER(ALL(mercado_contadores), mercado_contadores[franquia_responsavel] = SELECTEDVALUE(franquias[id_franquia]) && mercado_contadores[tier_prioridade] = "Alta"))
-		formatString: 0
-		displayFolder: 6. Desafio 3
-		lineageTag: 5cf82f57-0cf0-4958-bd82-fbefdf08f943
-
-	/// Endereçáveis do território ÷ ECs
-	measure 'Prospects por EC' =
-			DIVIDE([Prospects no Território], [ECs])
-		formatString: 0.0
-		displayFolder: 6. Desafio 3
-		lineageTag: 07571e60-642a-4a40-9d71-8706b7703356
-
-	/// nMRR oficial por EC
-	measure 'Realizado por EC' =
-			DIVIDE(SUM(franquias[realizado_nmrr_mes]), [ECs])
-		formatString: #,0
-		displayFolder: 6. Desafio 3
-		lineageTag: dc005f51-35b5-4f48-935e-4de2f4a21fb6
-
-	/// Meta de nMRR por EC
-	measure 'Meta por EC' =
-			DIVIDE(SUM(franquias[meta_nmrr_mes]), [ECs])
-		formatString: #,0
-		displayFolder: 6. Desafio 3
-		lineageTag: 8af66086-6e09-4fdc-9baf-9cd7ad2e0416
-
-	/// Meta de nMRR (R$/mês)
-	measure 'Meta (R$)' =
-			SUM(franquias[meta_nmrr_mes])
-		formatString: #,0
-		displayFolder: 6. Desafio 3
-		lineageTag: 2d35df6b-00a7-4fce-a2ee-1f9ac9c6e664
-
-	/// Parte do realizado que preenche a meta (barra de progresso)
-	measure 'Realizado até a Meta' =
-			IF(NOT ISBLANK([Meta (R$)]), MIN([Realizado (R$)], [Meta (R$)]))
-		formatString: #,0
-		displayFolder: 6. Desafio 3
-		lineageTag: 2ed71ba1-8a6a-46ca-aa3d-d5839151f71e
-
-	/// O que falta para bater a meta
-	measure 'Falta para a Meta' =
-			IF(NOT ISBLANK([Meta (R$)]), MAX([Meta (R$)] - [Realizado (R$)], 0))
-		formatString: #,0
-		displayFolder: 6. Desafio 3
-		lineageTag: aee65603-8bd1-4537-93ae-98363f5800bf
-
-	/// O que passou da meta
-	measure 'Acima da Meta' =
-			IF(NOT ISBLANK([Meta (R$)]), MAX([Realizado (R$)] - [Meta (R$)], 0))
-		formatString: #,0
-		displayFolder: 6. Desafio 3
-		lineageTag: 9945a52e-b187-47ed-8772-d029924f160b
-
-	/// Realizado ÷ meta no contexto (franquia ou região)
-	measure Atingimento =
-			DIVIDE([Realizado (R$)], [Meta (R$)])
-		formatString: 0%
-		displayFolder: 6. Desafio 3
-		lineageTag: e84cef02-5fe5-4139-96c0-17b1793e5ad7
-
-	/// Realizado por EC ÷ realizado por EC da rede
-	measure 'Realizado por EC vs Rede' =
-			DIVIDE([Realizado por EC], DIVIDE(SUMX(ALLNOBLANKROW(franquias), franquias[realizado_nmrr_mes]), SUMX(ALLNOBLANKROW(franquias), franquias[num_executivos])))
-		formatString: 0%
-		displayFolder: 6. Desafio 3
-		lineageTag: 3da218b7-8783-4dcd-9342-0b76045aaa5e
-
-	/// Média de fechamentos por EC por mês (execucao_comercial)
-	measure 'Fechamentos por EC-mês' =
-			AVERAGE(execucao_comercial[fechamentos])
-		formatString: 0.00
-		displayFolder: 6. Desafio 3
-		lineageTag: 79ef764c-7072-4b84-917e-a2129ea6292e
-
 	/// Média de leads trabalhados por EC por mês: a carga do EC (execucao_comercial)
-	measure 'Leads por EC-mês' =
-			AVERAGE(execucao_comercial[leads_trabalhados])
+	measure 'Leads por EC-mês' = AVERAGE(execucao_comercial[leads_trabalhados])
 		formatString: 0.0
 		displayFolder: 6. Desafio 3
 		lineageTag: 2c2bff9f-194f-4ffa-a82a-9e6612facaa3
-
-	/// % dos EC-mês sem nenhum fechamento (dispersão entre ECs)
-	measure '% EC-mês sem Fechamento' =
-			DIVIDE(COUNTROWS(FILTER(execucao_comercial, execucao_comercial[fechamentos] = 0)), COUNTROWS(execucao_comercial))
-		formatString: 0%
-		displayFolder: 6. Desafio 3
-		lineageTag: 90c8de7d-a981-4e12-850c-f3a1bfb4c11a
-
-	/// Realizado de nMRR (R$/mês)
-	measure 'Realizado (R$)' =
-			SUM(franquias[realizado_nmrr_mes])
-		formatString: #,0
-		displayFolder: 6. Desafio 3
-		lineageTag: 30761b75-d845-4e35-b75e-cfc0fd88ef37
-
-	/// Fechamentos ÷ leads trabalhados (execucao_comercial, 2024)
-	measure 'Conversão do Funil' =
-			DIVIDE(SUM(execucao_comercial[fechamentos]), SUM(execucao_comercial[leads_trabalhados]))
-		formatString: 0.0%
-		displayFolder: 6. Desafio 3
-		lineageTag: e411cfd2-26af-4240-92e6-3ba8c95ea527
-
-	/// Endereçáveis por EC × conversão do funil da franquia
-	measure 'Fechamentos Potenciais por EC' =
-			[Prospects por EC] * [Conversão do Funil]
-		formatString: 0.00
-		displayFolder: 6. Desafio 3
-		lineageTag: e9fe3605-982a-42ec-b045-9e2c115bd8e7
-
-	/// 1 = franquia com mais fechamentos potenciais por EC (onde alocar o EC adicional)
-	measure 'Ranking EC Adicional' =
-			IF(HASONEVALUE(franquias[id_franquia]), RANKX(ALLNOBLANKROW(franquias), [Fechamentos Potenciais por EC]))
-		formatString: 0
-		displayFolder: 6. Desafio 3
-		lineageTag: bbb8d75d-f844-4bcc-b034-a34d139ba1a9
-
-	/// Franquia com mais fechamentos potenciais por EC
-	measure 'Franquia Recomendada' =
-			SUBSTITUTE(MAXX(TOPN(1, ALLNOBLANKROW(franquias), [Fechamentos Potenciais por EC]), franquias[nome_franquia]), "Franquia ", "")
-		displayFolder: 6. Desafio 3
-		lineageTag: 32fa5b92-596d-4eb7-82f0-219003037160
 
 	column Coluna
 		dataType: string
@@ -560,3 +492,4 @@ table _Medidas
 				    Fonte
 
 	annotation PBI_ResultType = Table
+

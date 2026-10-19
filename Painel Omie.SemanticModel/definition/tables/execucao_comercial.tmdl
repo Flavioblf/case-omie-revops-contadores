@@ -1,7 +1,7 @@
 /// Funil mensal por franquia (execucao_comercial): conversão lead → fechamento.
 table execucao_comercial
-	lineageTag: 9fc89c4d-26f9-4a70-a97f-3218e4baa09b
 	isHidden
+	lineageTag: 9fc89c4d-26f9-4a70-a97f-3218e4baa09b
 
 	column id_executivo
 		dataType: string
@@ -118,3 +118,4 @@ table execucao_comercial
 				    SemLinhaOrigem
 
 	annotation PBI_ResultType = Table
+

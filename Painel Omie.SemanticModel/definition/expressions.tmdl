@@ -9,3 +9,4 @@ expression BancoSQL = "OMIE" meta [IsParameterQuery=true, Type="Text", IsParamet
 	lineageTag: 5832cc28-19bc-4c35-862c-bbb75f5f78e8
 
 	annotation PBI_ResultType = Text
+

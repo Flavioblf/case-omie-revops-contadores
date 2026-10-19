@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "055681d830e24d363782",
   "position": {
     "x": 16,
     "y": 265,
     "z": 0,
-    "width": 507,
     "height": 441,
+    "width": 507,
     "tabOrder": 3
   },
   "visual": {
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "franquias.rotulo",
-              "nativeQueryRef": "rotulo"
+              "nativeQueryRef": "rotulo",
+              "active": true
             }
           ]
         },
