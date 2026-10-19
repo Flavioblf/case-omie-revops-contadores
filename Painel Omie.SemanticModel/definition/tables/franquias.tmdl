@@ -83,9 +83,10 @@ table franquias
 
 		annotation SummarizationSetBy = User
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	/// Realizado ÷ meta de nMRR
-	column atingimento =
-			DIVIDE(franquias[realizado_nmrr_mes], franquias[meta_nmrr_mes])
+	column atingimento = DIVIDE(franquias[realizado_nmrr_mes], franquias[meta_nmrr_mes])
 		dataType: double
 		formatString: 0%
 		lineageTag: 890e7954-528e-4cad-90a6-4a74e69c0d6b
@@ -94,8 +95,7 @@ table franquias
 		annotation SummarizationSetBy = User
 
 	/// Meta − realizado (R$/mês), zero para quem bateu a meta
-	column gap =
-			MAX(0, franquias[meta_nmrr_mes] - franquias[realizado_nmrr_mes])
+	column gap = MAX(0, franquias[meta_nmrr_mes] - franquias[realizado_nmrr_mes])
 		dataType: double
 		formatString: #,0
 		lineageTag: d6b52d0c-293c-4f4c-8d78-01d26ab34763
@@ -104,8 +104,7 @@ table franquias
 		annotation SummarizationSetBy = User
 
 	/// Realizado de nMRR por EC
-	column realizado_por_ec =
-			DIVIDE(franquias[realizado_nmrr_mes], franquias[num_executivos])
+	column realizado_por_ec = DIVIDE(franquias[realizado_nmrr_mes], franquias[num_executivos])
 		dataType: double
 		formatString: #,0
 		lineageTag: 83196a0c-7763-4906-9e01-dc35a5b957e8
@@ -113,33 +112,30 @@ table franquias
 
 		annotation SummarizationSetBy = User
 
-	/// Na meta ou abaixo da meta
-	column situacao =
-			IF(franquias[atingimento] >= 1, "Na meta", "Abaixo da meta")
-		dataType: string
-		lineageTag: 50f90704-48e7-4b28-9315-918f9c8bbea4
-		summarizeBy: none
-
-		annotation SummarizationSetBy = User
-
 	/// Ordem do menor para o maior atingimento (desempate pelo id)
-	column ordem_atingimento =
-			RANKX(ALLNOBLANKROW(franquias), franquias[atingimento] + VALUE(RIGHT(franquias[id_franquia], 3)) / 1000000, , ASC, DENSE)
+	column ordem_atingimento = RANKX(ALLNOBLANKROW(franquias), franquias[atingimento] + VALUE(RIGHT(franquias[id_franquia], 3)) / 1000000, , ASC, DENSE)
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 26035849-0b87-4a4a-8896-92d0222ce859
 		summarizeBy: none
-		isHidden
 
 		annotation SummarizationSetBy = User
 
 	/// Franquia, nº de ECs e atingimento, ordenada pelo atingimento
-	column rotulo =
-			SUBSTITUTE(franquias[nome_franquia], "Franquia ", "") & " · " & franquias[num_executivos] & " EC · " & FORMAT(franquias[atingimento], "0%")
+	column rotulo = SUBSTITUTE(franquias[nome_franquia], "Franquia ", "") & " · " & franquias[num_executivos] & " EC · " & FORMAT(franquias[atingimento], "0%")
 		dataType: string
 		lineageTag: 5dfc91b4-3a1b-48ca-a77a-4f6f26ddb836
 		summarizeBy: none
 		sortByColumn: ordem_atingimento
+
+		annotation SummarizationSetBy = User
+
+	/// Na meta ou abaixo da meta
+	column situacao = IF(franquias[atingimento] >= 1, "Na meta", "Abaixo da meta")
+		dataType: string
+		lineageTag: 50f90704-48e7-4b28-9315-918f9c8bbea4
+		summarizeBy: none
 
 		annotation SummarizationSetBy = User
 
@@ -154,3 +150,4 @@ table franquias
 				    SemLinhaOrigem
 
 	annotation PBI_ResultType = Table
+

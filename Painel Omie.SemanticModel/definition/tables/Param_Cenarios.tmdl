@@ -46,3 +46,4 @@ table Param_Cenarios
 				    Fonte
 
 	annotation PBI_ResultType = Table
+

@@ -202,6 +202,19 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4297.3830500146942,
+            "y": 78
+          },
+          "nodeIndex": "Param_Estagios",
+          "nodeLineageTag": "db7e7a0d-d876-4f9c-acc0-b3b4a9856145",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "Todas as tabelas",

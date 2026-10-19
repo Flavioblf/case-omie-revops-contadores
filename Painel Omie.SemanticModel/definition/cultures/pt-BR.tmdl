@@ -78,7 +78,7 @@ cultureInfo pt-BR
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Conversão": {
+			          "% marcado como convertido (converteu_omie)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -2244,6 +2244,27 @@ cultureInfo pt-BR
 			      "Terms": [
 			        {
 			          "Estágio": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.conversão_real_pipeline": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Conversão Real (Pipeline)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Conversão real lead → Ganho": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",

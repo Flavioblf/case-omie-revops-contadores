@@ -36,3 +36,4 @@ table Param_Territorio
 				    Fonte
 
 	annotation PBI_ResultType = Table
+

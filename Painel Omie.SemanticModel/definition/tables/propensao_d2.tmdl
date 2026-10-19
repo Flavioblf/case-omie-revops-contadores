@@ -1,7 +1,7 @@
 /// Score de propensão do Desafio 2 por contador (view dbo.vw_propensao_d2): 600 contadores.
 table propensao_d2
-	lineageTag: 559bff5a-5916-439a-82ca-980e8bfb55b2
 	isHidden
+	lineageTag: 559bff5a-5916-439a-82ca-980e8bfb55b2
 
 	column id_contador
 		dataType: string
@@ -47,3 +47,4 @@ table propensao_d2
 				    Dados
 
 	annotation PBI_ResultType = Table
+

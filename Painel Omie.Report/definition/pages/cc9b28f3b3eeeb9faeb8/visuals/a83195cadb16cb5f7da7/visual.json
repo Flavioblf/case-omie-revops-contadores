@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "a83195cadb16cb5f7da7",
   "position": {
     "x": 533,
     "y": 265,
     "z": 0,
-    "width": 731,
     "height": 200,
+    "width": 731,
     "tabOrder": 4
   },
   "visual": {
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "franquias.regiao",
-              "nativeQueryRef": "regiao"
+              "nativeQueryRef": "regiao",
+              "active": true
             }
           ]
         },

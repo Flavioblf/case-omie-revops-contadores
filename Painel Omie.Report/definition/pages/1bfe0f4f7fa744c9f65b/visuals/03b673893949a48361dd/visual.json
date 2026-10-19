@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "03b673893949a48361dd",
   "position": {
     "x": 16,
     "y": 496,
     "z": 0,
-    "width": 347,
     "height": 211,
+    "width": 347,
     "tabOrder": 4
   },
   "visual": {
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "mercado_contadores.porte",
-              "nativeQueryRef": "porte"
+              "nativeQueryRef": "porte",
+              "active": true
             }
           ]
         },
