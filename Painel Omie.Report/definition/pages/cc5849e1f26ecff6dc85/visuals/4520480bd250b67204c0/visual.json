@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "4520480bd250b67204c0",
   "position": {
     "x": 16,
     "y": 543,
     "z": 0,
-    "height": 164,
     "width": 787,
+    "height": 164,
     "tabOrder": 4
   },
   "visual": {
@@ -27,8 +27,7 @@
                 }
               },
               "queryRef": "mercado_contadores.faixa_propensao",
-              "nativeQueryRef": "faixa_propensao",
-              "active": true
+              "nativeQueryRef": "faixa_propensao"
             }
           ]
         },

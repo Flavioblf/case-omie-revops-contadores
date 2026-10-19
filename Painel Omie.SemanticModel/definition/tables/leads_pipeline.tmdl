@@ -1,10 +1,10 @@
 /// Pipeline comercial: resultado real (Ganho/Perdido) para contrastar com o target.
 table leads_pipeline
-	lineageTag: 07ca64c7-a12f-4289-94e7-552e8ce4772a
+	lineageTag: 445d1738-1809-40e8-ab76-ddd07a8606ab
 
 	column id_lead
 		dataType: string
-		lineageTag: e8faed47-44b8-472c-bfd8-4c2b457cda21
+		lineageTag: f5aa5131-0b7d-423d-aff1-4b3dec361768
 		summarizeBy: none
 		sourceColumn: id_lead
 
@@ -12,7 +12,7 @@ table leads_pipeline
 
 	column id_contador
 		dataType: string
-		lineageTag: c65eccb7-ebff-4e0c-a938-9f56c55c0926
+		lineageTag: 75882cc2-7617-41bf-8922-e3cfc3312a99
 		summarizeBy: none
 		sourceColumn: id_contador
 
@@ -20,7 +20,7 @@ table leads_pipeline
 
 	column canal_origem
 		dataType: string
-		lineageTag: a4739489-c874-47a9-8077-b00d54a362cf
+		lineageTag: 5a16afa2-c448-4d76-b9d3-96e47f402c7e
 		summarizeBy: none
 		sourceColumn: canal_origem
 
@@ -28,7 +28,7 @@ table leads_pipeline
 
 	column id_franquia
 		dataType: string
-		lineageTag: 1279d37f-5804-4fd7-818c-c4112f05fbe1
+		lineageTag: a0648363-e1ce-478a-aa96-6f9ebe027125
 		summarizeBy: none
 		sourceColumn: id_franquia
 
@@ -37,17 +37,15 @@ table leads_pipeline
 	column data_entrada
 		dataType: dateTime
 		formatString: dd/mm/yyyy
-		lineageTag: eaec4ccc-bb5f-4c49-901e-755eb69133f0
+		lineageTag: 73a6e393-b72b-4ecc-b195-ea137950de4b
 		summarizeBy: none
 		sourceColumn: data_entrada
 
 		annotation SummarizationSetBy = User
 
-		annotation UnderlyingDateTimeDataType = Date
-
 	column status_lead
 		dataType: string
-		lineageTag: 6f5224b4-b3d6-4f29-9878-3c716e289ea6
+		lineageTag: b81befc6-370e-4e59-a3e4-ab221c8fc17f
 		summarizeBy: none
 		sourceColumn: status_lead
 
@@ -56,17 +54,15 @@ table leads_pipeline
 	column data_conversao
 		dataType: dateTime
 		formatString: dd/mm/yyyy
-		lineageTag: 66e43c02-8052-4e3b-b00e-73aecc32fdba
+		lineageTag: 0634afdc-c76d-401d-a9cb-2a632d606aa0
 		summarizeBy: none
 		sourceColumn: data_conversao
 
 		annotation SummarizationSetBy = User
 
-		annotation UnderlyingDateTimeDataType = Date
-
 	column mrr_inicial
 		dataType: double
-		lineageTag: 06c235fd-8524-4a7b-a577-1f9ba414c3ec
+		lineageTag: 44b9875c-81b3-4a81-b276-fcb7dea65d83
 		summarizeBy: none
 		sourceColumn: mrr_inicial
 
@@ -74,7 +70,7 @@ table leads_pipeline
 
 	column motivo_perda
 		dataType: string
-		lineageTag: 2747c901-1c74-4942-a5a5-79281bcfa02a
+		lineageTag: f58dc28f-ed6c-43f8-bd0a-a788f6b618d4
 		summarizeBy: none
 		sourceColumn: motivo_perda
 
@@ -82,7 +78,7 @@ table leads_pipeline
 
 	column num_tentativas_contato
 		dataType: int64
-		lineageTag: bae37f75-8387-4523-9714-bf370a20b7a7
+		lineageTag: b8e2feea-97cc-4585-941b-aaf90b9035de
 		summarizeBy: none
 		sourceColumn: num_tentativas_contato
 
@@ -90,29 +86,31 @@ table leads_pipeline
 
 	column tempo_ciclo_dias
 		dataType: int64
-		lineageTag: 662cfc21-6dd5-41e7-9bf3-51654bdc8f23
+		lineageTag: b48ffda1-19fb-43c1-a376-b35dc2529f54
 		summarizeBy: none
 		sourceColumn: tempo_ciclo_dias
 
 		annotation SummarizationSetBy = User
 
 	/// 1 = lead Ganho
-	column ganho = IF(leads_pipeline[status_lead] = "Ganho", 1, 0)
+	column ganho =
+			IF(leads_pipeline[status_lead] = "Ganho", 1, 0)
 		dataType: int64
-		isHidden
 		formatString: 0
-		lineageTag: f78b3302-d5c3-4b3d-8a20-2fafc5b62f60
+		lineageTag: 448f2d97-0b1f-4c57-a861-5dca688a6052
 		summarizeBy: none
+		isHidden
 
 		annotation SummarizationSetBy = User
 
 	/// 1 = lead encerrado (Ganho ou Perdido)
-	column com_desfecho = IF(leads_pipeline[status_lead] IN {"Ganho", "Perdido"}, 1, 0)
+	column com_desfecho =
+			IF(leads_pipeline[status_lead] IN {"Ganho", "Perdido"}, 1, 0)
 		dataType: int64
-		isHidden
 		formatString: 0
-		lineageTag: 8e1eeeb4-f5c8-4913-9e1b-59bdeec03eba
+		lineageTag: 4a7381b4-9e9e-4993-af28-49c52381175d
 		summarizeBy: none
+		isHidden
 
 		annotation SummarizationSetBy = User
 
@@ -127,4 +125,3 @@ table leads_pipeline
 				    SemLinhaOrigem
 
 	annotation PBI_ResultType = Table
-

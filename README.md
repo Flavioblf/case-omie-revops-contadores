@@ -27,10 +27,9 @@ e que estão declarados como premissa.
 | Desafio | Entregável | Onde |
 |---|---|---|
 | 1 · SQL | Consultas das perguntas a, b e c (T-SQL) | `omie-case-contadores/sql/sqlserver/desafio1*.sql` |
-| 1 · apoio | Views do painel e análises de governança | `omie-case-contadores/sql/sqlserver/anexo_analises_complementares.sql` |
 | 2 · Propensão | Planilha com fórmulas vivas (aba **Respostas** primeiro) | `omie-case-contadores/output/Desafio2_Propensao.xlsx` |
 | 3 · Capacity | Planilha com fórmulas vivas | `omie-case-contadores/output/Desafio3_Capacity.xlsx` |
-| 4 · Storytelling | Apresentação de 6 slides (com notas do apresentador) | `omie-case-contadores/output/Apresentacao_Omie_Canal_Contadores.pptx` |
+| 4 · Storytelling | Apresentação de 6 slides: [PDF (abre no navegador)](omie-case-contadores/output/Apresentacao_Omie_Canal_Contadores.pdf) · [PowerPoint, com notas do apresentador](omie-case-contadores/output/Apresentacao_Omie_Canal_Contadores.pptx) | `omie-case-contadores/output/` |
 | 1 a 3 · Painel | Power BI (7 páginas, uma por pergunta: pergunta → resposta → evidência) | `Painel Omie.pbip` |
 | Documentação do painel | Modelo, medidas DAX e valores de referência | `Painel Omie - Documentação.md` |
 
@@ -130,7 +129,7 @@ Pré-requisitos: SQL Server local (banco `OMIE`, tabelas no esquema `raw`), Pyth
 
 ```bash
 cd omie-case-contadores
-# 1. SQL Server: rodar sql/sqlserver/anexo_analises_complementares.sql (cria as views do painel)
+# 1. SQL Server: o painel lê views dbo.vw_* com a mesma lógica das consultas (não incluídas no repositório)
 # 2. Planilhas (DuckDB local + recálculo pelo Excel)
 python src/load.py
 python src/build_excel_propensao.py && python src/recalc_excel.py output/Desafio2_Propensao.xlsx
@@ -148,7 +147,7 @@ python powerbi/build_pbip.py
 ├── Painel Omie.pbip                     # painel Power BI (modelo TMDL + relatório PBIR)
 ├── Painel Omie - Documentação.md
 └── omie-case-contadores/
-    ├── sql/sqlserver/                   # respostas do Desafio 1 e anexo (T-SQL)
+    ├── sql/sqlserver/                   # respostas do Desafio 1 (T-SQL)
     ├── sql/00_staging.sql, 01c_*.sql    # mesma lógica em DuckDB, usada para gerar as planilhas
     ├── src/                             # geradores das planilhas e dos dados do deck
     ├── deck/                            # gerador do deck e design system Omie

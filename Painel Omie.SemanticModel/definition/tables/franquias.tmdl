@@ -1,10 +1,10 @@
 /// Franquias: meta e realizado de nMRR (impacto e Desafio 3).
 table franquias
-	lineageTag: 8910fe95-0485-4ce9-a254-1cbfd4fdbfec
+	lineageTag: fe5a4246-d4c7-48d3-8ede-6823ed7ed379
 
 	column id_franquia
 		dataType: string
-		lineageTag: 71a47619-7c06-476b-8ae7-65702574472e
+		lineageTag: 691f2fe9-4146-41ce-8ef7-ed30b66f6adf
 		summarizeBy: none
 		sourceColumn: id_franquia
 
@@ -12,7 +12,7 @@ table franquias
 
 	column nome_franquia
 		dataType: string
-		lineageTag: d8f31850-97d9-4276-8129-95ee3aa6bff8
+		lineageTag: d647311a-ed04-4dc4-a70a-d9a6afc93ff0
 		summarizeBy: none
 		sourceColumn: nome_franquia
 
@@ -20,7 +20,7 @@ table franquias
 
 	column estado
 		dataType: string
-		lineageTag: 47e096e5-91dc-43e9-9873-f1a7ea129d0f
+		lineageTag: f67c90c2-5e13-4cab-803c-790a6f4f69e5
 		summarizeBy: none
 		sourceColumn: estado
 
@@ -28,7 +28,7 @@ table franquias
 
 	column regiao
 		dataType: string
-		lineageTag: 9696afb6-9d9d-4bba-845a-b7aa17efdf60
+		lineageTag: c35bc788-564c-4158-adf6-5355b6e2e96f
 		summarizeBy: none
 		sourceColumn: regiao
 
@@ -36,7 +36,7 @@ table franquias
 
 	column meses_operando
 		dataType: int64
-		lineageTag: f4fa4708-1fbb-49c1-bc07-3ba0e577902d
+		lineageTag: e94b7fae-e682-4bb0-92f3-cad45db4c0f2
 		summarizeBy: none
 		sourceColumn: meses_operando
 
@@ -44,7 +44,7 @@ table franquias
 
 	column meta_nmrr_mes
 		dataType: int64
-		lineageTag: e09d6fd5-988c-4b03-96db-2e822d1b9617
+		lineageTag: 08853bf7-984a-4308-a1b7-8cf18df03569
 		summarizeBy: none
 		sourceColumn: meta_nmrr_mes
 
@@ -52,7 +52,7 @@ table franquias
 
 	column realizado_nmrr_mes
 		dataType: int64
-		lineageTag: 3b063053-4337-4404-978d-9f6e44705346
+		lineageTag: 630e01d8-39b0-4e9c-8b05-60ca547d61e5
 		summarizeBy: none
 		sourceColumn: realizado_nmrr_mes
 
@@ -60,7 +60,7 @@ table franquias
 
 	column num_executivos
 		dataType: int64
-		lineageTag: 6b7fbff9-dfdf-418c-b38b-7893d06403bc
+		lineageTag: 5e992097-386d-49b3-bbb1-73c8effaaec8
 		summarizeBy: none
 		sourceColumn: num_executivos
 
@@ -68,7 +68,7 @@ table franquias
 
 	column atingimento_pct
 		dataType: double
-		lineageTag: 1b2379f4-20d4-41bb-beec-3156505b45fd
+		lineageTag: 2fab6014-ef7f-45a0-b859-62bab9d1aa9e
 		summarizeBy: none
 		sourceColumn: atingimento_pct
 
@@ -77,65 +77,69 @@ table franquias
 	column data_inicio
 		dataType: dateTime
 		formatString: dd/mm/yyyy
-		lineageTag: d5cd7031-ac2d-4ee1-aa0c-30a140725ba8
+		lineageTag: 791c8763-f46b-404b-b550-8a181ae5cd03
 		summarizeBy: none
 		sourceColumn: data_inicio
 
 		annotation SummarizationSetBy = User
 
-		annotation UnderlyingDateTimeDataType = Date
-
 	/// Realizado ÷ meta de nMRR
-	column atingimento = DIVIDE(franquias[realizado_nmrr_mes], franquias[meta_nmrr_mes])
+	column atingimento =
+			DIVIDE(franquias[realizado_nmrr_mes], franquias[meta_nmrr_mes])
 		dataType: double
 		formatString: 0%
-		lineageTag: 6ed658c6-6087-4084-b1f4-d685f7734a4f
+		lineageTag: df7db326-6129-4e18-8fd0-560e38513457
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
 
 	/// Meta − realizado (R$/mês), zero para quem bateu a meta
-	column gap = MAX(0, franquias[meta_nmrr_mes] - franquias[realizado_nmrr_mes])
+	column gap =
+			MAX(0, franquias[meta_nmrr_mes] - franquias[realizado_nmrr_mes])
 		dataType: double
 		formatString: #,0
-		lineageTag: bd73cc91-2e78-4606-933c-6865f294fb3e
+		lineageTag: 58bcec8d-71b9-4542-b7a3-05efda7fec2c
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
 
 	/// Realizado de nMRR por EC
-	column realizado_por_ec = DIVIDE(franquias[realizado_nmrr_mes], franquias[num_executivos])
+	column realizado_por_ec =
+			DIVIDE(franquias[realizado_nmrr_mes], franquias[num_executivos])
 		dataType: double
 		formatString: #,0
-		lineageTag: 47eec769-aa2a-44db-bec0-1f634b96d628
+		lineageTag: c4c0ae35-f84d-4992-a1e0-def021ad4836
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	/// Na meta ou abaixo da meta
+	column situacao =
+			IF(franquias[atingimento] >= 1, "Na meta", "Abaixo da meta")
+		dataType: string
+		lineageTag: 2bd163e8-497b-4b57-9add-fc67145e2f70
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
 
 	/// Ordem do menor para o maior atingimento (desempate pelo id)
-	column ordem_atingimento = RANKX(ALLNOBLANKROW(franquias), franquias[atingimento] + VALUE(RIGHT(franquias[id_franquia], 3)) / 1000000, , ASC, DENSE)
+	column ordem_atingimento =
+			RANKX(ALLNOBLANKROW(franquias), franquias[atingimento] + VALUE(RIGHT(franquias[id_franquia], 3)) / 1000000, , ASC, DENSE)
 		dataType: int64
-		isHidden
 		formatString: 0
-		lineageTag: 4ec38999-3e18-4c4b-afec-4f7b5e0e76bc
+		lineageTag: d2bcdb45-dc9e-4951-8621-b7f331e6e6eb
 		summarizeBy: none
+		isHidden
 
 		annotation SummarizationSetBy = User
 
 	/// Franquia, meses de operação e atingimento, ordenada pelo atingimento
-	column rotulo = SUBSTITUTE(franquias[nome_franquia], "Franquia ", "") & " · " & franquias[meses_operando] & "m · " & FORMAT(franquias[atingimento], "0%")
+	column rotulo =
+			SUBSTITUTE(franquias[nome_franquia], "Franquia ", "") & " · " & franquias[meses_operando] & "m · " & FORMAT(franquias[atingimento], "0%")
 		dataType: string
-		lineageTag: 20f048f5-bd24-4440-b24f-34f119f55a56
+		lineageTag: aff4b226-df8a-433a-9457-8b550187fe4e
 		summarizeBy: none
 		sortByColumn: ordem_atingimento
-
-		annotation SummarizationSetBy = User
-
-	/// Na meta ou abaixo da meta
-	column situacao = IF(franquias[atingimento] >= 1, "Na meta", "Abaixo da meta")
-		dataType: string
-		lineageTag: 71d65ec3-cd4d-4636-92d2-240d0bcd125b
-		summarizeBy: none
 
 		annotation SummarizationSetBy = User
 
@@ -150,4 +154,3 @@ table franquias
 				    SemLinhaOrigem
 
 	annotation PBI_ResultType = Table
-

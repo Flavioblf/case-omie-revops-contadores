@@ -1,4 +1,4 @@
-"""Gera o modelo semântico (TMDL), o relatório (PBIR) e a documentação do 'Painel Omie.pbip' — Desafios 1, 2 e 3.
+"""Gera o modelo semântico (TMDL), o relatório (PBIR) e a documentação do 'Painel Omie.pbip' - Desafios 1, 2 e 3.
 
 Uma página por pergunta do case: pergunta → resposta (números de deck/data.json) → evidência.
 Fonte: SQL Server local, banco OMIE (tabelas no esquema raw; views dbo.vw_* criadas por
@@ -167,7 +167,7 @@ CALC_MERCADO = [  # (nome, dataType, formatString, DAX, sortBy, oculta, descriç
      f"LOOKUPVALUE(propensao_d2[faixa_propensao], propensao_d2[id_contador], {MC}[id_contador])", "faixa_prop_ordem", False,
      "Faixa de propensão: Alta = top 30% do score, Média = do percentil 30 ao 70, Baixa = demais"),
     ("situacao_pipeline", S, None,
-     f'COALESCE(LOOKUPVALUE(tiers_1c[estagio_aberto], tiers_1c[id_contador], {MC}[id_contador]), "—")', None, False,
+     f'COALESCE(LOOKUPVALUE(tiers_1c[estagio_aberto], tiers_1c[id_contador], {MC}[id_contador]), "-")', None, False,
      "Estágio do lead ativo (até 90 dias) do contador"),
 ]
 CALC_LEADS = [
@@ -755,7 +755,7 @@ def paginas():
     roi = sorted(D["win_rate_canal"], key=lambda r: r["tentativas_por_fechamento"])
     conv = [r["conversao"] for r in D["conv_canal"]]
     tr = D["tiers"]
-    v = cabecalho("Desafio 1 · SQL", "Mercado endereçável, conversão por canal e prioridade —",
+    v = cabecalho("Desafio 1 · SQL", "Mercado endereçável, conversão por canal e prioridade -",
                   f"{end} endereçáveis · {roi[0]['canal_origem']} lidera o ROI · {tr['alta']} contadores na Alta")
     v.append(bloco_qa(24, Y_QA, 600, 210, "1a · Tamanho do mercado endereçável por região e porte (volume e %)", [
         f"{end} escritórios. Sudeste {pc(reg['Sudeste'])}, Nordeste {pc(reg['Nordeste'])}, Sul {pc(reg['Sul'])}, "
@@ -799,7 +799,7 @@ def paginas():
     # ---------------------------------------------------------------- 2. Desafio 2: lógica, top 5 e quais contadores
     dv = D["drivers"]
     rk = sorted(dv["ranking"], key=lambda r: r["rank"])[:5]
-    v = cabecalho("Desafio 2 · Propensão: lógica e top 5", "Converte mais quem é maior, estruturado e usa ERP —",
+    v = cabecalho("Desafio 2 · Propensão: lógica e top 5", "Converte mais quem é maior, estruturado e usa ERP -",
                   "e a propensão de cada contador sai desses 5 drivers")
     v.append(bloco_qa(24, Y_QA, 1872, 210,
                       "Quais variáveis você considerou relevantes e por quê? Quais contadores têm maior propensão? "
@@ -825,7 +825,7 @@ def paginas():
     ps.append(("D2 · Lógica, top 5 e propensão", v))
 
     # ---------------------------------------------------------------- 3. Desafio 2: como avaliar
-    v = cabecalho("Desafio 2 · Como avaliar", "Avaliação em duas etapas —",
+    v = cabecalho("Desafio 2 · Como avaliar", "Avaliação em duas etapas -",
                   "o score ordena na base; o piloto prova se gera receita")
     v.append(bloco_qa(24, Y_QA, 1872, 210,
                       "Como você avaliaria se a abordagem está funcionando? Que métricas usaria?", [
@@ -852,7 +852,7 @@ def paginas():
 
     # ---------------------------------------------------------------- 4. Desafio 2: impacto (extra)
     pr = dv["premissas"]
-    v = cabecalho("Desafio 2 · Impacto em nMRR (extra)", "Priorizar o topo da propensão pode render —",
+    v = cabecalho("Desafio 2 · Impacto em nMRR (extra)", "Priorizar o topo da propensão pode render -",
                   f"+{pc(dv['uplift'][1])} de nMRR no cenário base, se o piloto confirmar")
     v.append(bloco_qa(24, Y_QA, 1872, 210,
                       "Extra: qual o nMRR incremental se o time comercial priorizar os contadores com maior score de "
@@ -899,7 +899,7 @@ def paginas():
     ce = next(f_ for f_ in fr if f_["nome"] == "CE")
     sem = sorted(fr, key=lambda f_: f_["sem_fech"])
     v = cabecalho("Desafio 3a · Franquias e ECs vs meta", f"Gap de R$ {br(D['gap_total'] / 1000, 1)} mil/mês nas "
-                  f"{D['abaixo_meta']['n']} franquias abaixo da meta —", "risco em Norte, Nordeste e Centro-Oeste")
+                  f"{D['abaixo_meta']['n']} franquias abaixo da meta -", "risco em Norte, Nordeste e Centro-Oeste")
     v.append(bloco_qa(24, Y_QA, 1872, 210,
                       "Quais franquias e ECs estão subperformando vs meta de nMRR? Qual o gap total e quais regiões "
                       "concentram o maior risco?", [
@@ -930,7 +930,7 @@ def paginas():
 
     # ---------------------------------------------------------------- 6. Desafio 3b
     on = D["ondas"]
-    v = cabecalho("Desafio 3b · Framework de priorização", "Primeiro quem já está comprando, depois o perfil —",
+    v = cabecalho("Desafio 3b · Framework de priorização", "Primeiro quem já está comprando, depois o perfil -",
                   f"5 ondas: {on[0]['n']} para fechar, {on[1]['n']} para prospectar, {on[2]['n']} para limpar")
     v.append(bloco_qa(24, Y_QA, 1872, 210,
                       "Considerando o score de propensão do Desafio 2 e a distribuição geográfica, quais contadores atacar "
@@ -957,7 +957,7 @@ def paginas():
 
     # ---------------------------------------------------------------- 7. Desafio 3c
     ec = D["ec_adicional"]
-    v = cabecalho("Desafio 3c · EC adicional", "Se só houver 1 EC adicional —", f"ele vai para a {ec['franquia']}")
+    v = cabecalho("Desafio 3c · EC adicional", "Se só houver 1 EC adicional -", f"ele vai para a {ec['franquia']}")
     v.append(bloco_qa(24, Y_QA, 1872, 210,
                       "Se você pudesse contratar apenas 1 EC adicional, em qual franquia/estado ele deveria ser alocado? "
                       "Justifique com dados.", [
@@ -1042,7 +1042,7 @@ def escrever_relatorio():
 
 # =============================================================== documentação
 def escrever_doc():
-    L = ["# Painel Omie — Desafios 1, 2 e 3 no Power BI", "",
+    L = ["# Painel Omie - Desafios 1, 2 e 3 no Power BI", "",
          "Projeto `Painel Omie.pbip` (modelo em TMDL, relatório em PBIR), gerado por "
          "`omie-case-contadores/powerbi/build_pbip.py`. Abordagem **descritiva** (sem modelo estatístico), com os mesmos "
          "números dos Excel `output/Desafio2_Propensao.xlsx` e `output/Desafio3_Capacity.xlsx`, e visual no design system Omie do deck.", "",
@@ -1070,7 +1070,7 @@ def escrever_doc():
          "| `Param_Ondas` | Tabela fixa | 5 ondas | Quem entra, o que o EC faz e por quê (Desafio 3b) |",
          "| `Param_Territorio` | Tabela fixa | 1 linha por estado com franquia | Franquia do estado (MT, MA, RO e MS não têm franquia) |",
          "| `execucao_comercial` (oculta) | `raw.execucao_comercial` | franquia × mês × EC | Conversão do funil e dispersão por EC (Desafio 3) |",
-         "| `_Medidas` | — | — | Tabela de medidas |", "",
+         "| `_Medidas` | - | - | Tabela de medidas |", "",
          "## 3. Relacionamentos", "",
          "| De (muitos) | Para (um) | Direção |", "|---|---|---|",
          "| `leads_pipeline[id_contador]` | `mercado_contadores[id_contador]` | Única (mercado filtra leads) |",
@@ -1084,26 +1084,26 @@ def escrever_doc():
                        ("clientes_ativos", CALC_CLIENTES)):
         L += [f"### {tab}", ""]
         for nm, _, _, dax, _, _, desc in calcs:
-            L += [f"**`{nm}`** — {desc}", "", "```dax", dax, "```", ""]
+            L += [f"**`{nm}`** - {desc}", "", "```dax", dax, "```", ""]
     L += ["## 5. Medidas", ""]
     atual = None
     for nm, pasta, fmt, dax, desc in MEDIDAS:
         if pasta != atual:
             L += [f"### {pasta}", ""]
             atual = pasta
-        L += [f"**[{nm}]** — {desc}" + (f" · formato `{fmt}`" if fmt else " · texto"), "", "```dax", dax, "```", ""]
+        L += [f"**[{nm}]** - {desc}" + (f" · formato `{fmt}`" if fmt else " · texto"), "", "```dax", dax, "```", ""]
     L += ["## 6. Páginas (uma por pergunta do case: pergunta → resposta → evidência)", "",
-          "- **D1 · Mercado, conversão e tiers** — 1a (endereçáveis por região e porte), 1b (conversão e ROI de esforço por "
+          "- **D1 · Mercado, conversão e tiers** - 1a (endereçáveis por região e porte), 1b (conversão e ROI de esforço por "
           "canal e franquia) e 1c (matriz Fit × Engajamento e tiers), lidos das views do SQL.",
-          "- **D2 · Lógica, top 5 e propensão** — variáveis e porquê, ranking dos drivers e os 303 endereçáveis ordenados pelo "
+          "- **D2 · Lógica, top 5 e propensão** - variáveis e porquê, ranking dos drivers e os 303 endereçáveis ordenados pelo "
           "score de propensão.",
-          "- **D2 · Como avaliar** — plano em duas etapas (base e piloto): tabela de métricas com hoje, meta e etapa, e o "
+          "- **D2 · Como avaliar** - plano em duas etapas (base e piloto): tabela de métricas com hoje, meta e etapa, e o "
           "target × win rate real por faixa de propensão.",
-          "- **D2 · Impacto em nMRR** — uplift por cenário e premissas.",
-          "- **D3a · Gap e risco** — meta × realizado por franquia (barra de progresso), gap das franquias abaixo da meta e "
+          "- **D2 · Impacto em nMRR** - uplift por cenário e premissas.",
+          "- **D3a · Gap e risco** - meta × realizado por franquia (barra de progresso), gap das franquias abaixo da meta e "
           "atingimento por região, e a análise por EC equivalente.",
-          "- **D3b · Priorização** — as 5 ondas, ondas 1 e 2 por franquia e a lista de quem atacar primeiro.",
-          "- **D3c · EC adicional** — franquia recomendada e ranking por fechamentos potenciais por EC (endereçáveis por EC × "
+          "- **D3b · Priorização** - as 5 ondas, ondas 1 e 2 por franquia e a lista de quem atacar primeiro.",
+          "- **D3c · EC adicional** - franquia recomendada e ranking por fechamentos potenciais por EC (endereçáveis por EC × "
           "conversão do funil).", "",
           "## 7. Design system", "",
           "Cores, fontes e componentes de `deck/design_system/tokens.json`: tema `Omie.json` (paleta deep/cyan/teal, "

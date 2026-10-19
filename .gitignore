@@ -5,6 +5,13 @@ CLAUDE.md
 imagem*.png
 omie-case-contadores/output/Design_System_Omie.pptx
 omie-case-contadores/data/
+*.pbix
+
+# ferramentas internas (dependem de arquivos que não são publicados)
+omie-case-contadores/deck/render.py
+omie-case-contadores/deck/build_design_system.js
+omie-case-contadores/deck/design_system/build_logo.py
+omie-case-contadores/src/run_sql.py
 
 # dependências e artefatos locais
 omie-case-contadores/deck/node_modules/
@@ -15,3 +22,6 @@ omie-case-contadores/deck/node_modules/
 # Power BI: configurações locais e cache de dados do .pbip
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
+
+# consulta de apoio (views do painel e governança)
+omie-case-contadores/sql/sqlserver/anexo_analises_complementares.sql

@@ -1,11 +1,11 @@
 /// Desafio 1b: conversão e ROI de esforço por canal e franquia (view dbo.vw_desafio1b_conversao).
 table d1b_conversao
-	lineageTag: 446a8f99-8c7f-470b-8b9f-b61d0a174607
+	lineageTag: 95096054-a696-4413-be59-7e6b2ad40e46
 
 	column ordem_bloco
 		dataType: int64
 		isHidden
-		lineageTag: 76329cc7-99c1-41d0-9023-5719bf72edb5
+		lineageTag: 8c9ad828-19bd-4131-a29e-0483fed40570
 		summarizeBy: none
 		sourceColumn: ordem_bloco
 
@@ -13,7 +13,7 @@ table d1b_conversao
 
 	column canal_origem
 		dataType: string
-		lineageTag: 4f676907-d94f-421b-8f58-21a176949f97
+		lineageTag: 3bd11090-52ea-4999-b43a-8c34f6772cee
 		summarizeBy: none
 		sourceColumn: canal_origem
 
@@ -21,7 +21,7 @@ table d1b_conversao
 
 	column nome_franquia
 		dataType: string
-		lineageTag: b6975053-b350-438b-98d1-7aaa1be4b8e7
+		lineageTag: d3db3e5d-9c3a-4e44-b81d-d5955cbd38bd
 		summarizeBy: none
 		sourceColumn: nome_franquia
 
@@ -29,7 +29,7 @@ table d1b_conversao
 
 	column num_leads
 		dataType: int64
-		lineageTag: e201d934-075f-4bd5-886e-5089774bcda7
+		lineageTag: defe43a1-5e3e-4d79-bab9-f3fb80f7d440
 		summarizeBy: none
 		sourceColumn: num_leads
 
@@ -37,7 +37,7 @@ table d1b_conversao
 
 	column num_ganhos
 		dataType: int64
-		lineageTag: 6a8f8ba8-f109-4c95-a98c-5135d4f743a2
+		lineageTag: 1c023084-d146-4dc2-a1a8-8645a601859b
 		summarizeBy: none
 		sourceColumn: num_ganhos
 
@@ -45,7 +45,7 @@ table d1b_conversao
 
 	column num_tentativas_contato
 		dataType: int64
-		lineageTag: 1ed572b5-cb6c-47e4-a226-a0b1538c0089
+		lineageTag: 27566520-ea2c-43e8-8571-e3336bfb6589
 		summarizeBy: none
 		sourceColumn: num_tentativas_contato
 
@@ -54,7 +54,7 @@ table d1b_conversao
 	column taxa_conv_lead_ganho_pct
 		dataType: double
 		formatString: 0.0
-		lineageTag: c48877b0-de1f-4192-9bbb-a69489661572
+		lineageTag: 5ea0150e-bba9-418c-8df1-573e35c5851f
 		summarizeBy: none
 		sourceColumn: taxa_conv_lead_ganho_pct
 
@@ -63,7 +63,7 @@ table d1b_conversao
 	column tentativas_contato_por_ganho
 		dataType: double
 		formatString: 0.0
-		lineageTag: 3c7900aa-baa9-4698-89cf-7aa121dd6dc1
+		lineageTag: 345890a1-e32c-4926-b0ef-2c7eeef962cf
 		summarizeBy: none
 		sourceColumn: tentativas_contato_por_ganho
 
@@ -71,7 +71,7 @@ table d1b_conversao
 
 	column ranking_roi_esforco
 		dataType: int64
-		lineageTag: f023a6f9-f088-4da8-b4bf-78d32bcebb04
+		lineageTag: 6c830713-918e-46c1-86e1-3f6509f5b865
 		summarizeBy: none
 		sourceColumn: ranking_roi_esforco
 
@@ -79,7 +79,7 @@ table d1b_conversao
 
 	column alerta_amostra
 		dataType: string
-		lineageTag: 9afcfa11-2512-4a76-a54f-9b33a47a4a33
+		lineageTag: 60818304-8e54-4981-af02-2c319f49b071
 		summarizeBy: none
 		sourceColumn: alerta_amostra
 
@@ -95,4 +95,3 @@ table d1b_conversao
 				    Dados
 
 	annotation PBI_ResultType = Table
-

@@ -1,10 +1,10 @@
 /// Franquia de cada estado com franquia (SP é tratado por cidade); estados sem franquia não entram
 table Param_Territorio
-	lineageTag: fd80001b-f263-4f4e-a221-3c7f6bb51bbf
+	lineageTag: d055f8d9-e5fd-41b4-a9a0-e41f4ad3adbf
 
 	column estado
 		dataType: string
-		lineageTag: 754f9a6a-eafc-4a0c-939e-e64141d066b0
+		lineageTag: 7d75fa58-72e1-4651-8ccd-9426c6f2fd72
 		summarizeBy: none
 		sourceColumn: estado
 
@@ -12,7 +12,7 @@ table Param_Territorio
 
 	column id_franquia
 		dataType: string
-		lineageTag: 3672233c-76aa-4b33-8d3f-f56a1220a5b1
+		lineageTag: cf06c077-f2a1-4226-aa8d-9edd4985c6f9
 		summarizeBy: none
 		sourceColumn: id_franquia
 
@@ -20,7 +20,7 @@ table Param_Territorio
 
 	column tipo
 		dataType: string
-		lineageTag: 961502b6-941d-46b3-a23c-d89cbe8694b2
+		lineageTag: 27f23706-ea39-4706-ba62-7b7479bedc28
 		summarizeBy: none
 		sourceColumn: tipo
 
@@ -36,4 +36,3 @@ table Param_Territorio
 				    Fonte
 
 	annotation PBI_ResultType = Table
-

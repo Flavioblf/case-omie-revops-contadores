@@ -16,16 +16,16 @@ const pct = (x, dec = 0) => num(x * 100, dec) + "%";
 const mil = (x, dec = 1) => "R$ " + num(x / 1000, x % 1000 === 0 ? 0 : dec) + " mil";
 
 const { pres, S, ui } = createPres();
-pres.title = "Canal de Contadores — oportunidade, perfil de conversão e plano de 90 dias";
-pres.subject = "Case técnico — Analista de Revenue Ops Sênior";
+pres.title = "Canal de Contadores - oportunidade, perfil de conversão e plano de 90 dias";
+pres.subject = "Case técnico - Analista de Revenue Ops Sênior";
 
-// =================================================================== SLIDE 1 — oportunidade
+// =================================================================== SLIDE 1 - oportunidade
 pres.addSection({ title: "Oportunidade" });
 {
   const s = pres.addSlide({ masterName: "ESCURO", sectionTitle: "Oportunidade" });
   const mk = D.mercado;
   ui.kicker(s, "Case técnico · Revenue Ops · Canal de Contadores");
-  ui.titulo(s, `${pct(1 - mk.penetracao)} do canal ainda está fora da Omie —`, "e o que sobra são escritórios pequenos e autônomos", true);
+  ui.titulo(s, `${pct(1 - mk.penetracao)} do canal ainda está fora da Omie -`, "e o que sobra são escritórios pequenos e autônomos", true);
 
   const stats = [
     [pct(mk.penetracao, 1), `penetração: ${mk.clientes} de ${mk.universo} escritórios já são clientes ou já converteram`],
@@ -70,12 +70,12 @@ pres.addSection({ title: "Oportunidade" });
     `e ${D.prospeccao.com_contrato_ativo} dos ${mk.enderecaveis} endereçáveis já têm contrato ativo na tabela de contratos. Volto a esse tema de governança no final.`);
 }
 
-// =================================================================== SLIDE 2 — onde está o dinheiro
+// =================================================================== SLIDE 2 - onde está o dinheiro
 pres.addSection({ title: "Onde está o dinheiro" });
 {
   const s = pres.addSlide({ masterName: "CLARO", sectionTitle: "Onde está o dinheiro" });
   ui.kicker(s, "2 · Onde está o dinheiro");
-  ui.titulo(s, "O que sobra: Sudeste e escritórios pequenos —", "e o perfil ideal (ICP) já foi quase todo convertido", false);
+  ui.titulo(s, "O que sobra: Sudeste e escritórios pequenos -", "e o perfil ideal (ICP) já foi quase todo convertido", false);
   const rg = D.regiao;
   s.addChart(pres.charts.BAR, [{ name: "Clientes finais", labels: rg.map(r => r.regiao), values: rg.map(r => r.carteira) }], {
     x: M, y: 2.0, w: 6.5, h: 4.75, barDir: "col", ...ui.chart(false),
@@ -113,13 +113,13 @@ pres.addSection({ title: "Onde está o dinheiro" });
     `MT e MS, sem franquia, somam ${im.mt_ms} endereçáveis. O próximo slide mostra por que essa leitura de conversão precisa ser validada.`);
 }
 
-// =================================================================== SLIDE 3 — drivers (Desafio 2, descritivo)
+// =================================================================== SLIDE 3 - drivers (Desafio 2, descritivo)
 pres.addSection({ title: "Drivers de conversão" });
 {
   const s = pres.addSlide({ masterName: "CLARO", sectionTitle: "Drivers de conversão" });
   const dv = D.drivers;
   ui.kicker(s, "3 · Propensão à conversão");
-  ui.titulo(s, "Converte mais quem é maior, estruturado e usa ERP —", "mas o fechamento real ainda não confirma esse perfil", false);
+  ui.titulo(s, "Converte mais quem é maior, estruturado e usa ERP -", "mas o fechamento real ainda não confirma esse perfil", false);
   const curto = { "Autônomo": "Autônomo", "Pequeno Escritório": "Pequeno", "Médio Escritório": "Médio", "Grande Escritório": "Grande" };
   s.addChart(pres.charts.BAR, [
     { name: "Target (converteu_omie)", labels: dv.porte.map(p => curto[p.porte]), values: dv.porte.map(p => p.target) },
@@ -173,13 +173,13 @@ pres.addSection({ title: "Drivers de conversão" });
     `Para saber se funciona, a métrica é simples: num piloto de 90 dias, o grupo que prioriza o topo do score fecha mais do que o grupo de controle?`);
 }
 
-// =================================================================== SLIDE 4 — capacity
+// =================================================================== SLIDE 4 - capacity
 pres.addSection({ title: "Capacity e EC adicional" });
 {
   const s = pres.addSlide({ masterName: "CLARO", sectionTitle: "Capacity e EC adicional" });
   const ec = D.ec_adicional;
   ui.kicker(s, "4 · Capacity & foco dos ECs");
-  ui.titulo(s, `${mil(D.gap_total)}/mês de gap em ${D.abaixo_meta.n} franquias: maturidade —`, `e o próximo EC vai para a ${ec.franquia}`, false);
+  ui.titulo(s, `${mil(D.gap_total)}/mês de gap em ${D.abaixo_meta.n} franquias: maturidade -`, `e o próximo EC vai para a ${ec.franquia}`, false);
   const fr = D.franquias;
   s.addChart(pres.charts.BAR, [
     { name: "Abaixo da meta", labels: fr.map(f => `${f.nome} · ${f.meses}m`), values: fr.map(f => f.atingimento < 1 ? f.atingimento : 0) },
@@ -241,7 +241,7 @@ pres.addSection({ title: "Capacity e EC adicional" });
     `Os ${ec.sem_franquia} endereçáveis de MT, MA, RO e MS não têm franquia nem histórico de execução, então não dá para avaliá-los com dado.`);
 }
 
-// =================================================================== SLIDE 5 — ações
+// =================================================================== SLIDE 5 - ações
 pres.addSection({ title: "Ações imediatas" });
 {
   const s = pres.addSlide({ masterName: "ESCURO", sectionTitle: "Ações imediatas" });
@@ -285,7 +285,7 @@ pres.addSection({ title: "Ações imediatas" });
     `Embaixo estão as três decisões de gestão que sustentam isso: meta ajustada à maturidade, plano para o RJ e o EC adicional em ${D.ec_adicional.franquia}.`);
 }
 
-// =================================================================== SLIDE 6 — KPI
+// =================================================================== SLIDE 6 - KPI
 pres.addSection({ title: "KPI de 90 dias" });
 {
   const s = pres.addSlide({ masterName: "CLARO", sectionTitle: "KPI de 90 dias" });

@@ -65,14 +65,14 @@
       "type": "RegisteredResources",
       "items": [
         {
-          "name": "logo_omie_escuro.png",
-          "path": "logo_omie_escuro.png",
-          "type": "Image"
-        },
-        {
           "name": "Omie.json",
           "path": "Omie.json",
           "type": "CustomTheme"
+        },
+        {
+          "name": "logo_omie_escuro.png",
+          "path": "logo_omie_escuro.png",
+          "type": "Image"
         }
       ]
     }
