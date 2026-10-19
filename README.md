@@ -32,6 +32,7 @@ e que estão declarados como premissa.
 | 2 · Propensão | Planilha com fórmulas vivas (aba **Respostas** primeiro) | `omie-case-contadores/output/Desafio2_Propensao.xlsx` |
 | 3 · Capacity | Planilha com fórmulas vivas | `omie-case-contadores/output/Desafio3_Capacity.xlsx` |
 | 4 · Storytelling | Apresentação de 6 slides: [PDF (abre no navegador)](omie-case-contadores/output/Apresentacao_Omie_Canal_Contadores.pdf) · [PowerPoint, com notas do apresentador](omie-case-contadores/output/Apresentacao_Omie_Canal_Contadores.pptx) | `omie-case-contadores/output/` |
+| Estudo do cenário | Diagnóstico do canal em 18 slides (mapa de KPIs, funil, conversão, ciclo, MRR, churn, metas e qualidade de dados): [PDF (abre no navegador)](omie-case-contadores/output/Estudo_Cenario_Canal_Contadores.pdf) · [PowerPoint](omie-case-contadores/output/Estudo_Cenario_Canal_Contadores.pptx) | `omie-case-contadores/output/` |
 | 1 a 3 · Painel | Power BI (7 páginas, uma por pergunta: pergunta → resposta → evidência) | `Painel Omie.pbip` |
 | Documentação do painel | Modelo, medidas DAX e valores de referência | `Painel Omie - Documentação.md` |
 
