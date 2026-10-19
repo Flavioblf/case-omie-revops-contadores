@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "08a0df1299bd6e61bfbb",
   "position": {
     "x": 16,
     "y": 516,
     "z": 0,
-    "height": 191,
     "width": 733,
+    "height": 191,
     "tabOrder": 4
   },
   "visual": {
@@ -27,8 +27,7 @@
                 }
               },
               "queryRef": "leads_pipeline.trimestre_ganho",
-              "nativeQueryRef": "trimestre_ganho",
-              "active": true
+              "nativeQueryRef": "trimestre_ganho"
             }
           ]
         },

@@ -1,10 +1,10 @@
 /// Plano de avaliação do Desafio 2 (igual à aba Como_Avaliar do Excel)
 table Param_Avaliacao
-	lineageTag: 3eaba240-9404-4d26-8de5-5ec8e37ee9ad
+	lineageTag: 11a79b8e-75d3-4ec5-812a-495b63f1181d
 
 	column ordem
 		dataType: int64
-		lineageTag: 8c94723e-5d6c-47d8-b365-0340b99e4576
+		lineageTag: 96dc5eee-c72e-455f-86d7-13db33379835
 		summarizeBy: none
 		sourceColumn: ordem
 
@@ -12,7 +12,7 @@ table Param_Avaliacao
 
 	column metrica
 		dataType: string
-		lineageTag: 4419de11-b7d4-4b33-a459-ced5deb8487b
+		lineageTag: e7089cee-4286-4c2d-9a64-0b092e51005c
 		summarizeBy: none
 		sourceColumn: metrica
 		sortByColumn: ordem
@@ -21,7 +21,7 @@ table Param_Avaliacao
 
 	column o_que_mede
 		dataType: string
-		lineageTag: dd6948c9-68b5-4bf4-a2ee-88571193aa55
+		lineageTag: 45c18fb8-5a91-4030-b5c2-9ec6e1434938
 		summarizeBy: none
 		sourceColumn: o_que_mede
 
@@ -29,7 +29,7 @@ table Param_Avaliacao
 
 	column hoje
 		dataType: string
-		lineageTag: 09bce05c-8fc2-4a7c-889d-8ad0a59333a0
+		lineageTag: 4dc68afa-3706-46a9-a13e-0605f9f6a83b
 		summarizeBy: none
 		sourceColumn: hoje
 
@@ -37,7 +37,7 @@ table Param_Avaliacao
 
 	column meta
 		dataType: string
-		lineageTag: 0aef996b-290a-4b2f-966c-f39b610abc43
+		lineageTag: cbfd9bbd-686c-4a36-a355-a2f37610a0ce
 		summarizeBy: none
 		sourceColumn: meta
 
@@ -45,7 +45,7 @@ table Param_Avaliacao
 
 	column etapa
 		dataType: string
-		lineageTag: 443679c6-fc51-4bbf-98c8-50fee5926150
+		lineageTag: 57a0a178-752b-4a7a-8ff1-45ef48aa5274
 		summarizeBy: none
 		sourceColumn: etapa
 
@@ -61,4 +61,3 @@ table Param_Avaliacao
 				    Fonte
 
 	annotation PBI_ResultType = Table
-

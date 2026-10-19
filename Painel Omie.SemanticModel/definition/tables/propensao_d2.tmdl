@@ -1,11 +1,11 @@
 /// Score de propensão do Desafio 2 por contador (view dbo.vw_propensao_d2): 600 contadores.
 table propensao_d2
+	lineageTag: 559bff5a-5916-439a-82ca-980e8bfb55b2
 	isHidden
-	lineageTag: 8f3190ec-a31f-4031-9809-80390e1eb79d
 
 	column id_contador
 		dataType: string
-		lineageTag: 0d8e6d25-2b96-4648-88f9-f2d13bedfacb
+		lineageTag: 83700013-1c4c-45aa-b220-c64be0fa882c
 		summarizeBy: none
 		sourceColumn: id_contador
 
@@ -13,7 +13,7 @@ table propensao_d2
 
 	column propensao
 		dataType: double
-		lineageTag: 4fa7b162-5769-4163-a29b-d4a03cad7248
+		lineageTag: 434a6db4-33af-433f-916c-e8432b61789f
 		summarizeBy: none
 		sourceColumn: propensao
 
@@ -21,7 +21,7 @@ table propensao_d2
 
 	column faixa_propensao
 		dataType: string
-		lineageTag: 1dac1597-9765-42c4-a8f5-818af5d212e4
+		lineageTag: 7d92921e-9915-425c-9b7b-cdcd7f6b9085
 		summarizeBy: none
 		sourceColumn: faixa_propensao
 		sortByColumn: faixa_ordem
@@ -31,7 +31,7 @@ table propensao_d2
 	column faixa_ordem
 		dataType: int64
 		isHidden
-		lineageTag: cef47033-1fa2-4eb2-b7f9-bfb798dcbca1
+		lineageTag: 95d3a1ff-0a07-416f-806f-80b499a09634
 		summarizeBy: none
 		sourceColumn: faixa_ordem
 
@@ -47,4 +47,3 @@ table propensao_d2
 				    Dados
 
 	annotation PBI_ResultType = Table
-

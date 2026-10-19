@@ -403,6 +403,12 @@ SUM(leads_pipeline[com_desfecho])
 SUM(leads_pipeline[ganho])
 ```
 
+**[Conversão Real (Pipeline)]** - Ganhos ÷ leads do pipeline: a conversão comercial real (compare com o converteu_omie) · formato `0.0%`
+
+```dax
+DIVIDE([Ganhos (Real)], [Leads])
+```
+
 **[Win Rate Real]** - Ganho ÷ (Ganho + Perdido): o fechamento comercial de verdade · formato `0.0%`
 
 ```dax

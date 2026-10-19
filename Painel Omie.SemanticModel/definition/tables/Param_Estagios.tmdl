@@ -1,10 +1,10 @@
 /// Estágios do lead aberto e quantas etapas do funil faltam para fechar (Sem Resposta: fora do funil)
 table Param_Estagios
-	lineageTag: 06caa065-2b9c-4111-b30e-ad67adf5d128
+	lineageTag: db7e7a0d-d876-4f9c-acc0-b3b4a9856145
 
 	column ordem
 		dataType: int64
-		lineageTag: efa300a3-3dd1-4ae7-95fe-4c520a7de18d
+		lineageTag: b6e451e0-c37d-4f48-96f2-75bd3658cf8b
 		summarizeBy: none
 		sourceColumn: ordem
 
@@ -12,7 +12,7 @@ table Param_Estagios
 
 	column estagio
 		dataType: string
-		lineageTag: 2842b1bf-76c3-412d-9916-3950f15f52ad
+		lineageTag: a83a5c1d-f72f-4075-ae80-47a7477bbc07
 		summarizeBy: none
 		sourceColumn: estagio
 		sortByColumn: ordem
@@ -21,7 +21,7 @@ table Param_Estagios
 
 	column etapas_ate_fechar
 		dataType: int64
-		lineageTag: 84cd94ca-60bc-4132-b80a-aa53f5bb7c53
+		lineageTag: bc9bfbf8-db1b-4669-8d5a-adf74fac2bcd
 		summarizeBy: none
 		sourceColumn: etapas_ate_fechar
 
@@ -37,4 +37,3 @@ table Param_Estagios
 				    Fonte
 
 	annotation PBI_ResultType = Table
-

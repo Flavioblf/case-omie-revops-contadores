@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "03b673893949a48361dd",
   "position": {
     "x": 16,
     "y": 496,
     "z": 0,
-    "height": 211,
     "width": 347,
+    "height": 211,
     "tabOrder": 4
   },
   "visual": {
@@ -27,8 +27,7 @@
                 }
               },
               "queryRef": "mercado_contadores.porte",
-              "nativeQueryRef": "porte",
-              "active": true
+              "nativeQueryRef": "porte"
             }
           ]
         },
@@ -47,7 +46,22 @@
               },
               "queryRef": "_Medidas.Taxa de Conversão",
               "nativeQueryRef": "Taxa de Conversão",
-              "displayName": "Conversão"
+              "displayName": "% marcado como convertido (converteu_omie)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Conversão Real (Pipeline)"
+                }
+              },
+              "queryRef": "_Medidas.Conversão Real (Pipeline)",
+              "nativeQueryRef": "Conversão Real (Pipeline)",
+              "displayName": "Conversão real lead → Ganho"
             }
           ]
         }
@@ -116,7 +130,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
@@ -178,6 +192,44 @@
                 }
               }
             }
+          }
+        }
+      ],
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#006B79'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Taxa de Conversão"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFB547'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Conversão Real (Pipeline)"
           }
         }
       ]
@@ -318,7 +370,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Conversão por porte (driver nº 1)'"
+                  "Value": "'Porte: % marcado como convertido × conversão real'"
                 }
               }
             },

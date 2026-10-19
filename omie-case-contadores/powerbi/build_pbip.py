@@ -354,6 +354,8 @@ MEDIDAS = [  # (nome, pasta, formato, DAX, descrição)
     ("Leads", "3. Resultado Real", "#,0", "COUNTROWS(leads_pipeline)", "Leads no pipeline"),
     ("Leads com Desfecho", "3. Resultado Real", "#,0", "SUM(leads_pipeline[com_desfecho])", "Leads Ganho + Perdido"),
     ("Ganhos (Real)", "3. Resultado Real", "#,0", "SUM(leads_pipeline[ganho])", "Leads Ganho"),
+    ("Conversão Real (Pipeline)", "3. Resultado Real", "0.0%", "DIVIDE([Ganhos (Real)], [Leads])",
+     "Ganhos ÷ leads do pipeline: a conversão comercial real (compare com o converteu_omie)"),
     ("Win Rate Real", "3. Resultado Real", "0.0%", "DIVIDE([Ganhos (Real)], [Leads com Desfecho])",
      "Ganho ÷ (Ganho + Perdido): o fechamento comercial de verdade"),
     ("Win Rate Real ICP", "3. Resultado Real", "0.0%", f'CALCULATE([Win Rate Real], {T}[icp] = "Sim")', "Win rate real do ICP"),
@@ -859,8 +861,10 @@ def paginas():
                            [(coluna("Param_Variaveis", "variavel"), "Característica"),
                             (medida("Amplitude (p.p.)"), "p.p."), (medida("Ranking do Driver"), "#")],
                            "Top 5 (ranking dos drivers)", ordem=(medida("Ranking do Driver"), "Ascending")))
-    v.append(grafico("clusteredColumnChart", 24, 744, 520, 316, mc("porte"), [("Taxa de Conversão", "Conversão")],
-                     "Conversão por porte (driver nº 1)"))
+    v.append(grafico("clusteredColumnChart", 24, 744, 520, 316, mc("porte"),
+                     [("Taxa de Conversão", "% marcado como convertido (converteu_omie)"),
+                      ("Conversão Real (Pipeline)", "Conversão real lead → Ganho")],
+                     "Porte: % marcado como convertido × conversão real", cores=[HEX["teal"], HEX["atencao"]]))
     v.append(tabela_visual(560, Y1, 1336, 662,
                            [(mc("id_contador"), "Contador"), (mc("estado"), "UF"), (mc("porte"), "Porte"),
                             (mc("num_clientes_ativos"), "Clientes"), (mc("num_funcionarios"), "Func."),

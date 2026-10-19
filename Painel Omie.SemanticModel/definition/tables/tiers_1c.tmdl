@@ -1,44 +1,20 @@
 /// Tier do Desafio 1c (view dbo.vw_tiers_prospects, matriz Fit x Engajamento): 303 endereçáveis.
 table tiers_1c
+	lineageTag: cd8655dc-fee6-4360-8587-aebd20e76c05
 	isHidden
-	lineageTag: 452cb304-ad06-4643-b3ae-14cccdf6abc0
 
 	column id_contador
 		dataType: string
-		lineageTag: 6def50ab-e148-42d5-8011-c3d123d20b40
+		lineageTag: 33642469-8d62-4ecc-8fe6-80ec5cac1b5d
 		summarizeBy: none
 		sourceColumn: id_contador
-
-		annotation SummarizationSetBy = User
-
-	column score_prioridade
-		dataType: int64
-		lineageTag: e88f6271-32e8-4c36-b2f1-cee9eff3dfbf
-		summarizeBy: none
-		sourceColumn: score_prioridade
-
-		annotation SummarizationSetBy = User
-
-	column tier_prioridade
-		dataType: string
-		lineageTag: 3291bdb7-d8df-4013-bad1-645c879dac69
-		summarizeBy: none
-		sourceColumn: tier_prioridade
-
-		annotation SummarizationSetBy = User
-
-	column estagio_aberto
-		dataType: string
-		lineageTag: 8d6f418a-f362-436e-bec5-59c710f64714
-		summarizeBy: none
-		sourceColumn: estagio_aberto
 
 		annotation SummarizationSetBy = User
 
 	column nivel_fit
 		dataType: int64
 		isHidden
-		lineageTag: cfae4b18-2904-4bd3-bd61-aeb63fe56ee0
+		lineageTag: 127b0c4c-b1a3-4d0c-8ead-1271b716507a
 		summarizeBy: none
 		sourceColumn: nivel_fit
 
@@ -46,7 +22,7 @@ table tiers_1c
 
 	column fit_carteira
 		dataType: string
-		lineageTag: 725ccf70-311e-4fc1-b2a2-fe5538a7ec4d
+		lineageTag: 5de47701-4c87-43db-bf6b-aaadf915048b
 		summarizeBy: none
 		sourceColumn: fit_carteira
 		sortByColumn: nivel_fit
@@ -56,7 +32,7 @@ table tiers_1c
 	column nivel_engajamento
 		dataType: int64
 		isHidden
-		lineageTag: 04b5b74e-82ef-4512-a896-767d4ff82ecf
+		lineageTag: da52c55d-be4f-4405-8b87-98b4ecf0a935
 		summarizeBy: none
 		sourceColumn: nivel_engajamento
 
@@ -64,10 +40,34 @@ table tiers_1c
 
 	column engajamento
 		dataType: string
-		lineageTag: 32ae2059-b6e8-45c0-ba85-d2499e17ae21
+		lineageTag: a3de5bc4-0319-48ff-a4a2-f28d9775a67d
 		summarizeBy: none
 		sourceColumn: engajamento
 		sortByColumn: nivel_engajamento
+
+		annotation SummarizationSetBy = User
+
+	column score_prioridade
+		dataType: int64
+		lineageTag: c7feb12c-bef1-4d1e-999d-22a62e115aed
+		summarizeBy: none
+		sourceColumn: score_prioridade
+
+		annotation SummarizationSetBy = User
+
+	column tier_prioridade
+		dataType: string
+		lineageTag: f8d61e76-e450-4533-8b24-9bb5fae67283
+		summarizeBy: none
+		sourceColumn: tier_prioridade
+
+		annotation SummarizationSetBy = User
+
+	column estagio_aberto
+		dataType: string
+		lineageTag: 2bf7c695-8ddc-4e0f-9f1b-687095aaea69
+		summarizeBy: none
+		sourceColumn: estagio_aberto
 
 		annotation SummarizationSetBy = User
 
@@ -83,4 +83,3 @@ table tiers_1c
 				    Colunas
 
 	annotation PBI_ResultType = Table
-

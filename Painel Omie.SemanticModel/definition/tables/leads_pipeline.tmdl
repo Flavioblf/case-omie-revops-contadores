@@ -1,10 +1,10 @@
 /// Pipeline comercial: resultado real (Ganho/Perdido) para contrastar com o target.
 table leads_pipeline
-	lineageTag: ceb1b4cf-ec13-4f40-9936-66bd627ce55c
+	lineageTag: 7b76afdf-cdd8-4aef-9742-7400467282b2
 
 	column id_lead
 		dataType: string
-		lineageTag: f118178b-3be9-4906-8897-794f523e2758
+		lineageTag: 6991c981-6682-4939-b120-05410f03d6c4
 		summarizeBy: none
 		sourceColumn: id_lead
 
@@ -12,7 +12,7 @@ table leads_pipeline
 
 	column id_contador
 		dataType: string
-		lineageTag: 75b58f11-995b-4264-898b-518ecdc8ca0f
+		lineageTag: 5eb7dc64-beb7-4f7f-a070-2518cfd2c359
 		summarizeBy: none
 		sourceColumn: id_contador
 
@@ -20,7 +20,7 @@ table leads_pipeline
 
 	column canal_origem
 		dataType: string
-		lineageTag: 5e8f05b7-27e6-41f6-9653-7bef8785f9fb
+		lineageTag: fa5afe75-5f3a-41e6-8c9a-2ca56e7daa3d
 		summarizeBy: none
 		sourceColumn: canal_origem
 
@@ -28,7 +28,7 @@ table leads_pipeline
 
 	column id_franquia
 		dataType: string
-		lineageTag: 2b771e10-984c-4b4e-bede-4b902acee9b9
+		lineageTag: 6472f8c1-e719-4dc8-bec3-52dbe27e8b89
 		summarizeBy: none
 		sourceColumn: id_franquia
 
@@ -37,17 +37,15 @@ table leads_pipeline
 	column data_entrada
 		dataType: dateTime
 		formatString: dd/mm/yyyy
-		lineageTag: 36ab74d6-f357-4e34-8fab-c8c014a6a20f
+		lineageTag: 89bb6711-79f5-4b64-9c2a-0965859ffe41
 		summarizeBy: none
 		sourceColumn: data_entrada
 
 		annotation SummarizationSetBy = User
 
-		annotation UnderlyingDateTimeDataType = Date
-
 	column status_lead
 		dataType: string
-		lineageTag: 27651400-516d-4c5d-8c05-3c43bbfdc8a9
+		lineageTag: 0ac06f6f-84c9-4e99-b9b9-2e59655bfe75
 		summarizeBy: none
 		sourceColumn: status_lead
 
@@ -56,17 +54,15 @@ table leads_pipeline
 	column data_conversao
 		dataType: dateTime
 		formatString: dd/mm/yyyy
-		lineageTag: 23b967fa-d5d8-41b0-914c-6be94168edff
+		lineageTag: afc936dd-3d47-4886-a558-ed08443a9184
 		summarizeBy: none
 		sourceColumn: data_conversao
 
 		annotation SummarizationSetBy = User
 
-		annotation UnderlyingDateTimeDataType = Date
-
 	column mrr_inicial
 		dataType: double
-		lineageTag: 51bf903c-8607-4b34-affb-52058aa8e0e2
+		lineageTag: 93eaf33e-fc1d-4082-967a-c817a672a6ef
 		summarizeBy: none
 		sourceColumn: mrr_inicial
 
@@ -74,7 +70,7 @@ table leads_pipeline
 
 	column motivo_perda
 		dataType: string
-		lineageTag: b6c55824-7903-445b-bc4f-7465391d38ed
+		lineageTag: e14dc2b3-0262-45b8-ae26-860f5419bd15
 		summarizeBy: none
 		sourceColumn: motivo_perda
 
@@ -82,7 +78,7 @@ table leads_pipeline
 
 	column num_tentativas_contato
 		dataType: int64
-		lineageTag: bae9f49e-31f6-4ef7-ac66-ee8c1c18e54c
+		lineageTag: 86ef8e1a-7e32-4e1a-b74d-1ae39df8daac
 		summarizeBy: none
 		sourceColumn: num_tentativas_contato
 
@@ -90,37 +86,40 @@ table leads_pipeline
 
 	column tempo_ciclo_dias
 		dataType: int64
-		lineageTag: 2a5af624-53be-4672-8774-2518e863d61b
+		lineageTag: 9d05c62a-4e1e-4e49-b3c3-48a286e1d3d6
 		summarizeBy: none
 		sourceColumn: tempo_ciclo_dias
 
 		annotation SummarizationSetBy = User
 
 	/// 1 = lead Ganho
-	column ganho = IF(leads_pipeline[status_lead] = "Ganho", 1, 0)
+	column ganho =
+			IF(leads_pipeline[status_lead] = "Ganho", 1, 0)
 		dataType: int64
-		isHidden
 		formatString: 0
-		lineageTag: c0be8861-fff1-4084-a816-878d3c4fa7ba
+		lineageTag: 1d5f23e5-bc2b-4fd2-b533-c0b104bbe1a3
+		summarizeBy: none
+		isHidden
+
+		annotation SummarizationSetBy = User
+
+	/// Trimestre do Ganho (data_conversao)
+	column trimestre_ganho =
+			IF(leads_pipeline[status_lead] = "Ganho", FORMAT(YEAR(leads_pipeline[data_conversao]), "0") & " T" & FORMAT(QUARTER(leads_pipeline[data_conversao]), "0"))
+		dataType: string
+		lineageTag: 773ebbf6-72e0-4e5f-a14d-5601f01e540d
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
 
 	/// 1 = lead encerrado (Ganho ou Perdido)
-	column com_desfecho = IF(leads_pipeline[status_lead] IN {"Ganho", "Perdido"}, 1, 0)
+	column com_desfecho =
+			IF(leads_pipeline[status_lead] IN {"Ganho", "Perdido"}, 1, 0)
 		dataType: int64
-		isHidden
 		formatString: 0
-		lineageTag: f2b2e714-0d2a-41d9-ba4a-e57bca7d4692
+		lineageTag: 90becd71-f17a-41d5-8920-9857faca8eb1
 		summarizeBy: none
-
-		annotation SummarizationSetBy = User
-
-	/// Trimestre do Ganho (data_conversao)
-	column trimestre_ganho = IF(leads_pipeline[status_lead] = "Ganho", FORMAT(YEAR(leads_pipeline[data_conversao]), "0") & " T" & FORMAT(QUARTER(leads_pipeline[data_conversao]), "0"))
-		dataType: string
-		lineageTag: d954877a-94b0-43dd-b6ab-ef3c1f62a4f9
-		summarizeBy: none
+		isHidden
 
 		annotation SummarizationSetBy = User
 
@@ -135,4 +134,3 @@ table leads_pipeline
 				    SemLinhaOrigem
 
 	annotation PBI_ResultType = Table
-
