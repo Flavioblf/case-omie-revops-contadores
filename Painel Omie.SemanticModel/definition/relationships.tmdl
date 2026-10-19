@@ -1,15 +1,15 @@
-relationship 7ff515f0-9852-4152-b8c1-4461d6fb1d17
+relationship 6f784ebc-df79-46bf-a71e-dcad657c966c
 	fromColumn: leads_pipeline.id_contador
 	toColumn: mercado_contadores.id_contador
 
-relationship 9026448a-be42-40eb-9283-972ab5783d1a
+relationship c9264f3f-a042-4a64-a8b6-7672c9133a0a
 	fromColumn: leads_pipeline.id_franquia
 	toColumn: franquias.id_franquia
 
-relationship a7cdf8a8-9076-48f1-85a6-6696f07f9898
+relationship bf1a9964-1810-4c17-9f0e-955fab99d176
 	fromColumn: clientes_ativos.id_contador
 	toColumn: mercado_contadores.id_contador
 
-relationship 6e54fbad-26a3-4c8c-8704-a08637e0c930
+relationship 7af867d2-0ea9-4b7a-a302-25436de594a2
 	fromColumn: execucao_comercial.id_franquia
 	toColumn: franquias.id_franquia

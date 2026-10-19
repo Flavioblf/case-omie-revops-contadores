@@ -257,10 +257,10 @@ IF(franquias[atingimento] >= 1, "Na meta", "Abaixo da meta")
 RANKX(ALLNOBLANKROW(franquias), franquias[atingimento] + VALUE(RIGHT(franquias[id_franquia], 3)) / 1000000, , ASC, DENSE)
 ```
 
-**`rotulo`** - Franquia, meses de operação e atingimento, ordenada pelo atingimento
+**`rotulo`** - Franquia, nº de ECs e atingimento, ordenada pelo atingimento
 
 ```dax
-SUBSTITUTE(franquias[nome_franquia], "Franquia ", "") & " · " & franquias[meses_operando] & "m · " & FORMAT(franquias[atingimento], "0%")
+SUBSTITUTE(franquias[nome_franquia], "Franquia ", "") & " · " & franquias[num_executivos] & " EC · " & FORMAT(franquias[atingimento], "0%")
 ```
 
 ### clientes_ativos
@@ -540,14 +540,14 @@ SELECTEDVALUE(Param_Cenarios[fator_realizacao])
 COUNTROWS(FILTER(ALLNOBLANKROW(franquias), franquias[realizado_nmrr_mes] < franquias[meta_nmrr_mes]))
 ```
 
-**[Correlação Maturidade × Atingimento]** - Correlação de Pearson entre meses de operação e atingimento (≈ 0,65) · formato `0.00`
+**[Correlação Nº de ECs × Atingimento]** - Correlação de Pearson entre nº de ECs da franquia e atingimento (≈ 0,64) · formato `0.00`
 
 ```dax
 VAR t = ALLNOBLANKROW(franquias)
-VAR mx = AVERAGEX(t, franquias[meses_operando])
+VAR mx = AVERAGEX(t, franquias[num_executivos])
 VAR my = AVERAGEX(t, franquias[atingimento])
-VAR cov = SUMX(t, (franquias[meses_operando] - mx) * (franquias[atingimento] - my))
-VAR sx = SQRT(SUMX(t, (franquias[meses_operando] - mx) ^ 2))
+VAR cov = SUMX(t, (franquias[num_executivos] - mx) * (franquias[atingimento] - my))
+VAR sx = SQRT(SUMX(t, (franquias[num_executivos] - mx) ^ 2))
 VAR sy = SQRT(SUMX(t, (franquias[atingimento] - my) ^ 2))
 RETURN DIVIDE(cov, sx * sy)
 ```
@@ -648,6 +648,12 @@ DIVIDE([Realizado por EC], DIVIDE(SUMX(ALLNOBLANKROW(franquias), franquias[reali
 AVERAGE(execucao_comercial[fechamentos])
 ```
 
+**[Leads por EC-mês]** - Média de leads trabalhados por EC por mês: a carga do EC (execucao_comercial) · formato `0.0`
+
+```dax
+AVERAGE(execucao_comercial[leads_trabalhados])
+```
+
 **[% EC-mês sem Fechamento]** - % dos EC-mês sem nenhum fechamento (dispersão entre ECs) · formato `0%`
 
 ```dax
@@ -714,7 +720,7 @@ Cores, fontes e componentes de `deck/design_system/tokens.json`: tema `Omie.json
 | Melhor ROI de esforço (1b) | Evento (24,8 tentativas por ganho) |
 | Uplift nMRR (Conservador / Base / Otimista) | +9,5% / +25,4% / +45,6% |
 | Gap de meta / franquias abaixo da meta | R$ 19.500 / 9 |
-| Correlação maturidade × atingimento | 0,65 |
+| Correlação nº de ECs × atingimento (meses_operando dá 0,65, mas contradiz data_inicio) | 0,64 |
 | Gap das franquias abaixo da meta por região: Nordeste / Norte / Centro-Oeste / Sudeste / Sul | 6.500 / 4.000 / 4.000 / 4.000 / 1.000 |
 | Atingimento da região: Norte / Nordeste / Centro-Oeste / Sudeste / Sul | 74% / 82% / 89% / 107% / 108% |
 | Ondas 1 a 5 | 15 / 13 / 54 / 66 / 155 |

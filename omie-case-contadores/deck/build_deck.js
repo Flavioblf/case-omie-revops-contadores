@@ -167,7 +167,7 @@ pres.addSection({ title: "Drivers de conversão" });
     `A característica que mais separa quem converte de quem não converte é a que tem maior diferença entre a melhor e a pior categoria. ` +
     `Em ordem: ${d1}, ${d2}, ${d3}, ${d4} e ${d5}. A propensão de cada contador é a média das taxas de conversão do perfil dele nessas cinco características: sem modelo e sem pesos. ` +
     `O score ordena bem: a faixa Alta, Média e Baixa convertem ${dv.conv_faixas}; o top 30% converte ${num(dv.top30_lift, 1)} vezes a média e capta ${pct(dv.captura)} dos convertidos.\n\n` +
-    `O ponto mais importante está no gráfico: pela base, Médio e Grande convertem quase sempre e o Autônomo quase nunca. Mas no pipeline real o fechamento é parecido em todos os portes. ` +
+    `O ponto mais importante está no gráfico: pela base, Médio e Grande convertem quase sempre e o Autônomo quase nunca. Mas no pipeline real o fechamento não segue esse padrão: o Autônomo fecha 67% e o Médio, 46%. ` +
     `E o top 30% do score fecha ${pct(dv.win_alta)} no pipeline real, contra ${pct(dv.win_demais)} nas demais faixas. Ou seja, a coluna de conversão mede potencial, não fechamento.\n\n` +
     `Por isso trato o impacto como hipótese: +${pct(dv.uplift[1])} de nMRR no cenário base, cerca de ${mil(dv.nmrr_oficial[1], 0)} por mês nas franquias abaixo da meta. ` +
     `Para saber se funciona, a métrica é simples: num piloto de 90 dias, o grupo que prioriza o topo do score fecha mais do que o grupo de controle?`);
@@ -179,21 +179,21 @@ pres.addSection({ title: "Capacity e EC adicional" });
   const s = pres.addSlide({ masterName: "CLARO", sectionTitle: "Capacity e EC adicional" });
   const ec = D.ec_adicional;
   ui.kicker(s, "4 · Capacity & foco dos ECs");
-  ui.titulo(s, `${mil(D.gap_total)}/mês de gap em ${D.abaixo_meta.n} franquias: maturidade -`, `e o próximo EC vai para a ${ec.franquia}`, false);
+  ui.titulo(s, `${mil(D.gap_total)}/mês de gap, concentrado nas franquias pequenas -`, `e o próximo EC vai para a ${ec.franquia}`, false);
   const fr = D.franquias;
   s.addChart(pres.charts.BAR, [
-    { name: "Abaixo da meta", labels: fr.map(f => `${f.nome} · ${f.meses}m`), values: fr.map(f => f.atingimento < 1 ? f.atingimento : 0) },
-    { name: "Na meta", labels: fr.map(f => `${f.nome} · ${f.meses}m`), values: fr.map(f => f.atingimento >= 1 ? f.atingimento : 0) },
+    { name: "Abaixo da meta", labels: fr.map(f => `${f.nome} · ${f.ecs} EC`), values: fr.map(f => f.atingimento < 1 ? f.atingimento : 0) },
+    { name: "Na meta", labels: fr.map(f => `${f.nome} · ${f.ecs} EC`), values: fr.map(f => f.atingimento >= 1 ? f.atingimento : 0) },
   ], {
     x: M, y: 1.95, w: 5.7, h: 4.9, barDir: "bar", barGrouping: "stacked", catAxisOrientation: "maxMin",
-    ...ui.chart(false), title: "Atingimento da meta · franquia e meses de operação",
+    ...ui.chart(false), title: "Atingimento da meta · franquia e nº de ECs",
     chartColors: [HEX.alerta, HEX.positivo], dataLabelFormatCode: '0%;;;', dataLabelPosition: "inEnd",
     dataLabelColor: HEX.branco, dataLabelFontSize: 10, catAxisLabelFontSize: 11, valAxisHidden: true, barGapWidthPct: 30,
     showLegend: true, legendPos: "b", legendFontSize: 11, legendFontFace: "+mn-lt", legendColor: HEX.deep,
     objectName: "Gráfico atingimento por franquia",
   });
 
-  const mini = [[num(D.corr_maturidade, 2), "Maturidade", "meses de operação × atingimento"],
+  const mini = [[num(D.corr_ecs, 2), "Tamanho", "nº de ECs × atingimento"],
     [num(D.corr_funil, 2), "Funil", "proposta → fechamento × atingimento"]];
   mini.forEach(([big, head, lbl], i) => {
     const x = 6.75 + i * 3.04;
@@ -212,7 +212,7 @@ pres.addSection({ title: "Capacity e EC adicional" });
   const ne = porReg(["Nordeste"]), noco = porReg(["Norte", "Centro-Oeste"]), suse = porReg(["Sudeste", "Sul"]);
   const ating = Object.fromEntries(D.regioes_gap.map(r => [r.regiao, r.atingimento]));
   const diag = [
-    [mil(soma(ne)), "Nordeste", `região a ${pct(ating["Nordeste"])} da meta; ${nomes(ne)} abaixo, com 4 a 6 meses`, HEX.alerta, HEX.branco],
+    [mil(soma(ne)), "Nordeste", `região a ${pct(ating["Nordeste"])} da meta; ${nomes(ne)} abaixo, com 1 a 2 ECs`, HEX.alerta, HEX.branco],
     [mil(soma(noco)), "Norte e Centro-Oeste", `regiões a ${pct(ating["Norte"])} e ${pct(ating["Centro-Oeste"])} da meta`, HEX.atencao, HEX.deep],
     [mil(soma(suse)), "Sudeste e Sul", `batem a meta (${pct(ating["Sudeste"])} e ${pct(ating["Sul"])}); gap só no ${nomes(suse).replace(", ", " e no ")}`, HEX.texto2, HEX.branco],
   ];
@@ -226,18 +226,20 @@ pres.addSection({ title: "Capacity e EC adicional" });
   ui.card(s, "EC adicional", 6.75, 5.42, 5.98, 1.43, HEX.deep);
   s.addText([
     { text: `+1 EC na ${ec.franquia}`, options: { bold: true, color: S.cyan, fontSize: 17, fontFace: "+mj-lt", breakLine: true } },
-    { text: `Mais fechamentos potenciais por EC: ${num(ec.demanda_ec, 1)} endereçáveis por EC (rede: ${num(ec.demanda_rede, 1)}) e conversão de ${num(ec.conv * 100, 1)}% (rede: ${num(ec.conv_rede * 100, 1)}%), com gap de ${mil(ec.gap)}. 2ª opção: ${ec.segunda}.`, options: { color: S.branco } },
+    { text: `Mais fechamentos potenciais por EC: ${num(ec.demanda_ec, 1)} endereçáveis por EC (rede: ${num(ec.demanda_rede, 1)}), conversão de ${num(ec.conv * 100, 1)}% (rede: ${num(ec.conv_rede * 100, 1)}%) e os ECs mais carregados (${num(ec.carga_ec, 1)} leads/mês; rede: ${num(ec.carga_rede, 1)}). 2ª opção, por pouco: ${ec.segunda}.`, options: { color: S.branco } },
   ], { x: 6.95, y: 5.47, w: 5.6, h: 1.33, fontSize: 13, margin: 0, valign: "middle", isTextBox: true, objectName: "EC adicional texto" });
   ui.fonte(s, "Meta e realizado: tabela franquias (oficial) · funil: execucao_comercial 2024 · Desafio3_Capacity.xlsx · Painel Omie (Power BI), págs. 5 a 7 (D3)");
   s.addNotes(
     `Capacity. São ${D.abaixo_meta.n} franquias abaixo da meta, com gap de ${mil(D.gap_total)} por mês. A primeira hipótese seria execução, mas os dados não sustentam: ` +
     `as taxas do funil são praticamente iguais entre franquias e a correlação da etapa proposta → fechamento com o atingimento é de só ${num(D.corr_funil, 2)}. ` +
-    `O que explica o gap é maturidade: correlação de ${num(D.corr_maturidade, 2)} entre meses de operação e atingimento.\n\n` +
-    `A rede como um todo bate a meta; os ${mil(D.gap_total)} são o gap das ${D.abaixo_meta.n} franquias abaixo dela. Por região: Norte, Nordeste e Centro-Oeste estão abaixo da meta como região (${pct(ating["Norte"])}, ${pct(ating["Nordeste"])} e ${pct(ating["Centro-Oeste"])}); Sudeste e Sul batem a meta (${pct(ating["Sudeste"])} e ${pct(ating["Sul"])}) e o gap vem só do RJ, com 14 meses e o maior gap da rede, e do RS. ` +
+    `O gap está nas franquias pequenas: das 7 com 1 a 2 ECs, 6 estão abaixo da meta, e a correlação entre nº de ECs e atingimento é de ${num(D.corr_ecs, 2)}. ` +
+    `Não chamo isso de maturidade: a coluna meses_operando diz o mesmo, mas contradiz a data_inicio da própria tabela, e pela data de início a correlação é negativa (${num(D.corr_data_inicio, 2)}). É mais um ponto de governança.\n\n` +
+    `A rede como um todo bate a meta; os ${mil(D.gap_total)} são o gap das ${D.abaixo_meta.n} franquias abaixo dela. Por região: Norte, Nordeste e Centro-Oeste estão abaixo da meta como região (${pct(ating["Norte"])}, ${pct(ating["Nordeste"])} e ${pct(ating["Centro-Oeste"])}); Sudeste e Sul batem a meta (${pct(ating["Sudeste"])} e ${pct(ating["Sul"])}) e o gap vem só do RJ, que tem o maior gap da rede, e do RS. ` +
     `O CE, por exemplo, tem a maior meta por EC da rede e realiza acima da média por EC: parte do gap é meta, não execução.\n\n` +
     `Sobre o EC adicional: usei só dados da base. O EC vai para onde há mais fechamentos potenciais por EC, que é a demanda do território por EC vezes a conversão do funil da própria franquia. ` +
-    `A ${ec.franquia} lidera: ${num(ec.demanda_ec, 1)} endereçáveis por EC, contra ${num(ec.demanda_rede, 1)} na média da rede, e conversão de ${num(ec.conv * 100, 1)}%, contra ${num(ec.conv_rede * 100, 1)}% da rede (${ec.rank_demanda}ª em demanda e ${ec.rank_conv}ª em conversão). ` +
-    `O realizado por EC ainda baixo é coerente com ${ec.meses} meses de operação. A 2ª opção é ${ec.segunda}, que já está acima da meta. ` +
+    `A ${ec.franquia} lidera: ${num(ec.demanda_ec, 1)} endereçáveis por EC, contra ${num(ec.demanda_rede, 1)} da rede, e conversão de ${num(ec.conv * 100, 1)}%, contra ${num(ec.conv_rede * 100, 1)}% da rede (${ec.rank_demanda}ª em demanda e ${ec.rank_conv}ª em conversão). ` +
+    `E os ECs dela já são os mais carregados da rede: ${num(ec.carga_ec, 1)} leads trabalhados por mês, contra ${num(ec.carga_rede, 1)}. ` +
+    `A margem é pequena: ${num(ec.pot, 2)} contra ${num(ec.pot_2, 2)} fechamentos potenciais por EC da ${ec.segunda}, que converte parecido (${num(ec.conv_2 * 100, 1)}%) e já está acima da meta. A diferença vem da demanda por EC. ` +
     `Os ${ec.sem_franquia} endereçáveis de MT, MA, RO e MS não têm franquia nem histórico de execução, então não dá para avaliá-los com dado.`);
 }
 
@@ -272,7 +274,7 @@ pres.addSection({ title: "Ações imediatas" });
   });
   s.addText("Decisões de gestão:", { x: M, y: 6.2, w: 2.0, h: 0.45, fontSize: ESC.corpo, bold: true, color: S.branco,
     margin: 0, valign: "middle", isTextBox: true, objectName: "Decisões de gestão rótulo" });
-  [["Metas ajustadas à maturidade", 3.0], ["Plano de ação no RJ", 3.0], [`+1 EC na ${D.ec_adicional.franquia}`, 3.0]]
+  [["Metas das franquias pequenas", 3.0], ["Plano de ação no RJ", 3.0], [`+1 EC na ${D.ec_adicional.franquia}`, 3.0]]
     .forEach(([t, w], i) => ui.pill(s, `Decisão ${i + 1}`, t, 2.65 + i * 3.2, 6.2, w, 0.45,
       { line: HEX.branco, color: HEX.branco, fontSize: 12 }));
   ui.fonte(s, "Lista priorizada por franquia: Desafio3_Capacity.xlsx (Priorizacao e Ondas_Capacidade) · Painel Omie (Power BI), págs. 6 e 7");
@@ -280,9 +282,9 @@ pres.addSection({ title: "Ações imediatas" });
     `As três ações para o campo, em ordem de prioridade.\n\n` +
     `Primeira: fechar o que já está quente. São ${on[0].n} contadores com lead ativo em reunião ou proposta, o único sinal real de compra que temos, independente de qualquer perfil. ` +
     `Junto com isso, limpar o pipeline: ${pct(pl.parados / pl.abertos)} dos leads abertos estão parados há mais de 90 dias, o dobro do ciclo médio de um ganho. Isso libera tempo de EC e torna a cobertura confiável.\n\n` +
-    `Segunda: o piloto do tier Alta, a lista priorizada da pergunta C: carteira acima de 24 clientes e lead em andamento. São ${D.tiers.alta} contadores; ${D.tiers.alta_quente} já estão em negociação, então o piloto ataca os outros ${on[1].n}. Metade dos ECs ataca essa lista, a outra metade é o grupo de controle. Em 90 dias eu sei se o perfil gera receita de verdade.\n\n` +
+    `Segunda: o piloto do tier Alta, a lista priorizada da pergunta C: carteira acima de 24 clientes com lead em andamento, ou de 15 a 24 com lead em reunião ou proposta. São ${D.tiers.alta} contadores; ${D.tiers.alta_quente} já estão em negociação, então o piloto ataca os outros ${on[1].n}. Metade dos ECs ataca essa lista, a outra metade é o grupo de controle. Em 90 dias eu sei se o perfil gera receita de verdade.\n\n` +
     `Terceira: proposta → fechamento é a etapa de menor conversão, ${pct(D.bench_pf)}. Cinco pontos percentuais a mais nela valem ${pct(D.sim_pf.uplift)} de nMRR.\n\n` +
-    `Embaixo estão as três decisões de gestão que sustentam isso: meta ajustada à maturidade, plano para o RJ e o EC adicional em ${D.ec_adicional.franquia}.`);
+    `Embaixo estão as três decisões de gestão que sustentam isso: meta revista nas franquias pequenas, plano para o RJ e o EC adicional em ${D.ec_adicional.franquia}.`);
 }
 
 // =================================================================== SLIDE 6 - KPI
@@ -320,7 +322,7 @@ pres.addSection({ title: "KPI de 90 dias" });
     ["Win rate do tier Alta (piloto vs controle)", `${pct(D.pipeline.win_rate_rede)} (rede)`, "Piloto acima do controle", "Valida o perfil"],
     ["Conversão proposta → fechamento", pct(D.bench_pf), "Subir", "Maior alavanca do funil"],
     ["Leads abertos parados há +90 dias", pct(D.pipeline.parados / D.pipeline.abertos), "Cair", "Pipeline confiável"],
-    ["Contadores do tier Alta trabalhados", `0 de ${D.tiers.alta}`, "Todos", "Cobertura do tier Alta"],
+    ["Tier Alta com lead em Reunião/Proposta", `${D.tiers.alta_quente} de ${D.tiers.alta}`, "Todos", "Cobertura do tier Alta"],
   ];
   s.addTable(rowsT, { x: 5.0, y: 1.95, w: 7.73, colW: [2.95, 1.35, 1.65, 1.78], fontSize: 13, color: HEX.deep,
     fontFace: THEME.bodyFontFace, border: { type: "solid", pt: 0.5, color: HEX.linha }, rowH: 0.52, valign: "middle",
@@ -333,7 +335,7 @@ pres.addSection({ title: "KPI de 90 dias" });
     { text: `Hoje o mesmo KPI vale ${mil(rf[0], 0)}, ${mil(rf[1], 0)} ou ${mil(rf[2], 0)} por mês, conforme a tabela (franquias, execução ou CRM). `, options: { color: S.deep } },
     { text: "Junto: ID único de EC no CRM e definição canônica de conversão, para que o piloto meça a mesma coisa em todas as franquias.", options: { color: S.deep } },
   ], { x: 5.25, y: 5.0, w: 7.3, h: 1.6, fontSize: ESC.corpo, margin: 0, valign: "middle", isTextBox: true, objectName: "Governança texto" });
-  ui.fonte(s, "Hoje: franquias, stg_lead e Desafio 3 · Painel Omie (Power BI) · sinais de sucesso a validar com a liderança");
+  ui.fonte(s, "Hoje: franquias, leads_pipeline e Desafio 3 · Painel Omie (Power BI) · sinais de sucesso a validar com a liderança");
   s.addNotes(
     `Para fechar: como medir o sucesso em 90 dias. Proponho um único KPI norte, o atingimento de nMRR das ${ab.n} franquias que hoje estão abaixo da meta. ` +
     `Elas estão em ${pct(ab.realizado / ab.meta)} e a meta é chegar à meta delas, 100%, acompanhado no painel de Power BI que montei sobre a mesma base do case: drivers, contraste com o real, priorização e capacity, tudo lendo direto do SQL Server.\n\n` +

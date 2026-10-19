@@ -32,7 +32,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Franquias: 9 de 15 abaixo da meta, com gap de R$ 19.500/mês (a rede como um todo bate a meta). Por região: Norte, Nordeste e Centro-Oeste estão abaixo da meta como região (74%, 82%, 89%); Sudeste e Sul batem a meta (107% e 108%) e o gap vem só de RJ e RS. O gap acompanha os meses de operação (correlação 0,65), não o funil (0,15).",
+                    "value": "Franquias: 9 de 15 abaixo da meta, com gap de R$ 19.500/mês (a rede como um todo bate a meta). Por região: Norte, Nordeste e Centro-Oeste estão abaixo da meta como região (74%, 82%, 89%); Sudeste e Sul batem a meta (107% e 108%) e o gap vem só de RJ e RS. O gap está nas franquias pequenas (correlação nº de ECs × atingimento 0,64), não no funil (0,15).",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "12pt",

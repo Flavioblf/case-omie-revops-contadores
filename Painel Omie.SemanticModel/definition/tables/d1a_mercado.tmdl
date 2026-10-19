@@ -1,10 +1,10 @@
 /// Desafio 1a: mercado endereçável por região e porte (view dbo.vw_desafio1a_mercado).
 table d1a_mercado
-	lineageTag: d97ed76b-a8b8-4182-92a0-c61b04c55038
+	lineageTag: 302c5ca3-25fe-4f8f-8364-fd6f06093fa3
 
 	column ordem_linha
 		dataType: int64
-		lineageTag: f32bccbd-e65a-4e8c-8417-0ea01ee3f95d
+		lineageTag: faa3204a-9c7b-45ce-b47a-846f09ffdd96
 		summarizeBy: none
 		sourceColumn: ordem_linha
 
@@ -12,7 +12,7 @@ table d1a_mercado
 
 	column regiao
 		dataType: string
-		lineageTag: 59e43ab2-ba00-4f02-af22-81803a9b4231
+		lineageTag: 1ca42b11-6170-4724-9a13-dc2544a1159d
 		summarizeBy: none
 		sourceColumn: regiao
 
@@ -20,7 +20,7 @@ table d1a_mercado
 
 	column porte
 		dataType: string
-		lineageTag: fedf5855-716c-4225-ad5a-828532e5ce23
+		lineageTag: 1918fef2-f671-4d8b-a5ca-d3a93f16669e
 		summarizeBy: none
 		sourceColumn: porte
 
@@ -28,7 +28,7 @@ table d1a_mercado
 
 	column num_contadores
 		dataType: int64
-		lineageTag: 6a9fd6a0-74e1-4f05-8fea-1b78e948e39c
+		lineageTag: aebb25d7-ca25-408b-8d33-470170b33cac
 		summarizeBy: none
 		sourceColumn: num_contadores
 
@@ -37,7 +37,7 @@ table d1a_mercado
 	column participacao_regiao_pct
 		dataType: double
 		formatString: 0.0
-		lineageTag: 38ecd25d-0e4b-40b5-ab21-4738612fa291
+		lineageTag: 3b9f7f75-e288-4947-95f9-3282f8172e7c
 		summarizeBy: none
 		sourceColumn: participacao_regiao_pct
 
@@ -46,7 +46,7 @@ table d1a_mercado
 	column participacao_total_pct
 		dataType: double
 		formatString: 0.0
-		lineageTag: bdb489bb-1999-47ff-9b0d-a949f2d366a3
+		lineageTag: d3f93442-4dee-4025-80ef-c45daa0166b7
 		summarizeBy: none
 		sourceColumn: participacao_total_pct
 
@@ -55,7 +55,7 @@ table d1a_mercado
 	column e_total_brasil
 		dataType: int64
 		isHidden
-		lineageTag: 077b3188-d428-4e0c-b255-4eb89984833e
+		lineageTag: 20ae7d1b-42e9-4c2c-9641-28cdab66a4cc
 		summarizeBy: none
 		sourceColumn: e_total_brasil
 
@@ -64,7 +64,7 @@ table d1a_mercado
 	column e_total_regiao
 		dataType: int64
 		isHidden
-		lineageTag: 02061209-3c04-4159-8d97-a414b1b77f5c
+		lineageTag: 78fc05c9-25a7-43ee-b9ad-eabb8c513ba9
 		summarizeBy: none
 		sourceColumn: e_total_regiao
 

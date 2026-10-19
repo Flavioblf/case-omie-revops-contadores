@@ -32,21 +32,6 @@
             },
             {
               "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "franquias"
-                    }
-                  },
-                  "Property": "meses_operando"
-                }
-              },
-              "queryRef": "franquias.meses_operando",
-              "nativeQueryRef": "meses_operando",
-              "displayName": "Meses"
-            },
-            {
-              "field": {
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
@@ -59,6 +44,21 @@
               "queryRef": "_Medidas.ECs",
               "nativeQueryRef": "ECs",
               "displayName": "ECs"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Leads por EC-mês"
+                }
+              },
+              "queryRef": "_Medidas.Leads por EC-mês",
+              "nativeQueryRef": "Leads por EC-mês",
+              "displayName": "Leads/EC-mês"
             },
             {
               "field": {

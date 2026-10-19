@@ -255,8 +255,8 @@ CALC_FRANQUIAS = [
      "RANKX(ALLNOBLANKROW(franquias), franquias[atingimento] + VALUE(RIGHT(franquias[id_franquia], 3)) / 1000000, , ASC, DENSE)",
      None, True, "Ordem do menor para o maior atingimento (desempate pelo id)"),
     ("rotulo", S, None,
-     'SUBSTITUTE(franquias[nome_franquia], "Franquia ", "") & " · " & franquias[meses_operando] & "m · " & FORMAT(franquias[atingimento], "0%")',
-     "ordem_atingimento", False, "Franquia, meses de operação e atingimento, ordenada pelo atingimento"),
+     'SUBSTITUTE(franquias[nome_franquia], "Franquia ", "") & " · " & franquias[num_executivos] & " EC · " & FORMAT(franquias[atingimento], "0%")',
+     "ordem_atingimento", False, "Franquia, nº de ECs e atingimento, ordenada pelo atingimento"),
 ]
 TERRITORIO = {}
 FRQ_ESTADO = {"RJ": "FRQ003", "MG": "FRQ004", "PR": "FRQ005", "SC": "FRQ006", "RS": "FRQ007", "DF": "FRQ008",
@@ -392,14 +392,14 @@ F_ = "SELECTEDVALUE(franquias[id_franquia])"
 MEDIDAS += [
     ("Franquias Abaixo da Meta", "6. Desafio 3", "0",
      "COUNTROWS(FILTER(ALLNOBLANKROW(franquias), franquias[realizado_nmrr_mes] < franquias[meta_nmrr_mes]))", "Nº de franquias abaixo da meta"),
-    ("Correlação Maturidade × Atingimento", "6. Desafio 3", "0.00", "\n".join([
+    ("Correlação Nº de ECs × Atingimento", "6. Desafio 3", "0.00", "\n".join([
         "VAR t = ALLNOBLANKROW(franquias)",
-        "VAR mx = AVERAGEX(t, franquias[meses_operando])",
+        "VAR mx = AVERAGEX(t, franquias[num_executivos])",
         "VAR my = AVERAGEX(t, franquias[atingimento])",
-        "VAR cov = SUMX(t, (franquias[meses_operando] - mx) * (franquias[atingimento] - my))",
-        "VAR sx = SQRT(SUMX(t, (franquias[meses_operando] - mx) ^ 2))",
+        "VAR cov = SUMX(t, (franquias[num_executivos] - mx) * (franquias[atingimento] - my))",
+        "VAR sx = SQRT(SUMX(t, (franquias[num_executivos] - mx) ^ 2))",
         "VAR sy = SQRT(SUMX(t, (franquias[atingimento] - my) ^ 2))",
-        "RETURN DIVIDE(cov, sx * sy)"]), "Correlação de Pearson entre meses de operação e atingimento (≈ 0,65)"),
+        "RETURN DIVIDE(cov, sx * sy)"]), "Correlação de Pearson entre nº de ECs da franquia e atingimento (≈ 0,64)"),
     ("Gap (R$)", "6. Desafio 3", "#,0", "SUM(franquias[gap])", "Gap de meta no contexto (R$/mês)"),
     ("Atingimento (abaixo da meta)", "6. Desafio 3", "0%",
      "VAR a = DIVIDE(SUM(franquias[realizado_nmrr_mes]), SUM(franquias[meta_nmrr_mes])) RETURN IF(a < 1, a)",
@@ -430,6 +430,8 @@ MEDIDAS += [
      "Realizado por EC ÷ realizado por EC da rede"),
     ("Fechamentos por EC-mês", "6. Desafio 3", "0.00", "AVERAGE(execucao_comercial[fechamentos])",
      "Média de fechamentos por EC por mês (execucao_comercial)"),
+    ("Leads por EC-mês", "6. Desafio 3", "0.0", "AVERAGE(execucao_comercial[leads_trabalhados])",
+     "Média de leads trabalhados por EC por mês: a carga do EC (execucao_comercial)"),
     ("% EC-mês sem Fechamento", "6. Desafio 3", "0%",
      "DIVIDE(COUNTROWS(FILTER(execucao_comercial, execucao_comercial[fechamentos] = 0)), COUNTROWS(execucao_comercial))",
      "% dos EC-mês sem nenhum fechamento (dispersão entre ECs)"),
@@ -905,8 +907,8 @@ def paginas():
                       "concentram o maior risco?", [
                           f"Franquias: {D['abaixo_meta']['n']} de 15 abaixo da meta, com gap de R$ {br(D['gap_total'])}/mês "
                           "(a rede como um todo bate a meta). "
-                          f"Por região: {reg_txt}. O gap acompanha os meses de operação (correlação "
-                          f"{br(D['corr_maturidade'], 2)}), não o funil ({br(D['corr_funil'], 2)}).",
+                          f"Por região: {reg_txt}. O gap está nas franquias pequenas (correlação nº de ECs × atingimento "
+                          f"{br(D['corr_ecs'], 2)}), não no funil ({br(D['corr_funil'], 2)}).",
                           f"ECs (equivalentes: a base não identifica o EC individual): os ECs de "
                           f"{', '.join(f_['nome'] for f_ in baixos[:4])} entregam {pc(baixos[0]['real_ec'] / rede)} a "
                           f"{pc(baixos[3]['real_ec'] / rede)} da média da rede (R$ {br(rede)} por EC); o CE entrega "
@@ -963,14 +965,16 @@ def paginas():
                       "Justifique com dados.", [
                           f"{ec['franquia']}: mais fechamentos potenciais por EC da rede = {br(ec['demanda_ec'], 1)} "
                           f"endereçáveis por EC (rede: {br(ec['demanda_rede'], 1)}) × conversão do funil de "
-                          f"{br(ec['conv'] * 100, 1)}% (rede: {br(ec['conv_rede'] * 100, 1)}%). Está abaixo da meta (gap de "
-                          f"R$ {br(ec['gap'])}) no Nordeste, a região de maior gap. 2ª opção: {ec['segunda']}, já acima da meta.",
+                          f"{br(ec['conv'] * 100, 1)}% (rede: {br(ec['conv_rede'] * 100, 1)}%), com os ECs mais carregados da rede "
+                          f"({br(ec['carga_ec'], 1)} leads por mês; rede: {br(ec['carga_rede'], 1)}). Está abaixo da meta (gap de "
+                          f"R$ {br(ec['gap'])}) no Nordeste, a região de maior gap. 2ª opção, por pouco: {ec['segunda']} "
+                          f"({br(ec['pot_2'], 2)} contra {br(ec['pot'], 2)}), já acima da meta.",
                           "Critério só com dados da base, sem premissas de custo ou território. "
                           f"MT, MA, RO e MS ({ec['sem_franquia']} endereçáveis) não têm franquia nem histórico de execução "
                           "para avaliar."]))
     v.append(cartao(24, Y1, 362, 150, "Franquia Recomendada", "EC adicional vai para", escuro=True))
     v.append(tabela_visual(24, 564, 1872, 496,
-                           [(fq("nome_franquia"), "Franquia"), (fq("meses_operando"), "Meses"), (medida("ECs"), "ECs"),
+                           [(fq("nome_franquia"), "Franquia"), (medida("ECs"), "ECs"), (medida("Leads por EC-mês"), "Leads/EC-mês"),
                             (medida("Prospects no Território"), "Endereçáveis"), (medida("Prospects por EC"), "Endereç./EC"),
                             (medida("Conversão do Funil"), "Conversão do funil"),
                             (medida("Fechamentos Potenciais por EC"), "Fech. potenciais/EC"),
@@ -1123,7 +1127,7 @@ def escrever_doc():
           "| Melhor ROI de esforço (1b) | Evento (24,8 tentativas por ganho) |",
           "| Uplift nMRR (Conservador / Base / Otimista) | +9,5% / +25,4% / +45,6% |",
           "| Gap de meta / franquias abaixo da meta | R$ 19.500 / 9 |",
-          "| Correlação maturidade × atingimento | 0,65 |",
+          "| Correlação nº de ECs × atingimento (meses_operando dá 0,65, mas contradiz data_inicio) | 0,64 |",
           "| Gap das franquias abaixo da meta por região: Nordeste / Norte / Centro-Oeste / Sudeste / Sul | 6.500 / 4.000 / 4.000 / 4.000 / 1.000 |",
           "| Atingimento da região: Norte / Nordeste / Centro-Oeste / Sudeste / Sul | 74% / 82% / 89% / 107% / 108% |",
           "| Ondas 1 a 5 | 15 / 13 / 54 / 66 / 155 |",

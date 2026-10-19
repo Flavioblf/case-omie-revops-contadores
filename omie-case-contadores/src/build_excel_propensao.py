@@ -380,7 +380,7 @@ for k, (t, fonte) in enumerate([
     ("• O lift do topo foi medido no target converteu_omie; só uma fração (fator de realização) vira Ganho real.", None),
     ("• Teste de estresse: com fator de realização = 0 (como o pipeline real sugere hoje), o uplift é zero — por isso o piloto.", None),
     ("• O nMRR da execução é 10 a 27x menor que o oficial das franquias; por isso o uplift % é o número principal "
-     "(anexo SQL, A6/A7).", None),
+     "(franquias.realizado_nmrr_mes contra execucao_comercial.nmrr_gerado).", None),
 ]):
     c = ws.cell(row=27 + k, column=1, value=t)
     if fonte:

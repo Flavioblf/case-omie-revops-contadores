@@ -1,11 +1,11 @@
 /// Tier do Desafio 1c (view dbo.vw_tiers_prospects, matriz Fit x Engajamento): 303 endereçáveis.
 table tiers_1c
-	lineageTag: e49162f5-3c81-4b26-9ce1-569bda5cd1db
+	lineageTag: 72f3b4f9-3848-4aea-b97d-c84e492b538e
 	isHidden
 
 	column id_contador
 		dataType: string
-		lineageTag: 232c3660-d9d2-486d-b816-1f71c4eb959d
+		lineageTag: 5bbdfe4c-ef96-4e40-b901-1630c4d64b3a
 		summarizeBy: none
 		sourceColumn: id_contador
 
@@ -14,7 +14,7 @@ table tiers_1c
 	column nivel_fit
 		dataType: int64
 		isHidden
-		lineageTag: b3834d88-8789-41ff-8c65-f25c78386ff9
+		lineageTag: e85743bc-dba2-41e5-8a48-bf17fc73783d
 		summarizeBy: none
 		sourceColumn: nivel_fit
 
@@ -22,7 +22,7 @@ table tiers_1c
 
 	column fit_carteira
 		dataType: string
-		lineageTag: babe522e-7f76-4c5b-8f3b-c63c4b8a97d8
+		lineageTag: e1bc48c1-572c-459b-85f4-143ca485110b
 		summarizeBy: none
 		sourceColumn: fit_carteira
 		sortByColumn: nivel_fit
@@ -32,7 +32,7 @@ table tiers_1c
 	column nivel_engajamento
 		dataType: int64
 		isHidden
-		lineageTag: 707b484c-a0aa-477e-a0df-ba5d1201418f
+		lineageTag: b3b89e4c-a9ea-49c3-ba28-ffe66ded45ed
 		summarizeBy: none
 		sourceColumn: nivel_engajamento
 
@@ -40,7 +40,7 @@ table tiers_1c
 
 	column engajamento
 		dataType: string
-		lineageTag: 77dcdc4f-7601-4378-8670-1d9ce7461110
+		lineageTag: b0ea066f-9a2a-4eb2-835b-e6fcce2a3645
 		summarizeBy: none
 		sourceColumn: engajamento
 		sortByColumn: nivel_engajamento
@@ -49,7 +49,7 @@ table tiers_1c
 
 	column score_prioridade
 		dataType: int64
-		lineageTag: 8939e9d2-47ce-4602-84b6-0692c7ddc905
+		lineageTag: 0e788f36-fab4-459a-b8e2-4af8590c4d87
 		summarizeBy: none
 		sourceColumn: score_prioridade
 
@@ -57,7 +57,7 @@ table tiers_1c
 
 	column tier_prioridade
 		dataType: string
-		lineageTag: eea74f28-2ccc-4d3d-97ed-64755e3555d6
+		lineageTag: d8949eaf-ec38-43ba-b387-3fd507879620
 		summarizeBy: none
 		sourceColumn: tier_prioridade
 
@@ -65,7 +65,7 @@ table tiers_1c
 
 	column estagio_aberto
 		dataType: string
-		lineageTag: e8971cb3-dd41-49ac-a444-70eef89c37f4
+		lineageTag: 5b2081e3-b9f8-493f-b92a-03865385a189
 		summarizeBy: none
 		sourceColumn: estagio_aberto
 

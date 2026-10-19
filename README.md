@@ -16,9 +16,11 @@ e que estão declarados como premissa.
   do Inbound (25,6).
 - **Propensão:** porte, funcionários, carteira, ERP e anos de mercado explicam a conversão do target, mas o fechamento
   real não confirma o perfil (win rate do topo 60% contra 65% das demais faixas). O perfil é hipótese a validar em piloto.
-- **Capacity:** gap de R$ 19,5 mil/mês nas 9 franquias abaixo da meta (a rede como um todo bate a meta). O gap acompanha
-  os meses de operação (correlação 0,65), não o funil (0,15).
-- **EC adicional:** BA, a franquia com mais fechamentos potenciais por EC (12,5 endereçáveis por EC × 4,5% de conversão).
+- **Capacity:** gap de R$ 19,5 mil/mês nas 9 franquias abaixo da meta (a rede como um todo bate a meta). O gap está
+  nas franquias pequenas: 6 das 7 com 1 a 2 ECs estão abaixo da meta (correlação nº de ECs × atingimento 0,64), não no
+  funil (0,15).
+- **EC adicional:** BA, a franquia com mais fechamentos potenciais por EC (12,5 endereçáveis por EC × 4,5% de conversão)
+  e os ECs mais carregados da rede (18,7 leads trabalhados por mês, contra 16,5). A MG é a 2ª opção, por pouco.
 - **Governança:** o mesmo nMRR vale R$ 299 mil, R$ 17 mil ou R$ 3 mil por mês conforme a tabela; o target
   `converteu_omie` vaza do `score_potencial_latente` e diverge dos contratos.
 
@@ -81,14 +83,17 @@ Score = nível do fit (1 a 3) + nível do engajamento (0 a 2): ≥ 4 Alta, 3 Mé
   estão abaixo da meta como região (74%, 82% e 89%); Sudeste e Sul batem a meta (107% e 108%) e o gap vem só do RJ e
   do RS. Por EC equivalente (a base não identifica o EC individual: `id_executivo` se repete na franquia), os ECs de
   PE, PA, BA e RJ entregam 74% a 82% da média da rede (R$ 6.795 por EC); o CE realiza acima da rede, mas tem a maior
-  meta por EC. Em 49% dos EC-mês não há nenhum fechamento.
+  meta por EC. Em 49% dos EC-mês não há nenhum fechamento. O gap está nas franquias pequenas (6 das 7 com 1 a 2 ECs
+  abaixo da meta) e não no funil: as taxas de etapa variam pouco e a de proposta → fechamento quase não se relaciona com
+  o atingimento (0,15).
 - **b) Framework de priorização (5 ondas):** 1. Fechar 15 contadores com lead em Reunião/Proposta → 2. Prospectar
   13 do tier Alta → 3. Requalificar 54 com lead parado → 4. Nutrir 66 (Média) → 5. Régua automatizada para 155 (Baixa).
   Dentro da onda, maior MRR esperado (ticket médio do porte × (1 − churn)). O Fit do 1c é a carteira, que acompanha a
   propensão do Desafio 2 (correlação 0,8 nos 303). Território = franquia do estado do contador.
 - **c) EC adicional: BA.** Critério: fechamentos potenciais por EC = endereçáveis do território por EC × conversão
-  lead → fechamento da franquia. BA 0,56 (12,5 endereçáveis por EC contra 6,6 da rede; 4,5% de conversão contra 4,0%),
-  MG 0,50 (já acima da meta). MT, MA, RO e MS somam 27 endereçáveis, mas não têm franquia nem histórico de execução.
+  lead → fechamento da franquia. BA 0,56 (12,5 endereçáveis por EC contra 6,3 da rede; 4,5% de conversão contra 4,0%;
+  ECs com 18,7 leads trabalhados por mês, os mais carregados da rede, contra 16,5), MG 0,50 (converte parecido, 4,7%,
+  e já está acima da meta). A margem é pequena e vem da demanda por EC. MT, MA, RO e MS somam 27 endereçáveis, mas não têm franquia nem histórico de execução.
 
 ### Desafio 4 — Apresentação (6 slides)
 
@@ -116,8 +121,10 @@ Score = nível do fit (1 a 3) + nível do engajamento (0 a 2): ≥ 4 Alta, 3 Mé
 - `id_executivo` não identifica o EC (1 ID por franquia).
 - nMRR em três escalas: franquias R$ 299 mil/mês, execução R$ 17 mil/mês, CRM R$ 3 mil/mês.
 - Menores: 184 linhas com `usa_erp = 'Não'` e ERP de mercado preenchido; 3 contadores duplicados em
-  `clientes_ativos`; 20 leads abertos de contadores que já são clientes ativos; `meses_operando` não bate com
-  `data_inicio`.
+  `clientes_ativos`; 20 leads abertos de contadores que já são clientes ativos.
+- `meses_operando` contradiz `data_inicio`: por `meses_operando`, as franquias mais maduras atingem mais (0,65); pela
+  `data_inicio`, as mais antigas atingem menos (−0,37). `meses_operando` acompanha o nº de ECs (0,99), por isso o
+  Desafio 3 usa o nº de ECs, que não tem contradição na base.
 
 ## Como reproduzir
 

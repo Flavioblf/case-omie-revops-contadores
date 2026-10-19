@@ -3,6 +3,7 @@
 A priorização usa o tier do Desafio 1c (matriz Fit x Engajamento, sql/01c_tiers_prioridade.sql).
 Uso: python src/build_excel_capacity.py
 """
+import pandas as pd
 from openpyxl import Workbook
 from openpyxl.chart import BarChart, Reference
 from openpyxl.formatting.rule import CellIsRule, ColorScaleRule
@@ -18,7 +19,8 @@ SQL_TIERS = ROOT / "sql" / "01c_tiers_prioridade.sql"
 con = connect()
 con.execute(SQL_TIERS.read_text(encoding="utf-8").split("-- @name:")[0])  # (re)cria vw_tiers_prospects
 franquias = con.execute("""
-    SELECT id_franquia, nome_franquia, estado, regiao, meses_operando, num_executivos, meta_nmrr_mes, realizado_nmrr_mes
+    SELECT id_franquia, nome_franquia, estado, regiao, meses_operando, num_executivos, meta_nmrr_mes, realizado_nmrr_mes,
+           data_inicio
     FROM franquias ORDER BY id_franquia""").df()
 execucao = con.execute("""
     SELECT id_executivo, id_franquia, estado, mes_ref, leads_trabalhados, reunioes_realizadas, propostas_enviadas,
@@ -86,7 +88,7 @@ linhas = [
     ("", None),
     ("Escolhas e premissas", F_SUB),
     ("• Meta e realizado: aba franquias (fonte oficial de meta). O funil (taxas, tendência) vem de execucao_comercial: "
-     "usamos apenas proporções, pois o nMRR da execução é 10 a 27x menor que o oficial (anexo SQL, A6/A7).", None),
+     "usamos apenas proporções, pois o nMRR da execução é 10 a 27x menor que o oficial (franquias.realizado_nmrr_mes ÷ média mensal de execucao_comercial.nmrr_gerado, por franquia).", None),
     ("• Nível de EC: o id_executivo se repete dentro da franquia (1 ID para todos os ECs), então não há como seguir um EC individual. "
      "Usamos o EC equivalente (franquia ÷ nº de ECs) e a dispersão (% de EC-mês sem fechamento).", None),
     ("• Prioridade = Intenção (lead ativo no pipeline) > Tier do Desafio 1c > MRR esperado. A intenção vem "
@@ -173,7 +175,7 @@ cols = ["id", "Franquia", "UF", "Região", "Meses operando", "Nº ECs", "Meta nM
         "Leads", "Reuniões", "Propostas", "Fechamentos",
         "Lead→Reunião", "Reunião→Proposta", "Proposta→Fechamento",
         "Índice L→R", "Índice R→P", "Índice P→F", "Etapa mais fraca vs rede",
-        "Tendência H2 vs H1", "% EC-mês sem fechamento", "Situação"]
+        "Tendência H2 vs H1", "% EC-mês sem fechamento", "Situação", "Início (data_inicio)"]
 header(ws, 4, cols)
 for k, row in enumerate(franquias.itertuples(index=False)):
     r = F0 + k
@@ -194,6 +196,8 @@ for k, row in enumerate(franquias.itertuples(index=False)):
     }
     for col, formula in f.items():
         ws[f"{col}{r}"] = formula
+    ws[f"AB{r}"] = pd.Timestamp(row.data_inicio).to_pydatetime()
+    ws[f"AB{r}"].number_format = "dd/mm/yyyy"
     for col in "GHJKL":
         ws[f"{col}{r}"].number_format = BRL
     for col in "IRST":
@@ -230,11 +234,14 @@ ws.cell(row=s, column=1, value="Leitura").font = F_SUB
 indic = [
     ("Gap total das franquias abaixo da meta (R$/mês)", f"=J{tr}", BRL),
     ("Franquias abaixo da meta", f'=COUNTIF(I{F0}:I{F1},"<1")', "0"),
-    ("Correlação meses de operação × atingimento", f"=CORREL(E{F0}:E{F1},I{F0}:I{F1})", "0.00"),
+    ("Correlação meses_operando × atingimento", f"=CORREL(E{F0}:E{F1},I{F0}:I{F1})", "0.00"),
     ("Correlação nº de ECs × atingimento", f"=CORREL(F{F0}:F{F1},I{F0}:I{F1})", "0.00"),
     ("Faixa dos índices L→R e R→P entre franquias", f'=FIXED(MIN(U{F0}:V{F1}),2)&" a "&FIXED(MAX(U{F0}:V{F1}),2)', None),
     ("Faixa do índice P→F entre franquias", f'=FIXED(MIN(W{F0}:W{F1}),2)&" a "&FIXED(MAX(W{F0}:W{F1}),2)', None),
     ("Correlação índice P→F × atingimento", f"=CORREL(W{F0}:W{F1},I{F0}:I{F1})", "0.00"),
+    ("Correlação antiguidade pela data_inicio × atingimento (início mais cedo = mais antiga)",
+     f"=-CORREL(AB{F0}:AB{F1},I{F0}:I{F1})", "0.00"),
+    ("Correlação meses_operando × nº de ECs", f"=CORREL(E{F0}:E{F1},F{F0}:F{F1})", "0.00"),
 ]
 for k, (nome, f, fmt) in enumerate(indic):
     ws.cell(row=s + 1 + k, column=1, value=nome)
@@ -244,11 +251,14 @@ for k, (nome, f, fmt) in enumerate(indic):
     c.fill = FILL_DESTAQUE
 conclusoes = [
     "1. O funil não explica o gap: L→R e R→P são quase iguais entre franquias; P→F varia mais, mas quase não se relaciona "
-    "com o atingimento (correlação ~0,15, contra ~0,65 dos meses de operação). Leads por EC também são parecidos (~16/mês).",
-    "2. O gap acompanha os meses de operação: as 5 franquias com 3 a 6 meses (PA, AM, CE, PE, BA) estão todas abaixo da meta. "
-    "O CE tem a maior meta por EC da rede (R$ 10 mil) e realiza acima da média por EC.",
-    "3. RJ: 14 meses de operação, maior gap absoluto (R$ 4 mil) e realizado por EC de R$ 5,6 mil, abaixo da média da rede.",
-    "4. Maiores quedas de nMRR na execução do 2º semestre: DF, MG, SP Interior e SC (coluna Y) — inclusive em franquias na meta.",
+    "com o atingimento (correlação ~0,15, contra ~0,64 do nº de ECs). Leads trabalhados por EC variam pouco (15 a 19 por mês).",
+    "2. O gap está nas franquias pequenas: das 7 franquias com 1 a 2 ECs, 6 estão abaixo da meta (só o ES bate). O CE tem a "
+    "maior meta por EC da rede (R$ 10 mil) e realiza acima da média por EC: parte do gap é meta, não execução.",
+    "3. Governança: meses_operando conta a mesma história (correlação ~0,99 com o nº de ECs), mas contradiz a data_inicio "
+    "(coluna AB): pela data de início, as franquias mais antigas atingem MENOS (correlação ~-0,37). Por isso a leitura usa o "
+    "nº de ECs, que não tem contradição na base.",
+    "4. RJ: 5 ECs, maior gap absoluto (R$ 4 mil) e realizado por EC de R$ 5,6 mil, abaixo da média da rede.",
+    "5. Maiores quedas de nMRR na execução do 2º semestre: DF, MG, SP Interior e SC (coluna Y) — inclusive em franquias na meta.",
     "Nível de EC: id_executivo não identifica o EC; usamos o EC equivalente (franquia ÷ nº de ECs) e a dispersão "
     "(% de EC-mês sem fechamento). Recomendação: ID único de EC no CRM.",
 ]
@@ -258,7 +268,7 @@ ws.freeze_panes = "C5"
 ws.row_dimensions[4].height = 48
 larguras(ws, {"A": 9, "B": 21, "C": 5, "D": 12, "E": 9, "F": 7, "G": 12, "H": 12, "I": 11, "J": 10, "K": 11,
               "L": 11, "M": 12, "N": 7, "O": 8, "P": 9, "Q": 11, "R": 10, "S": 10, "T": 11, "U": 8, "V": 8,
-              "W": 8, "X": 22, "Y": 11, "Z": 11, "AA": 16})
+              "W": 8, "X": 22, "Y": 11, "Z": 11, "AA": 16, "AB": 12})
 GAP = "Gap_Meta"
 
 # ---------------------------------------------------------------- Regioes (3a)
@@ -292,8 +302,8 @@ ws.conditional_formatting.add("J4:J8", ColorScaleRule(start_type="min", start_co
                                                      end_type="max", end_color="F8696B"))
 ws["A11"], ws["A11"].font = "Leitura", F_SUB
 ws["A12"] = ("• Norte, Nordeste e Centro-Oeste: 100% das franquias abaixo da meta e a região inteira abaixo da meta "
-             "(atingimento de 74%, 82% e 89%). São as regiões mais jovens, com 1 a 2 ECs por franquia.")
-ws["A13"] = ("• Sudeste e Sul batem a meta como região (107% e 108%): o gap é pontual, só do RJ (14 meses, maior gap "
+             "(atingimento de 74%, 82% e 89%). São as regiões das menores franquias: 1 a 3 ECs (Norte e Nordeste, 1 a 2).")
+ws["A13"] = ("• Sudeste e Sul batem a meta como região (107% e 108%): o gap é pontual, só do RJ (maior gap "
              "da rede) e do RS.")
 ws["A14"] = ("• A rede como um todo bate a meta (R$ 299 mil realizados contra R$ 297,5 mil): os R$ 19,5 mil são o gap "
              "das 9 franquias abaixo da meta.")
@@ -464,7 +474,7 @@ ws["A2"] = ("Critério (só dados da base): o EC vai para onde há mais fechamen
 header(ws, 4, ["id", "Franquia", "Meses de operação", "ECs", "Endereçáveis no território", "Endereçáveis por EC",
                "Conversão lead → fechamento", "Fechamentos potenciais por EC", "Gap (R$)", "Atingimento",
                "Realizado por EC", "Ranking (fechamentos potenciais)", "Ranking (demanda por EC)",
-               "Ranking (conversão)"])
+               "Ranking (conversão)", "Leads trabalhados por EC-mês (carga)"])
 E1 = 4 + NF
 for k in range(NF):
     r = 5 + k
@@ -482,6 +492,7 @@ for k in range(NF):
     ws.cell(row=r, column=11, value=f"={GAP}!L{g}").number_format = BRL
     for col, base in ((12, "H"), (13, "F"), (14, "G")):
         ws.cell(row=r, column=col, value=f"=RANK({base}{r},${base}$5:${base}${E1})")
+    ws.cell(row=r, column=15, value=f'=AVERAGEIFS({ex("E")},{ex("B")},A{r})').number_format = "0.0"
 ws.conditional_formatting.add(f"H5:H{E1}", ColorScaleRule(start_type="min", start_color="FFFFFF",
                                                           end_type="max", end_color="63BE7B"))
 rr = E1 + 2
@@ -493,9 +504,10 @@ ws.cell(row=rr + 2, column=1, value="2ª opção")
 ws.cell(row=rr + 2, column=4, value=f"=INDEX($B$5:$B${E1},MATCH(2,$L$5:$L${E1},0))")
 ws.cell(row=rr + 3, column=1, value="Por quê (franquia recomendada)")
 ws.cell(row=rr + 3, column=4, value=(
-    f'=FIXED(INDEX($F$5:$F${E1},{idx}),1)&" endereçáveis por EC (média da rede: "&FIXED(AVERAGE($F$5:$F${E1}),1)&"), '
+    f'=FIXED(INDEX($F$5:$F${E1},{idx}),1)&" endereçáveis por EC (rede: "&FIXED(SUM($E$5:$E${E1})/SUM($D$5:$D${E1}),1)&"), '
     f'conversão do funil de "&FIXED(INDEX($G$5:$G${E1},{idx})*100,1)&"% (rede: "&FIXED({GAP}!Q{F1 + 1}/{GAP}!N{F1 + 1}*100,1)&'
-    f'"%) e gap de R$ "&FIXED(INDEX($I$5:$I${E1},{idx}),0)&" com "&INDEX($C$5:$C${E1},{idx})&" meses de operação"'))
+    f'"%), ECs com "&FIXED(INDEX($O$5:$O${E1},{idx}),1)&" leads trabalhados por mês (rede: "&FIXED(AVERAGE({ex("E")}),1)&'
+    f'") e gap de R$ "&FIXED(INDEX($I$5:$I${E1},{idx}),0)'))
 ws.cell(row=rr + 4, column=1, value="Sensibilidade")
 ws.cell(row=rr + 4, column=4, value=(
     f'="Só pela demanda: "&INDEX($M$5:$M${E1},{idx})&"º · só pela conversão: "&INDEX($N$5:$N${E1},{idx})&"º"'))
@@ -504,15 +516,17 @@ ws.cell(row=rr + 5, column=4, value=(
     f'=COUNTIF({PR("O")},"Sem franquia")&" endereçáveis em MT, MA, RO e MS: sem EC nem histórico de execução para avaliar"'))
 ws.cell(row=rr + 7, column=1, value="Leitura").font = F_SUB
 for k, t in enumerate([
-    "• O gap atual acompanha os meses de operação (aba Gap_Meta): um EC a mais não muda isso. O EC adicional vai para "
-    "onde há mais demanda por EC e um funil que já converte.",
-    "• BA e MG são as únicas entre as 3 primeiras em demanda por EC e em conversão do funil. BA tem mais demanda por EC e "
-    "está abaixo da meta (gap de R$ 3 mil); MG já entrega 114% da meta. A SP Interior tem a maior demanda por EC, mas "
-    "divide com o PA a menor conversão da rede (2,9%). O realizado por EC ainda baixo da BA é consistente com os 6 meses de operação.",
+    "• O gap está nas franquias pequenas (aba Gap_Meta). O EC adicional vai para onde há mais demanda por EC, um funil que "
+    "já converte e ECs já carregados.",
+    "• BA e MG são as únicas entre as 3 primeiras em demanda por EC e em conversão do funil. A BA tem mais demanda por EC, "
+    "os ECs mais carregados da rede (18,7 leads trabalhados por mês, contra 16,5) e está abaixo da meta (gap de R$ 3 mil); "
+    "a MG já entrega 114% da meta. A margem é pequena (0,56 contra 0,50 fechamentos potenciais por EC): a diferença vem da "
+    "demanda por EC, não da conversão (4,5% × 4,7%). A SP Interior tem a maior demanda por EC, mas divide com o PA a menor "
+    "conversão da rede (2,9%).",
 ]):
     ws.cell(row=rr + 8 + k, column=1, value=t)
 larguras(ws, {"A": 9, "B": 21, "C": 11, "D": 6, "E": 13, "F": 12, "G": 13, "H": 14, "I": 11, "J": 11,
-              "K": 12, "L": 14, "M": 14, "N": 12})
+              "K": 12, "L": 14, "M": 14, "N": 12, "O": 14})
 ws.row_dimensions[4].height = 45
 
 wb.move_sheet("Execucao", offset=len(wb.sheetnames))

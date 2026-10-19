@@ -120,6 +120,8 @@ d["gap_total"] = g["J20"].value
 d["real_ec_rede"] = g["L20"].value
 d["sem_fech_rede"] = g["Z21"].value
 d["corr_maturidade"] = g["D26"].value
+d["corr_ecs"] = g["D27"].value
+d["corr_data_inicio"] = g["D31"].value
 d["corr_funil"] = g["D30"].value
 d["bench_pf"] = g["T21"].value
 d["regioes_gap"] = [{"regiao": reg[f"A{r}"].value, "gap": reg[f"I{r}"].value, "pct_abaixo": reg[f"D{r}"].value,
@@ -136,7 +138,9 @@ rank = {ec[f"L{r}"].value: r for r in range(5, 20)}
 r1 = rank[1]
 d["ec_adicional"] = {
     "franquia": ec[f"B{r1}"].value.replace("Franquia ", ""), "meses": ec[f"C{r1}"].value,
-    "demanda_ec": ec[f"F{r1}"].value, "demanda_rede": sum(ec[f"F{r}"].value for r in range(5, 20)) / 15,
+    "demanda_ec": ec[f"F{r1}"].value, "demanda_rede": sum(ec[f"E{r}"].value for r in range(5, 20)) / sum(ec[f"D{r}"].value for r in range(5, 20)),
+    "carga_ec": ec[f"O{r1}"].value, "carga_rede": g["N20"].value / sum(1 for _ in wb3["Execucao"].iter_rows(min_row=2)),
+    "pot": ec[f"H{r1}"].value, "pot_2": ec[f"H{rank[2]}"].value, "conv_2": ec[f"G{rank[2]}"].value,
     "conv": ec[f"G{r1}"].value, "conv_rede": g["Q20"].value / g["N20"].value, "gap": ec[f"I{r1}"].value,
     "rank_demanda": ec[f"M{r1}"].value, "rank_conv": ec[f"N{r1}"].value,
     "segunda": ec[f"B{rank[2]}"].value.replace("Franquia ", ""),
