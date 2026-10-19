@@ -1,79 +1,103 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "5cf2b5f8dbfce5b51f3b",
+  "name": "1570640384853b372775",
   "position": {
-    "x": 813,
-    "y": 265,
+    "x": 760,
+    "y": 391,
     "z": 0,
-    "width": 451,
-    "height": 267,
-    "tabOrder": 4
+    "width": 247,
+    "height": 115,
+    "tabOrder": 7
   },
   "visual": {
-    "visualType": "textbox",
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "nMRR Previsto (Pipeline)"
+                }
+              },
+              "queryRef": "_Medidas.nMRR Previsto (Pipeline)",
+              "nativeQueryRef": "nMRR Previsto (Pipeline)",
+              "displayName": "nMRR previsto (R$, CRM)"
+            }
+          ]
+        }
+      }
+    },
     "objects": {
-      "general": [
+      "labels": [
         {
           "properties": {
-            "paragraphs": [
-              {
-                "textRuns": [
-                  {
-                    "value": "Como o número é calculado",
-                    "textStyle": {
-                      "fontFamily": "Century Gothic",
-                      "fontSize": "15pt",
-                      "fontWeight": "bold",
-                      "color": "#001E27"
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#006B79'"
                     }
                   }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Uplift = % da capacidade × (lift do topo − 1) × fator de realização.",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "12pt",
-                      "fontWeight": "normal",
-                      "color": "#001E27"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "O lift vem do target (converteu_omie), que diverge do fechamento real: por isso só uma fração (o fator) vira Ganho, e o número só se confirma com o piloto.",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "12pt",
-                      "fontWeight": "normal",
-                      "color": "#001E27"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "O % é o número principal: as três fontes de nMRR da base estão em escalas diferentes.",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "12pt",
-                      "fontWeight": "bold",
-                      "color": "#006B79"
-                    }
-                  }
-                ]
+                }
               }
-            ]
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Century Gothic'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "28D"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryLabels": [
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#4E6B74'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            }
           }
         }
       ]
     },
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "background": [
         {
@@ -210,6 +234,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }

@@ -1,11 +1,11 @@
 /// Servidor do SQL Server com a base do case
 expression ServidorSQL = "localhost" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
-	lineageTag: fea105d8-4968-437a-8436-562d3ba3af79
+	lineageTag: f627ba6a-71b4-49fb-be39-c7bf488b95a4
 
 	annotation PBI_ResultType = Text
 
 /// Banco com as tabelas do case (esquema raw) e as views do Desafio 1 (dbo.vw_*)
 expression BancoSQL = "OMIE" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
-	lineageTag: d15e6b26-7f7d-4615-a52a-b1e34cbf8734
+	lineageTag: 5832cc28-19bc-4c35-862c-bbb75f5f78e8
 
 	annotation PBI_ResultType = Text

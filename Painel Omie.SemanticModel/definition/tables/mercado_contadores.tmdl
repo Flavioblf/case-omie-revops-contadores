@@ -1,10 +1,10 @@
 /// Base de mercado: 1 linha por contador (alvo converteu_omie e características).
 table mercado_contadores
-	lineageTag: d9a307ae-cea2-43d7-8b00-3f35fdbc3c43
+	lineageTag: 88561356-42f3-4c01-935d-0497cd50964b
 
 	column id_contador
 		dataType: string
-		lineageTag: 9c259e9b-f82b-473d-aa52-54a4c5b7de32
+		lineageTag: bc025a65-9fbd-48e0-a1c0-ce574c6903cf
 		summarizeBy: none
 		sourceColumn: id_contador
 
@@ -12,7 +12,7 @@ table mercado_contadores
 
 	column estado
 		dataType: string
-		lineageTag: 7de941b7-82af-4e36-b5d8-364a4d4ff102
+		lineageTag: 1cc57651-c81e-49f1-a2b4-ff2dca19fcfd
 		summarizeBy: none
 		sourceColumn: estado
 
@@ -20,7 +20,7 @@ table mercado_contadores
 
 	column regiao
 		dataType: string
-		lineageTag: 496c7533-5158-4fe1-981f-77c20e01b43d
+		lineageTag: 642dc55d-2126-442c-9061-e360c3e734af
 		summarizeBy: none
 		sourceColumn: regiao
 
@@ -28,7 +28,7 @@ table mercado_contadores
 
 	column cidade
 		dataType: string
-		lineageTag: a91700a9-ab86-4cf8-b194-72f9d3feff6c
+		lineageTag: 6e227022-1157-46d8-a91b-3f96f3376e50
 		summarizeBy: none
 		sourceColumn: cidade
 
@@ -36,7 +36,7 @@ table mercado_contadores
 
 	column porte
 		dataType: string
-		lineageTag: cfe01347-c986-45df-88be-eb4e9971f889
+		lineageTag: 498c8df3-05d5-425a-bf73-53dfbd758784
 		summarizeBy: none
 		sourceColumn: porte
 		sortByColumn: porte_ordem
@@ -45,7 +45,7 @@ table mercado_contadores
 
 	column segmento_principal
 		dataType: string
-		lineageTag: 2ef55f6f-ccec-4460-830f-b77ef47dfd5d
+		lineageTag: 94844d1f-1c94-4063-8322-b6170fac3b38
 		summarizeBy: none
 		sourceColumn: segmento_principal
 
@@ -53,7 +53,7 @@ table mercado_contadores
 
 	column anos_mercado
 		dataType: int64
-		lineageTag: fdcc86a5-9e82-4e3e-ab58-a083de2a5668
+		lineageTag: 00299c3b-6e71-43fd-bba9-9706f6a24d1a
 		summarizeBy: none
 		sourceColumn: anos_mercado
 
@@ -61,7 +61,7 @@ table mercado_contadores
 
 	column num_clientes_ativos
 		dataType: int64
-		lineageTag: d63ea204-5f98-4433-a891-b224e9bfb434
+		lineageTag: af54863b-0acb-416b-b223-88f6df4e5c77
 		summarizeBy: none
 		sourceColumn: num_clientes_ativos
 
@@ -69,7 +69,7 @@ table mercado_contadores
 
 	column num_funcionarios
 		dataType: int64
-		lineageTag: c29b07c6-0e28-4fdb-8cf7-53e33765c71f
+		lineageTag: 0228f9b1-eff6-4df0-8ca1-ccefe1f6e832
 		summarizeBy: none
 		sourceColumn: num_funcionarios
 
@@ -77,7 +77,7 @@ table mercado_contadores
 
 	column usa_erp
 		dataType: string
-		lineageTag: 14593da6-71eb-40ca-8498-e814502bdb33
+		lineageTag: ab7468e8-3e7c-45cf-a862-2d18c3d4e686
 		summarizeBy: none
 		sourceColumn: usa_erp
 
@@ -85,7 +85,7 @@ table mercado_contadores
 
 	column erp_atual
 		dataType: string
-		lineageTag: eab01edb-f564-49a9-a430-3124c5127427
+		lineageTag: d1a2d44e-bcbd-4a93-a1c4-173e43ad649a
 		summarizeBy: none
 		sourceColumn: erp_atual
 
@@ -93,7 +93,7 @@ table mercado_contadores
 
 	column tem_site
 		dataType: string
-		lineageTag: 4dfd18f7-933d-4981-a9c2-0231f598a5f8
+		lineageTag: c75877c9-c609-47b8-b8b9-0f653eaa0e27
 		summarizeBy: none
 		sourceColumn: tem_site
 
@@ -101,7 +101,7 @@ table mercado_contadores
 
 	column presenca_linkedin
 		dataType: string
-		lineageTag: 30fd76aa-26a2-4508-a5af-9ff925ef1372
+		lineageTag: 9112fb1a-f835-4386-960a-16d5a04fdd7f
 		summarizeBy: none
 		sourceColumn: presenca_linkedin
 
@@ -109,7 +109,7 @@ table mercado_contadores
 
 	column status_omie
 		dataType: string
-		lineageTag: 8dd24bdc-6d78-4def-927b-e3badcf9800c
+		lineageTag: df570d1e-cc08-48d2-a7dd-850afc2bc765
 		summarizeBy: none
 		sourceColumn: status_omie
 
@@ -117,7 +117,7 @@ table mercado_contadores
 
 	column converteu_omie
 		dataType: int64
-		lineageTag: 95cd585b-5a36-43bb-9290-c14a40d578d9
+		lineageTag: ee753858-46b9-4723-bd01-ecbd8ec5c91a
 		summarizeBy: none
 		sourceColumn: converteu_omie
 
@@ -126,7 +126,7 @@ table mercado_contadores
 	column score_potencial_latente
 		dataType: double
 		isHidden
-		lineageTag: 8781cbbf-24a6-45bb-8b99-3a9f4f5d7a59
+		lineageTag: d63ad13f-6212-499e-a3c2-6013dbf5a334
 		summarizeBy: none
 		sourceColumn: score_potencial_latente
 
@@ -135,7 +135,7 @@ table mercado_contadores
 	column porte_ordem
 		dataType: int64
 		isHidden
-		lineageTag: e9f1792e-d061-44ab-9342-ee109409266c
+		lineageTag: ed54d57e-d4ca-46b7-a7cc-95ba4b48b197
 		summarizeBy: none
 		sourceColumn: porte_ordem
 
@@ -146,7 +146,7 @@ table mercado_contadores
 			IF(mercado_contadores[erp_atual] IN {"Nenhum", "Planilha", "ContaAzul"}, 1, 0)
 		dataType: int64
 		formatString: 0
-		lineageTag: dda36b31-d9f1-458f-a84b-7c055a27f49a
+		lineageTag: afff23b8-01e9-482a-97fe-e2dd5a91ff22
 		summarizeBy: none
 		isHidden
 
@@ -156,7 +156,7 @@ table mercado_contadores
 	column uso_erp =
 			IF(mercado_contadores[sem_erp] = 1, "Sem ERP de mercado", "ERP de mercado")
 		dataType: string
-		lineageTag: 0d55a4f0-9b7d-443a-a61b-5c9e4bf195fa
+		lineageTag: 5dcbf334-fc81-4d69-b92d-851501b6c1ea
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
@@ -165,7 +165,7 @@ table mercado_contadores
 	column icp =
 			IF(mercado_contadores[num_clientes_ativos] >= 50 && mercado_contadores[num_funcionarios] >= 6 && mercado_contadores[sem_erp] = 0, "Sim", "Não")
 		dataType: string
-		lineageTag: dcccdeb2-9413-46f3-8b9d-ffc0f677b54c
+		lineageTag: eb5a2cc2-808d-43d7-9bc4-489f7359d4b2
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
@@ -174,7 +174,7 @@ table mercado_contadores
 	column enderecavel =
 			IF(mercado_contadores[status_omie] <> "Cliente Ativo" && mercado_contadores[converteu_omie] = 0, "Sim", "Não")
 		dataType: string
-		lineageTag: 19bb5a83-0cf2-44d2-9082-1f76eeb62eeb
+		lineageTag: 551d4a98-ebb5-42ae-8a17-95a00fde9569
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
@@ -184,7 +184,7 @@ table mercado_contadores
 			SWITCH(TRUE(), mercado_contadores[num_clientes_ativos] < 20, "1. < 20", mercado_contadores[num_clientes_ativos] < 50, "2. 20 a 49",
 			    mercado_contadores[num_clientes_ativos] < 150, "3. 50 a 149", "4. 150+")
 		dataType: string
-		lineageTag: de782766-28ab-4048-805b-f85256a06dd1
+		lineageTag: d5a85841-214d-48fa-a1a2-35b70230065c
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
@@ -194,7 +194,7 @@ table mercado_contadores
 			SWITCH(TRUE(), mercado_contadores[num_funcionarios] <= 2, "1. 1 a 2", mercado_contadores[num_funcionarios] <= 5, "2. 3 a 5",
 			    mercado_contadores[num_funcionarios] <= 15, "3. 6 a 15", "4. 16+")
 		dataType: string
-		lineageTag: d3094090-95fe-46ce-a759-690dcf0cbd5b
+		lineageTag: 8c75fbb9-ba1d-42af-b0f4-0b846e3087ab
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
@@ -203,7 +203,7 @@ table mercado_contadores
 	column faixa_anos =
 			SWITCH(TRUE(), mercado_contadores[anos_mercado] < 8, "1. < 8 anos", mercado_contadores[anos_mercado] < 16, "2. 8 a 15 anos", "3. 16+ anos")
 		dataType: string
-		lineageTag: 3b84e177-2237-425d-8af1-b74aa266f35d
+		lineageTag: 5cb95fe9-3e7a-40e5-b010-86fbe1274cb9
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
@@ -213,7 +213,7 @@ table mercado_contadores
 			LOOKUPVALUE(tiers_1c[score_prioridade], tiers_1c[id_contador], mercado_contadores[id_contador])
 		dataType: int64
 		formatString: 0
-		lineageTag: faaea127-f3e4-4a15-8a3e-3f95a0838f44
+		lineageTag: 0662a5e4-6a68-4404-8503-e8c164eeacd8
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
@@ -223,7 +223,7 @@ table mercado_contadores
 			LOOKUPVALUE(tiers_1c[nivel_fit], tiers_1c[id_contador], mercado_contadores[id_contador])
 		dataType: int64
 		formatString: 0
-		lineageTag: 094fe245-0b71-4c65-a9d9-1d0b7263924d
+		lineageTag: c9b6d3ed-9a77-4c7e-a0d7-c57c703ac7bf
 		summarizeBy: none
 		isHidden
 
@@ -233,7 +233,7 @@ table mercado_contadores
 	column fit_carteira =
 			LOOKUPVALUE(tiers_1c[fit_carteira], tiers_1c[id_contador], mercado_contadores[id_contador])
 		dataType: string
-		lineageTag: 16fc0ac8-ee8d-4a87-92fc-b870836ad8dd
+		lineageTag: 9df91e74-cdc6-490d-9f43-db1e5dac066d
 		summarizeBy: none
 		sortByColumn: fit_ordem
 
@@ -243,7 +243,7 @@ table mercado_contadores
 	column engajamento =
 			LOOKUPVALUE(tiers_1c[engajamento], tiers_1c[id_contador], mercado_contadores[id_contador])
 		dataType: string
-		lineageTag: d53f93c4-87c4-442c-8104-540bdd65e9fb
+		lineageTag: a5fae95e-f969-480e-8611-9bc586cbc600
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
@@ -254,7 +254,7 @@ table mercado_contadores
 			RETURN SWITCH(t, "Alta", 1, "Média", 2, "Baixa", 3)
 		dataType: int64
 		formatString: 0
-		lineageTag: 37b1b177-3955-414c-957e-5ae9f68f564c
+		lineageTag: bd7f58d4-b9a6-4cab-bf5d-0dd672755b52
 		summarizeBy: none
 		isHidden
 
@@ -264,7 +264,7 @@ table mercado_contadores
 	column tier_prioridade =
 			SWITCH(mercado_contadores[tier_ordem], 1, "Alta", 2, "Média", 3, "Baixa")
 		dataType: string
-		lineageTag: f07246f5-d1d1-4748-af2a-bbaab3aa48e1
+		lineageTag: 9419115f-15e9-4d51-8730-5fa9ee923b7f
 		summarizeBy: none
 		sortByColumn: tier_ordem
 
@@ -275,7 +275,7 @@ table mercado_contadores
 			LOOKUPVALUE(propensao_d2[propensao], propensao_d2[id_contador], mercado_contadores[id_contador])
 		dataType: double
 		formatString: 0.0%
-		lineageTag: 7c0598f8-5834-4700-84d6-cd7da18b0c88
+		lineageTag: 9275a51f-ee3e-4ddc-b0bd-ff9bb13b48e5
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
@@ -285,7 +285,7 @@ table mercado_contadores
 			LOOKUPVALUE(propensao_d2[faixa_ordem], propensao_d2[id_contador], mercado_contadores[id_contador])
 		dataType: int64
 		formatString: 0
-		lineageTag: 36b4ac85-02a1-41bb-8329-914b454c467b
+		lineageTag: 200f7867-8bbf-47aa-b967-761ad62d2788
 		summarizeBy: none
 		isHidden
 
@@ -295,7 +295,7 @@ table mercado_contadores
 	column faixa_propensao =
 			LOOKUPVALUE(propensao_d2[faixa_propensao], propensao_d2[id_contador], mercado_contadores[id_contador])
 		dataType: string
-		lineageTag: 235b1b8e-aa67-49e4-8605-a3924ad38e5d
+		lineageTag: d3709aec-6450-4e13-9fd7-5f14aa585eac
 		summarizeBy: none
 		sortByColumn: faixa_prop_ordem
 
@@ -305,7 +305,7 @@ table mercado_contadores
 	column situacao_pipeline =
 			COALESCE(LOOKUPVALUE(tiers_1c[estagio_aberto], tiers_1c[id_contador], mercado_contadores[id_contador]), "-")
 		dataType: string
-		lineageTag: 30cb2d19-4836-4777-9ce8-9462b8e3c240
+		lineageTag: f9423f1e-2a2f-4ee1-afb5-8ffc8b5578ed
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
@@ -316,7 +316,7 @@ table mercado_contadores
 			    IF(mercado_contadores[cidade] = "São Paulo", "FRQ001", "FRQ002"),
 			    LOOKUPVALUE(Param_Territorio[id_franquia], Param_Territorio[estado], mercado_contadores[estado]))
 		dataType: string
-		lineageTag: 42524f4e-5019-4c8c-921a-d6ddf1c34257
+		lineageTag: a101924a-d69c-44fb-948e-c696b5477aba
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
@@ -325,7 +325,7 @@ table mercado_contadores
 	column franquia_nome =
 			COALESCE(SUBSTITUTE(LOOKUPVALUE(franquias[nome_franquia], franquias[id_franquia], mercado_contadores[franquia_responsavel]), "Franquia ", ""), "Sem franquia")
 		dataType: string
-		lineageTag: 56f6bfb5-84ee-4adb-b731-bd44cbfb05ab
+		lineageTag: 29fad25f-18c3-4013-94a9-71dcecc77980
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
@@ -334,7 +334,7 @@ table mercado_contadores
 	column cobertura =
 			IF(ISBLANK(mercado_contadores[franquia_responsavel]), "Sem franquia", "Própria")
 		dataType: string
-		lineageTag: 3612eaa2-af46-4fc9-86d6-7c23a35238a2
+		lineageTag: d96b8b81-d45b-420e-b507-dea52c9158bc
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
@@ -345,7 +345,7 @@ table mercado_contadores
 			RETURN ROUND(AVERAGEX(FILTER(ALL(clientes_ativos), clientes_ativos[porte] = p), clientes_ativos[mrr_inicial]), 0)
 		dataType: double
 		formatString: #,0
-		lineageTag: 5070523c-91cb-4ed1-bb00-89fa928665ae
+		lineageTag: 7ea30b69-812b-4e8c-85fd-02cf606f4905
 		summarizeBy: none
 		isHidden
 
@@ -356,7 +356,7 @@ table mercado_contadores
 			IF(mercado_contadores[enderecavel] = "Sim", mercado_contadores[ticket_porte] * (1 - DIVIDE(COUNTROWS(FILTER(ALL(clientes_ativos), clientes_ativos[status_cliente] = "Churned")), COUNTROWS(ALL(clientes_ativos)))))
 		dataType: double
 		formatString: #,0
-		lineageTag: 738bc055-86a7-4f6c-9e4d-91cd99a361c3
+		lineageTag: b0ca4f75-f2c6-435f-b213-7d93d1a6b53b
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
@@ -366,7 +366,7 @@ table mercado_contadores
 			SWITCH(mercado_contadores[situacao_pipeline], "Proposta Enviada", 4, "Reunião Agendada", 3, "Em Contato", 2, "Novo", 1, 0)
 		dataType: int64
 		formatString: 0
-		lineageTag: cf463bbf-a15a-4514-a418-ccd818804875
+		lineageTag: 7dec444f-1ca1-4127-ae4b-66023221d30d
 		summarizeBy: none
 		isHidden
 
@@ -378,7 +378,7 @@ table mercado_contadores
 			    NOT leads_pipeline[status_lead] IN {"Ganho", "Perdido"} && leads_pipeline[tempo_ciclo_dias] > 90)) > 0, 1, 0)
 		dataType: int64
 		formatString: 0
-		lineageTag: cea00b62-8460-43c4-ab0a-6ad4a46b5806
+		lineageTag: c0717b62-ba22-4df8-8efa-933f2be95c25
 		summarizeBy: none
 		isHidden
 
@@ -391,7 +391,7 @@ table mercado_contadores
 			        mercado_contadores[tier_prioridade] = "Média", 4, 5))
 		dataType: int64
 		formatString: 0
-		lineageTag: 7c24f57b-7d41-4958-b66c-179d0f9f31dd
+		lineageTag: e071af81-1cf4-4ba3-955e-9d336541d704
 		summarizeBy: none
 		isHidden
 
@@ -402,7 +402,7 @@ table mercado_contadores
 			SWITCH(mercado_contadores[onda], 1, "1. Fechar (Reunião/Proposta)", 2, "2. Prospectar tier Alta",
 			    3, "3. Requalificar lead parado", 4, "4. Nutrir (marketing)", 5, "5. Régua automatizada")
 		dataType: string
-		lineageTag: 6d7beecb-da15-48dd-8443-710c1a3459a6
+		lineageTag: f3b807df-b16e-4edd-8586-338488f13e4f
 		summarizeBy: none
 		sortByColumn: onda
 

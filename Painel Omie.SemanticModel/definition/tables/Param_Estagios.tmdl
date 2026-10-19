@@ -1,0 +1,39 @@
+/// Estágios do lead aberto e quantas etapas do funil faltam para fechar (Sem Resposta: fora do funil)
+table Param_Estagios
+	lineageTag: 06caa065-2b9c-4111-b30e-ad67adf5d128
+
+	column ordem
+		dataType: int64
+		lineageTag: efa300a3-3dd1-4ae7-95fe-4c520a7de18d
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = User
+
+	column estagio
+		dataType: string
+		lineageTag: 2842b1bf-76c3-412d-9916-3950f15f52ad
+		summarizeBy: none
+		sourceColumn: estagio
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = User
+
+	column etapas_ate_fechar
+		dataType: int64
+		lineageTag: 84cd94ca-60bc-4132-b80a-aa53f5bb7c53
+		summarizeBy: none
+		sourceColumn: etapas_ate_fechar
+
+		annotation SummarizationSetBy = User
+
+	partition Param_Estagios = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [ordem = Int64.Type, estagio = text, etapas_ate_fechar = Int64.Type],
+				        {{1, "Proposta Enviada", 1}, {2, "Reunião Agendada", 2}, {3, "Em Contato", 3}, {4, "Novo", 3}, {5, "Sem Resposta", 0}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table

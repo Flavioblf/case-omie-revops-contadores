@@ -72,7 +72,12 @@ Score = nível do fit (1 a 3) + nível do engajamento (0 a 2): ≥ 4 Alta, 3 Mé
   1. Base: conversão por faixa Alta · Média · Baixa = 91% · 29% · 3%; o top 30% capta 69% dos convertidos;
      win rate real da faixa Alta 60% contra 65% das demais; ciclo do Ganho 36 contra 48 dias.
   2. Piloto de 90 dias com grupo de controle: win rate, nMRR por EC e ciclo do piloto melhores que os do controle.
-- **Impacto (extra):** +25% de nMRR no cenário base (10% a 46%), ≈ R$ 31 mil/mês nas 9 franquias abaixo da meta.
+- **Previsibilidade de receita (extra):** dois métodos independentes, só com dados da base, convergem para o próximo
+  trimestre: o pipeline aberto ponderado pela chance de fechar de cada estágio (taxas do funil de `execucao_comercial`)
+  prevê 6,9 Ganhos (≈ R$ 5,6 mil de nMRR), e o run-rate histórico do CRM, 8,1 (de 3 a 12 por trimestre). Os 133 leads
+  parados há mais de 90 dias entram com zero. Lacuna: os Ganhos do CRM somam 0,9% do nMRR oficial, então sem fonte única
+  dá para prever o pipeline, não a receita oficial. Aba `Previsao_Receita` e página 4 do painel.
+- **Impacto da priorização (extra):** +25% de nMRR no cenário base (10% a 46%), ≈ R$ 31 mil/mês nas 9 franquias abaixo da meta.
   Premissas declaradas: % da capacidade redirecionada ao topo (30% / 50% / 60%) e fator de realização do lift
   (25% / 40% / 60%). Com fator 0, que é o que o pipeline real sugere hoje, o uplift é 0: o número só se confirma
   com o piloto.

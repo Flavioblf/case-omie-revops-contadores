@@ -103,6 +103,16 @@ d["drivers"] = {  # Desafio 2 descritivo (sem modelo estatístico)
     "uplift": [imp[f"{c}23"].value for c in "BCD"],
     "nmrr_oficial": [imp[f"{c}24"].value for c in "BCD"],
 }
+pv = wb2["Previsao_Receita"]
+d["previsao"] = {  # previsibilidade de receita (Desafio 2, extra)
+    "estagios": [{"estagio": pv[f"A{r}"].value, "abertos": pv[f"B{r}"].value, "chance": pv[f"C{r}"].value,
+                  "ganhos": pv[f"D{r}"].value, "parados": pv[f"E{r}"].value} for r in range(13, 18)],
+    "ganhos_pipeline": pv["D18"].value, "abertos_90": pv["B18"].value, "parados": pv["E18"].value,
+    "nmrr_pipeline": pv["B22"].value, "run_rate": pv["B29"].value, "faixa_trimestre": pv["B30"].value,
+    "trimestres": [{"trimestre": pv[f"A{r}"].value, "ganhos": pv[f"D{r}"].value} for r in range(33, 42)],
+    "crm_mes": pv["B45"].value, "oficial_mes": pv["B46"].value, "crm_pct": pv["B47"].value,
+    "ganhos_priorizacao": pv["B48"].value,
+}
 
 # --- Desafio 3
 wb3 = openpyxl.load_workbook(ROOT / "output" / "Desafio3_Capacity.xlsx", data_only=True)

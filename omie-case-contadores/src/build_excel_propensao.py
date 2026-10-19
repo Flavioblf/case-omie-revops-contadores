@@ -33,7 +33,8 @@ base = con.execute("""
     LEFT JOIN vw_tiers_prospects t USING (id_contador)
     ORDER BY c.id_contador""").df()
 leads = con.execute("""
-    SELECT id_lead, id_contador, canal_origem, status_lead, mrr_inicial, num_tentativas_contato, tempo_ciclo_dias
+    SELECT id_lead, id_contador, canal_origem, status_lead, mrr_inicial, num_tentativas_contato, tempo_ciclo_dias,
+           data_conversao
     FROM leads_pipeline ORDER BY id_lead""").df()
 clientes = con.execute("""
     SELECT id_cliente, id_contador, status_cliente, mrr_inicial, mrr_atual
@@ -42,6 +43,10 @@ n_ecs = int(con.execute("SELECT SUM(num_executivos) FROM franquias").fetchone()[
 leads_por_ec, conv_execucao, ticket_execucao = con.execute(
     """SELECT AVG(leads_trabalhados), SUM(fechamentos) / SUM(leads_trabalhados), SUM(nmrr_gerado) / SUM(fechamentos)
        FROM execucao_comercial""").fetchone()
+f_leads, f_reun, f_prop, f_fech = con.execute(
+    """SELECT SUM(leads_trabalhados), SUM(reunioes_realizadas), SUM(propostas_enviadas), SUM(fechamentos)
+       FROM execucao_comercial""").fetchone()
+realizado_rede = con.execute("SELECT SUM(realizado_nmrr_mes) FROM franquias").fetchone()[0]
 realizado_abaixo, gap_abaixo, n_abaixo = con.execute(
     """SELECT SUM(realizado_nmrr_mes), SUM(meta_nmrr_mes - realizado_nmrr_mes), COUNT(*)
        FROM franquias WHERE realizado_nmrr_mes < meta_nmrr_mes""").fetchone()
@@ -182,12 +187,15 @@ larguras(ws, {"A": 26, "B": 20, "C": 11, "D": 11, "E": 9, "F": 11, "G": 3, "H": 
 ws_l = wb.create_sheet("Leads")
 header(ws_l, 1, ["id_lead", "id_contador", "canal_origem", "status_lead", "mrr_inicial", "tentativas",
                  "porte", "regiao", "converteu_omie", "com desfecho (Ganho/Perdido)", "ganho", "tier (1c)", "icp",
-                 "faixa de propensão (D2)", "tempo_ciclo_dias"])
+                 "faixa de propensão (D2)", "tempo_ciclo_dias", "data_conversao"])
 for i, row in enumerate(leads.itertuples(index=False), start=2):
     for j, v in enumerate(row[:6], start=1):
         val = py(v)
         ws_l.cell(row=i, column=j, value=None if (isinstance(val, float) and val != val) else val)
     ws_l[f"O{i}"] = py(row[6])
+    if row[7] == row[7] and row[7] is not None:  # só Ganho tem data_conversao
+        ws_l[f"P{i}"] = row[7].to_pydatetime() if hasattr(row[7], "to_pydatetime") else row[7]
+        ws_l[f"P{i}"].number_format = "dd/mm/yyyy"
     m = f"MATCH(B{i},Base!$A$2:$A${L},0)"
     ws_l[f"G{i}"] = f"=INDEX(Base!$D$2:$D${L},{m})"
     ws_l[f"H{i}"] = f"=INDEX(Base!$C$2:$C${L},{m})"
@@ -199,7 +207,7 @@ for i, row in enumerate(leads.itertuples(index=False), start=2):
     ws_l[f"N{i}"] = f"=INDEX(Base!$AB$2:$AB${L},{m})"
 LL_ = len(leads) + 1
 ws_l.freeze_panes = "A2"
-ws_l.auto_filter.ref = f"A1:O{LL_}"
+ws_l.auto_filter.ref = f"A1:P{LL_}"
 
 ws_c = wb.create_sheet("Clientes")
 header(ws_c, 1, ["id_cliente", "id_contador", "status_cliente", "mrr_inicial", "mrr_atual", "porte", "converteu_omie"])
@@ -388,6 +396,100 @@ for k, (t, fonte) in enumerate([
 ws.row_dimensions[24].height = 30
 larguras(ws, {"A": 44, "B": 15, "C": 15, "D": 15, "E": 70})
 
+# ---------------------------------------------------------------- Previsibilidade de receita (próximo trimestre)
+ws = wb.create_sheet("Previsao_Receita")
+ws["A1"], ws["A1"].font = "Previsibilidade de receita: quanto o pipeline atual deve gerar no próximo trimestre", F_TITULO
+ws["A2"] = ("Dois métodos independentes, só com dados da base: (1) pipeline aberto ponderado pela chance de fechar de cada "
+            "estágio; (2) run-rate histórico de Ganhos do CRM. Janela de 90 dias: nenhum Ganho da base fechou depois de 89 dias.")
+ws["A4"], ws["A4"].font = "1. Chance de fechar por estágio (funil de execucao_comercial, 2024)", F_SUB
+header(ws, 5, ["Etapa do funil", "Volume", "Taxa da etapa"])
+for k, (nome, val, taxa) in enumerate([("Leads trabalhados", f_leads, None), ("Reuniões realizadas", f_reun, "Lead → reunião"),
+                                       ("Propostas enviadas", f_prop, "Reunião → proposta"),
+                                       ("Fechamentos", f_fech, "Proposta → fechamento")]):
+    r = 6 + k
+    ws.cell(row=r, column=1, value=nome)
+    ws.cell(row=r, column=2, value=int(val)).number_format = "#,##0"
+    if taxa:
+        ws.cell(row=r, column=3, value=f"=B{r}/B{r - 1}").number_format = PCT1
+        ws.cell(row=r, column=4, value=taxa)
+
+ws["A11"], ws["A11"].font = "2. Método 1: pipeline aberto ponderado (leads abertos há até 90 dias)", F_SUB
+header(ws, 12, ["Estágio do lead", "Leads abertos até 90 dias", "Chance de fechar", "Ganhos esperados",
+                "Leads parados (> 90 dias): chance 0", "De onde vem a chance"])
+estagios = [("Proposta Enviada", "=C9", "Proposta → fechamento"),
+            ("Reunião Agendada", "=C8*C9", "Reunião → proposta → fechamento"),
+            ("Em Contato", "=C7*C8*C9", "Lead → reunião → proposta → fechamento"),
+            ("Novo", "=C7*C8*C9", "Lead → reunião → proposta → fechamento"),
+            ("Sem Resposta", 0, "Fora do funil: o contador não respondeu")]
+for k, (est, chance, origem) in enumerate(estagios):
+    r = 13 + k
+    ws.cell(row=r, column=1, value=est)
+    ws.cell(row=r, column=2, value=f'=COUNTIFS({lr("D")},A{r},{lr("O")},"<=90")')
+    ws.cell(row=r, column=3, value=chance).number_format = PCT1
+    ws.cell(row=r, column=4, value=f"=B{r}*C{r}").number_format = "0.0"
+    ws.cell(row=r, column=5, value=f'=COUNTIFS({lr("D")},A{r},{lr("O")},">90")')
+    ws.cell(row=r, column=6, value=origem)
+ws["A18"], ws["A18"].font = "Total", F_SUB
+for col in "BDE":
+    ws[f"{col}18"] = f"=SUM({col}13:{col}17)"
+ws["D18"].number_format = "0.0"
+ws["D18"].fill = FILL_DESTAQUE
+for k, (nome, f, fmt) in enumerate([
+    ("Ticket médio do Ganho (R$)", f'=AVERAGEIF({lr("D")},"Ganho",{lr("E")})', BRL),
+    ("Churn dos contratos", f'=COUNTIF({cr("C")},"Churned")/COUNTA({cr("A")})', PCT1),
+    ("nMRR esperado do pipeline no trimestre (R$, escala do CRM)", "=D18*B20*(1-B21)", BRL)]):
+    r = 20 + k
+    ws.cell(row=r, column=1, value=nome)
+    c = ws.cell(row=r, column=2, value=f)
+    c.number_format = fmt
+ws["B22"].fill = FILL_DESTAQUE
+
+ws["A24"], ws["A24"].font = "3. Método 2: run-rate histórico de Ganhos (CRM)", F_SUB
+for k, (nome, f, fmt) in enumerate([
+    ("Primeiro Ganho", f"=MIN({lr('P')})", "dd/mm/yyyy"),
+    ("Último Ganho", f"=MAX({lr('P')})", "dd/mm/yyyy"),
+    ("Meses de histórico", "=(YEAR(B26)-YEAR(B25))*12+MONTH(B26)-MONTH(B25)+1", "0"),
+    ("Ganhos no período", f'=COUNTIF({lr("D")},"Ganho")', "0"),
+    ("Ganhos por trimestre (run-rate)", "=B28/B27*3", "0.0"),
+    ("Menor e maior trimestre fechado", '=MIN(D33:D40)&" a "&MAX(D33:D40)', None)]):
+    r = 25 + k
+    ws.cell(row=r, column=1, value=nome)
+    c = ws.cell(row=r, column=2, value=f)
+    if fmt:
+        c.number_format = fmt
+ws["B29"].fill = FILL_DESTAQUE
+header(ws, 32, ["Trimestre", "Início", "Fim", "Ganhos"])
+tri = [(a, t) for a in (2024, 2025) for t in (1, 2, 3, 4)] + [(2026, 1)]
+for k, (ano, t) in enumerate(tri):
+    r = 33 + k
+    ws.cell(row=r, column=1, value=f"{ano} T{t}" + (" (parcial, até 07/03)" if (ano, t) == (2026, 1) else ""))
+    ws.cell(row=r, column=2, value=f"=DATE({ano},{3 * t - 2},1)").number_format = "dd/mm/yyyy"
+    ws.cell(row=r, column=3, value=f"=EOMONTH(B{r},2)").number_format = "dd/mm/yyyy"
+    ws.cell(row=r, column=4, value=f'=COUNTIFS({lr("D")},"Ganho",{lr("P")},">="&B{r},{lr("P")},"<="&C{r})')
+
+ws["A44"], ws["A44"].font = "4. Lacuna de previsibilidade e alavanca", F_SUB
+for k, (nome, f, fmt) in enumerate([
+    ("nMRR de Ganhos do CRM por mês (R$)", f'=SUMIF({lr("D")},"Ganho",{lr("E")})/B27', BRL),
+    ("nMRR oficial da rede por mês (R$, aba franquias)", int(realizado_rede), BRL),
+    ("CRM ÷ oficial", "=B45/B46", PCT1),
+    ("Ganhos previstos no trimestre com a priorização (cenário base do Impacto_nMRR)", "=D18*(1+Impacto_nMRR!C23)", "0.0")]):
+    r = 45 + k
+    ws.cell(row=r, column=1, value=nome)
+    c = ws.cell(row=r, column=2, value=f)
+    c.number_format = fmt
+ws["B47"].fill = FILL_DESTAQUE
+ws["A50"], ws["A50"].font = "Leitura", F_SUB
+for k, t in enumerate([
+    "• Os dois métodos convergem (pipeline ponderado × run-rate): o pipeline do CRM é previsível no curto prazo.",
+    "• Os leads parados há mais de 90 dias entram com chance zero: o pipeline nominal superestima o que vai fechar.",
+    "• A chance de fechar por estágio vem de execucao_comercial (outra fonte) aplicada aos leads do CRM: é a melhor evidência "
+    "da base, e a convergência com o run-rate mostra que funciona.",
+    "• Lacuna: os Ganhos do CRM explicam uma fração mínima do nMRR oficial. Sem uma fonte única de nMRR, dá para prever o "
+    "pipeline do CRM, mas não a receita oficial do canal.",
+]):
+    ws.cell(row=51 + k, column=1, value=t)
+larguras(ws, {"A": 62, "B": 22, "C": 16, "D": 16, "E": 22, "F": 40})
+
 # ---------------------------------------------------------------- Respostas (as 4 perguntas do Desafio 2)
 ws = ws_resp
 RK = "Drivers!$J$6:$J$14"
@@ -435,6 +537,14 @@ linhas += [
     ("• Premissas: 50% da capacidade dos ECs vai para o top 30% do score; 40% do lift do topo vira Ganho real "
      "(fator de realização, hipótese); ticket = mrr_inicial médio; desconto de churn de 20,5%.", None, None),
     ("• Teste de estresse: com fator de realização 0, o uplift é 0. O número só se confirma com o piloto.", None, None),
+    ("", None, None),
+    ("5. Previsibilidade de receita: o que o pipeline atual deve gerar no próximo trimestre", F_SUB, None),
+    ("Método 1: pipeline aberto ponderado pela chance de fechar de cada estágio (Ganhos)", None, ("=Previsao_Receita!D18", "0.0")),
+    ("Método 2: run-rate histórico do CRM (Ganhos por trimestre)", None, ("=Previsao_Receita!B29", "0.0")),
+    ("nMRR esperado do pipeline no trimestre (R$, escala do CRM)", None, ("=Previsao_Receita!B22", BRL)),
+    ("Ganhos do CRM ÷ nMRR oficial do canal", None, ("=Previsao_Receita!B47", PCT1)),
+    ("• Os dois métodos convergem: o pipeline do CRM é previsível. Mas ele explica uma fração mínima do nMRR oficial: "
+     "sem fonte única de nMRR, não dá para prever a receita oficial do canal.", None, None),
 ]
 for i, (txt, fonte, val) in enumerate(linhas, start=1):
     if val and val[0] == "top5":
@@ -454,6 +564,7 @@ for i, (txt, fonte, val) in enumerate(linhas, start=1):
             cv.number_format = val[1]
 larguras(ws, {"A": 120, "B": 16})
 
+wb.move_sheet("Previsao_Receita", offset=-(len(wb.sheetnames) - 1 - wb.sheetnames.index("Impacto_nMRR")) + 1)
 wb.move_sheet("Base", offset=10)
 wb.move_sheet("Leads", offset=10)
 wb.move_sheet("Clientes", offset=10)

@@ -23,6 +23,7 @@ Projeto `Painel Omie.pbip` (modelo em TMDL, relatório em PBIR), gerado por `omi
 | `propensao_d2` (oculta) | `dbo.vw_propensao_d2` | 1 linha por contador (600) | Score e faixa de propensão do Desafio 2 |
 | `Param_Variaveis` | Tabela fixa | 9 características | Lista para o ranking dos drivers |
 | `Param_Avaliacao` | Tabela fixa | 6 métricas | Plano de avaliação em duas etapas (Desafio 2) |
+| `Param_Estagios` | Tabela fixa | 5 estágios | Estágios do lead aberto para o pipeline ponderado (Desafio 2, extra) |
 | `Param_Cenarios` | Tabela fixa | 3 cenários | Premissas do impacto |
 | `clientes_ativos` | `raw.clientes_ativos` | 1 linha por contrato (73) | Ticket por porte e churn (Desafio 3) |
 | `Param_Ondas` | Tabela fixa | 5 ondas | Quem entra, o que o EC faz e por quê (Desafio 3b) |
@@ -217,6 +218,12 @@ SWITCH(mercado_contadores[onda], 1, "1. Fechar (Reunião/Proposta)", 2, "2. Pros
 
 ```dax
 IF(leads_pipeline[status_lead] = "Ganho", 1, 0)
+```
+
+**`trimestre_ganho`** - Trimestre do Ganho (data_conversao)
+
+```dax
+IF(leads_pipeline[status_lead] = "Ganho", FORMAT(YEAR(leads_pipeline[data_conversao]), "0") & " T" & FORMAT(QUARTER(leads_pipeline[data_conversao]), "0"))
 ```
 
 **`com_desfecho`** - 1 = lead encerrado (Ganho ou Perdido)
@@ -532,6 +539,71 @@ SELECTEDVALUE(Param_Cenarios[fator_realizacao])
 [Uplift nMRR] * [Realizado Franquias Abaixo da Meta]
 ```
 
+**[Chance de Fechar]** - Chance de o lead fechar a partir do estágio atual: produto das taxas do funil que faltam (execucao_comercial) · formato `0.0%`
+
+```dax
+VAR lr = CALCULATE(DIVIDE(SUM(execucao_comercial[reunioes_realizadas]), SUM(execucao_comercial[leads_trabalhados])), REMOVEFILTERS(execucao_comercial))
+VAR rp = CALCULATE(DIVIDE(SUM(execucao_comercial[propostas_enviadas]), SUM(execucao_comercial[reunioes_realizadas])), REMOVEFILTERS(execucao_comercial))
+VAR pf = CALCULATE(DIVIDE(SUM(execucao_comercial[fechamentos]), SUM(execucao_comercial[propostas_enviadas])), REMOVEFILTERS(execucao_comercial))
+RETURN SWITCH(SELECTEDVALUE(Param_Estagios[etapas_ate_fechar]), 1, pf, 2, rp * pf, 3, lr * rp * pf, 0)
+```
+
+**[Leads Abertos até 90 Dias]** - Leads abertos no estágio, com até 90 dias · formato `0`
+
+```dax
+CALCULATE(COUNTROWS(leads_pipeline), leads_pipeline[status_lead] = SELECTEDVALUE(Param_Estagios[estagio]), leads_pipeline[tempo_ciclo_dias] <= 90)
+```
+
+**[Leads Parados (> 90 dias)]** - Leads abertos há mais de 90 dias: nenhum Ganho da base fechou depois de 89 dias · formato `0`
+
+```dax
+CALCULATE(COUNTROWS(leads_pipeline), leads_pipeline[status_lead] = SELECTEDVALUE(Param_Estagios[estagio]), leads_pipeline[tempo_ciclo_dias] > 90)
+```
+
+**[Ganhos Esperados]** - Leads abertos até 90 dias × chance de fechar · formato `0.0`
+
+```dax
+[Leads Abertos até 90 Dias] * [Chance de Fechar]
+```
+
+**[Ganhos Previstos (Pipeline)]** - Método 1: soma dos Ganhos esperados do pipeline aberto (próximo trimestre) · formato `0.0`
+
+```dax
+SUMX(Param_Estagios, [Ganhos Esperados])
+```
+
+**[Ticket Médio do Ganho]** - mrr_inicial médio dos Ganhos · formato `#,0`
+
+```dax
+CALCULATE(AVERAGE(leads_pipeline[mrr_inicial]), leads_pipeline[status_lead] = "Ganho")
+```
+
+**[nMRR Previsto (Pipeline)]** - Ganhos previstos × ticket médio × (1 − churn), escala do CRM · formato `#,0`
+
+```dax
+[Ganhos Previstos (Pipeline)] * [Ticket Médio do Ganho] * (1 - DIVIDE(COUNTROWS(FILTER(ALL(clientes_ativos), clientes_ativos[status_cliente] = "Churned")), COUNTROWS(ALL(clientes_ativos))))
+```
+
+**[Meses de Histórico de Ganhos]** - Meses entre o primeiro e o último Ganho · formato `0`
+
+```dax
+VAR d1 = CALCULATE(MIN(leads_pipeline[data_conversao]), leads_pipeline[status_lead] = "Ganho")
+VAR d2 = CALCULATE(MAX(leads_pipeline[data_conversao]), leads_pipeline[status_lead] = "Ganho")
+RETURN (YEAR(d2) - YEAR(d1)) * 12 + MONTH(d2) - MONTH(d1) + 1
+```
+
+**[Ganhos por Trimestre (Run-rate)]** - Método 2: Ganhos do CRM por mês × 3 · formato `0.0`
+
+```dax
+DIVIDE(CALCULATE(COUNTROWS(leads_pipeline), leads_pipeline[status_lead] = "Ganho"), [Meses de Histórico de Ganhos]) * 3
+```
+
+**[CRM ÷ nMRR Oficial]** - nMRR mensal dos Ganhos do CRM ÷ nMRR oficial da rede (tabela franquias) · formato `0.0%`
+
+```dax
+DIVIDE(DIVIDE(CALCULATE(SUM(leads_pipeline[mrr_inicial]), leads_pipeline[status_lead] = "Ganho"), [Meses de Histórico de Ganhos]), SUM(franquias[realizado_nmrr_mes]))
+```
+
 ### 6. Desafio 3
 
 **[Franquias Abaixo da Meta]** - Nº de franquias abaixo da meta · formato `0`
@@ -695,7 +767,7 @@ SUBSTITUTE(MAXX(TOPN(1, ALLNOBLANKROW(franquias), [Fechamentos Potenciais por EC
 - **D1 · Mercado, conversão e tiers** - 1a (endereçáveis por região e porte), 1b (conversão e ROI de esforço por canal e franquia) e 1c (matriz Fit × Engajamento e tiers), lidos das views do SQL.
 - **D2 · Lógica, top 5 e propensão** - variáveis e porquê, ranking dos drivers e os 303 endereçáveis ordenados pelo score de propensão.
 - **D2 · Como avaliar** - plano em duas etapas (base e piloto): tabela de métricas com hoje, meta e etapa, e o target × win rate real por faixa de propensão.
-- **D2 · Impacto em nMRR** - uplift por cenário e premissas.
+- **D2 · Previsibilidade e impacto** - previsão do próximo trimestre por dois métodos (pipeline ponderado e run-rate do CRM), lacuna do CRM frente ao nMRR oficial e a priorização como alavanca (cenários).
 - **D3a · Gap e risco** - meta × realizado por franquia (barra de progresso), gap das franquias abaixo da meta e atingimento por região, e a análise por EC equivalente.
 - **D3b · Priorização** - as 5 ondas, ondas 1 e 2 por franquia e a lista de quem atacar primeiro.
 - **D3c · EC adicional** - franquia recomendada e ranking por fechamentos potenciais por EC (endereçáveis por EC × conversão do funil).
@@ -719,6 +791,8 @@ Cores, fontes e componentes de `deck/design_system/tokens.json`: tema `Omie.json
 | Matriz 1c (Alto, Médio, Baixo × Quente, Morno, Frio) | 3-13-80 / 5-9-103 / 7-10-73 |
 | Melhor ROI de esforço (1b) | Evento (24,8 tentativas por ganho) |
 | Uplift nMRR (Conservador / Base / Otimista) | +9,5% / +25,4% / +45,6% |
+| Ganhos previstos no trimestre: pipeline ponderado / run-rate do CRM | 6,9 / 8,1 |
+| nMRR previsto do pipeline (R$, escala do CRM) / CRM ÷ nMRR oficial | 5.597 / 0,9% |
 | Gap de meta / franquias abaixo da meta | R$ 19.500 / 9 |
 | Correlação nº de ECs × atingimento (meses_operando dá 0,65, mas contradiz data_inicio) | 0,64 |
 | Gap das franquias abaixo da meta por região: Nordeste / Norte / Centro-Oeste / Sudeste / Sul | 6.500 / 4.000 / 4.000 / 4.000 / 1.000 |

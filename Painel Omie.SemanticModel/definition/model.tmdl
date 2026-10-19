@@ -11,7 +11,7 @@ annotation __PBI_TimeIntelligenceEnabled = 0
 
 annotation PBI_ProTooling = ["DevMode"]
 
-annotation PBI_QueryOrder = ["ServidorSQL","BancoSQL","_Medidas","mercado_contadores","leads_pipeline","franquias","execucao_comercial","clientes_ativos","tiers_1c","propensao_d2","d1a_mercado","d1b_conversao","Param_Variaveis","Param_Cenarios","Param_Avaliacao","Param_Ondas","Param_Territorio"]
+annotation PBI_QueryOrder = ["ServidorSQL","BancoSQL","_Medidas","mercado_contadores","leads_pipeline","franquias","execucao_comercial","clientes_ativos","tiers_1c","propensao_d2","d1a_mercado","d1b_conversao","Param_Variaveis","Param_Cenarios","Param_Estagios","Param_Avaliacao","Param_Ondas","Param_Territorio"]
 
 ref table _Medidas
 ref table mercado_contadores
@@ -25,6 +25,7 @@ ref table d1a_mercado
 ref table d1b_conversao
 ref table Param_Variaveis
 ref table Param_Cenarios
+ref table Param_Estagios
 ref table Param_Avaliacao
 ref table Param_Ondas
 ref table Param_Territorio

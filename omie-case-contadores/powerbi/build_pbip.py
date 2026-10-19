@@ -172,6 +172,9 @@ CALC_MERCADO = [  # (nome, dataType, formatString, DAX, sortBy, oculta, descriç
 ]
 CALC_LEADS = [
     ("ganho", I, "0", 'IF(leads_pipeline[status_lead] = "Ganho", 1, 0)', None, True, "1 = lead Ganho"),
+    ("trimestre_ganho", S, None,
+     'IF(leads_pipeline[status_lead] = "Ganho", FORMAT(YEAR(leads_pipeline[data_conversao]), "0") & " T" & '
+     'FORMAT(QUARTER(leads_pipeline[data_conversao]), "0"))', None, False, "Trimestre do Ganho (data_conversao)"),
     ("com_desfecho", I, "0", 'IF(leads_pipeline[status_lead] IN {"Ganho", "Perdido"}, 1, 0)', None, True,
      "1 = lead encerrado (Ganho ou Perdido)"),
 ]
@@ -191,6 +194,13 @@ PARAM_TABLES = {
         "let\n    Fonte = #table(\n        type table [ordem = Int64.Type, cenario = text, pct_redirecionado = number, fator_realizacao = number],\n"
         f"        {CEN_M})\nin\n    Fonte",
         "Premissas dos cenários de impacto (iguais à aba Impacto_nMRR do Excel)", {"cenario": "ordem"}),
+    "Param_Estagios": (
+        [("ordem", I), ("estagio", S), ("etapas_ate_fechar", I)],
+        "let\n    Fonte = #table(type table [ordem = Int64.Type, estagio = text, etapas_ate_fechar = Int64.Type],\n"
+        '        {{1, "Proposta Enviada", 1}, {2, "Reunião Agendada", 2}, {3, "Em Contato", 3}, {4, "Novo", 3}, '
+        '{5, "Sem Resposta", 0}})\nin\n    Fonte',
+        "Estágios do lead aberto e quantas etapas do funil faltam para fechar (Sem Resposta: fora do funil)",
+        {"estagio": "ordem"}),
 }
 
 
@@ -208,6 +218,8 @@ CALC_CLIENTES = [
 ]
 CHURN_DAX = ('DIVIDE(COUNTROWS(FILTER(ALL(clientes_ativos), clientes_ativos[status_cliente] = "Churned")), '
              "COUNTROWS(ALL(clientes_ativos)))")
+EXEC_TAXA = ("CALCULATE(DIVIDE(SUM(execucao_comercial[{a}]), SUM(execucao_comercial[{b}])), "
+             "REMOVEFILTERS(execucao_comercial))")  # taxa de uma etapa do funil da rede
 CALC_MERCADO += [
     ("franquia_responsavel", S, None, "\n".join([
         f'IF({MC}[estado] = "SP",',
@@ -385,6 +397,38 @@ MEDIDAS = [  # (nome, pasta, formato, DAX, descrição)
      "% capacidade × (lift do top 30% do score − 1) × fator de realização"),
     ("nMRR Incremental (Franquias Abaixo da Meta)", "5. Impacto", "#,0",
      "[Uplift nMRR] * [Realizado Franquias Abaixo da Meta]", "Uplift aplicado ao nMRR oficial dessas franquias (R$/mês)"),
+    ("Chance de Fechar", "5. Impacto", "0.0%", "\n".join([
+        "VAR lr = " + EXEC_TAXA.format(a="reunioes_realizadas", b="leads_trabalhados"),
+        "VAR rp = " + EXEC_TAXA.format(a="propostas_enviadas", b="reunioes_realizadas"),
+        "VAR pf = " + EXEC_TAXA.format(a="fechamentos", b="propostas_enviadas"),
+        "RETURN SWITCH(SELECTEDVALUE(Param_Estagios[etapas_ate_fechar]), 1, pf, 2, rp * pf, 3, lr * rp * pf, 0)"]),
+     "Chance de o lead fechar a partir do estágio atual: produto das taxas do funil que faltam (execucao_comercial)"),
+    ("Leads Abertos até 90 Dias", "5. Impacto", "0",
+     "CALCULATE(COUNTROWS(leads_pipeline), leads_pipeline[status_lead] = SELECTEDVALUE(Param_Estagios[estagio]), "
+     "leads_pipeline[tempo_ciclo_dias] <= 90)", "Leads abertos no estágio, com até 90 dias"),
+    ("Leads Parados (> 90 dias)", "5. Impacto", "0",
+     "CALCULATE(COUNTROWS(leads_pipeline), leads_pipeline[status_lead] = SELECTEDVALUE(Param_Estagios[estagio]), "
+     "leads_pipeline[tempo_ciclo_dias] > 90)", "Leads abertos há mais de 90 dias: nenhum Ganho da base fechou depois de 89 dias"),
+    ("Ganhos Esperados", "5. Impacto", "0.0", "[Leads Abertos até 90 Dias] * [Chance de Fechar]",
+     "Leads abertos até 90 dias × chance de fechar"),
+    ("Ganhos Previstos (Pipeline)", "5. Impacto", "0.0", "SUMX(Param_Estagios, [Ganhos Esperados])",
+     "Método 1: soma dos Ganhos esperados do pipeline aberto (próximo trimestre)"),
+    ("Ticket Médio do Ganho", "5. Impacto", "#,0",
+     'CALCULATE(AVERAGE(leads_pipeline[mrr_inicial]), leads_pipeline[status_lead] = "Ganho")', "mrr_inicial médio dos Ganhos"),
+    ("nMRR Previsto (Pipeline)", "5. Impacto", "#,0",
+     f"[Ganhos Previstos (Pipeline)] * [Ticket Médio do Ganho] * (1 - {CHURN_DAX})",
+     "Ganhos previstos × ticket médio × (1 − churn), escala do CRM"),
+    ("Meses de Histórico de Ganhos", "5. Impacto", "0", "\n".join([
+        'VAR d1 = CALCULATE(MIN(leads_pipeline[data_conversao]), leads_pipeline[status_lead] = "Ganho")',
+        'VAR d2 = CALCULATE(MAX(leads_pipeline[data_conversao]), leads_pipeline[status_lead] = "Ganho")',
+        "RETURN (YEAR(d2) - YEAR(d1)) * 12 + MONTH(d2) - MONTH(d1) + 1"]), "Meses entre o primeiro e o último Ganho"),
+    ("Ganhos por Trimestre (Run-rate)", "5. Impacto", "0.0",
+     'DIVIDE(CALCULATE(COUNTROWS(leads_pipeline), leads_pipeline[status_lead] = "Ganho"), [Meses de Histórico de Ganhos]) * 3',
+     "Método 2: Ganhos do CRM por mês × 3"),
+    ("CRM ÷ nMRR Oficial", "5. Impacto", "0.0%",
+     'DIVIDE(DIVIDE(CALCULATE(SUM(leads_pipeline[mrr_inicial]), leads_pipeline[status_lead] = "Ganho"), '
+     "[Meses de Histórico de Ganhos]), SUM(franquias[realizado_nmrr_mes]))",
+     "nMRR mensal dos Ganhos do CRM ÷ nMRR oficial da rede (tabela franquias)"),
 ]
 
 
@@ -852,32 +896,44 @@ def paginas():
         [("O target ordena; o real ainda não confirma.", 10, True, HEX["teal"])]], fundo=HEX["gelo"]))
     ps.append(("D2 · Como avaliar", v))
 
-    # ---------------------------------------------------------------- 4. Desafio 2: impacto (extra)
-    pr = dv["premissas"]
-    v = cabecalho("Desafio 2 · Impacto em nMRR (extra)", "Priorizar o topo da propensão pode render -",
-                  f"+{pc(dv['uplift'][1])} de nMRR no cenário base, se o piloto confirmar")
+    # ---------------------------------------------------------------- 4. Desafio 2: previsibilidade e impacto (extra)
+    pr, pv = dv["premissas"], D["previsao"]
+    v = cabecalho("Desafio 2 · Previsibilidade e impacto em nMRR (extra)",
+                  f"O pipeline prevê {br(pv['ganhos_pipeline'], 0)} a {br(pv['run_rate'], 0)} Ganhos no próximo trimestre -",
+                  f"mas os Ganhos do CRM explicam só {pc(pv['crm_pct'], 1)} do nMRR oficial")
     v.append(bloco_qa(24, Y_QA, 1872, 210,
                       "Extra: qual o nMRR incremental se o time comercial priorizar os contadores com maior score de "
                       "propensão? Que premissas você assumiu?", [
-                          f"+{pc(dv['uplift'][1])} de nMRR no cenário base ({pc(dv['uplift'][0])} a {pc(dv['uplift'][2])}), "
-                          f"≈ R$ {br(dv['nmrr_oficial'][1] / 1000, 1)} mil/mês nas 9 franquias abaixo da meta.",
-                          f"Premissas: 50% da capacidade dos ECs ({pr['ecs']} ECs × {br(pr['leads_ec'], 1)} leads/mês) vai "
-                          f"para o top 30%; lift do topo de {br(dv['top30_lift'], 1)}x; 40% do lift vira Ganho real "
-                          f"(hipótese a validar no piloto); ticket de R$ {br(pr['ticket'])}; churn de {pc(pr['churn'], 1)}. "
-                          "Com fator de realização 0, o uplift é 0."]))
-    v.append(tabela_visual(24, Y1, 1180, 400,
+                          f"Previsão (só dados): pipeline ponderado = {br(pv['ganhos_pipeline'], 1)} Ganhos no próximo trimestre "
+                          f"(≈ R$ {br(pv['nmrr_pipeline'] / 1000, 1)} mil de nMRR); run-rate do CRM = {br(pv['run_rate'], 1)} "
+                          f"({pv['faixa_trimestre']} por trimestre). Os métodos convergem; os {pv['parados']} leads parados entram com zero.",
+                          f"Priorizar o topo: +{pc(dv['uplift'][1])} no cenário base ({pc(dv['uplift'][0])} a {pc(dv['uplift'][2])}) "
+                          f"≈ {br(pv['ganhos_priorizacao'], 1)} Ganhos no trimestre e R$ {br(dv['nmrr_oficial'][1] / 1000, 1)} mil/mês "
+                          "nas 9 franquias abaixo da meta, se o piloto confirmar (premissas na tabela).",
+                          f"Lacuna: os Ganhos do CRM são {pc(pv['crm_pct'], 1)} do nMRR oficial: sem fonte única, prevê-se o "
+                          "pipeline, não a receita oficial."]))
+    pe = lambda c: coluna("Param_Estagios", c)  # noqa: E731
+    v.append(tabela_visual(24, Y1, 1100, 360,
+                           [(pe("estagio"), "Estágio"), (medida("Leads Abertos até 90 Dias"), "Abertos ≤ 90d"),
+                            (medida("Chance de Fechar"), "Chance (funil)"), (medida("Ganhos Esperados"), "Ganhos esp."),
+                            (medida("Leads Parados (> 90 dias)"), "Parados > 90d")],
+                           "Método 1: pipeline ponderado pela chance de fechar",
+                           ordem=(pe("ordem"), "Ascending")))
+    trimestres = [t["trimestre"].split(" (")[0] for t in pv["trimestres"]]
+    v.append(grafico("columnChart", 24, 774, 1100, 286, coluna("leads_pipeline", "trimestre_ganho"),
+                     [("Ganhos (Real)", "Ganhos")], "Método 2: Ganhos por trimestre no CRM (2026 T1 parcial, até 07/03)",
+                     cores=[HEX["teal"]], filtro=filtro_coluna("leads_pipeline", "trimestre_ganho", trimestres)))
+    for k, (m_, rot, escuro) in enumerate([("Ganhos Previstos (Pipeline)", "Ganhos previstos (pipeline)", True),
+                                          ("Ganhos por Trimestre (Run-rate)", "Ganhos/trimestre (run-rate)", False),
+                                          ("nMRR Previsto (Pipeline)", "nMRR previsto (R$, CRM)", False),
+                                          ("CRM ÷ nMRR Oficial", "CRM ÷ nMRR oficial", False)]):
+        v.append(cartao(1140 + (k % 2) * 386, Y1 + (k // 2) * 188, 370, 172, m_, rot, escuro=escuro))
+    v.append(tabela_visual(1140, 774, 756, 286,
                            [(coluna("Param_Cenarios", "cenario"), "Cenário"),
-                            (medida("% Capacidade Redirecionada"), "% da capacidade"), (medida("Fator de Realização"), "Fator"),
+                            (medida("% Capacidade Redirecionada"), "% capacidade"), (medida("Fator de Realização"), "Fator"),
                             (medida("Uplift nMRR"), "Uplift"), (medida("nMRR Incremental (Franquias Abaixo da Meta)"), "R$/mês")],
-                           "Impacto por cenário", ordem=(coluna("Param_Cenarios", "cenario"), "Ascending")))
-    v.append(caixa_texto(1220, Y1, 676, 400, [
-        [("Como o número é calculado", 14, True, HEX["deep"])],
-        [("Uplift = % da capacidade × (lift do topo − 1) × fator de realização.", 10, False, HEX["deep"])],
-        [("O lift vem do target (converteu_omie), que diverge do fechamento real: por isso só uma fração "
-          "(o fator) vira Ganho, e o número só se confirma com o piloto.", 10, False, HEX["deep"])],
-        [("O % é o número principal: as três fontes de nMRR da base estão em escalas diferentes.", 10, True, HEX["teal"])]],
-        fundo=HEX["gelo"]))
-    ps.append(("D2 · Impacto em nMRR", v))
+                           "Alavanca: priorizar o topo da propensão", ordem=(coluna("Param_Cenarios", "cenario"), "Ascending")))
+    ps.append(("D2 · Previsibilidade e impacto", v))
 
     # ---------------------------------------------------------------- 5. Desafio 3a
     fr = D["franquias"]
@@ -1069,6 +1125,7 @@ def escrever_doc():
          "| `propensao_d2` (oculta) | `dbo.vw_propensao_d2` | 1 linha por contador (600) | Score e faixa de propensão do Desafio 2 |",
          "| `Param_Variaveis` | Tabela fixa | 9 características | Lista para o ranking dos drivers |",
          "| `Param_Avaliacao` | Tabela fixa | 6 métricas | Plano de avaliação em duas etapas (Desafio 2) |",
+         "| `Param_Estagios` | Tabela fixa | 5 estágios | Estágios do lead aberto para o pipeline ponderado (Desafio 2, extra) |",
          "| `Param_Cenarios` | Tabela fixa | 3 cenários | Premissas do impacto |",
          "| `clientes_ativos` | `raw.clientes_ativos` | 1 linha por contrato (73) | Ticket por porte e churn (Desafio 3) |",
          "| `Param_Ondas` | Tabela fixa | 5 ondas | Quem entra, o que o EC faz e por quê (Desafio 3b) |",
@@ -1103,7 +1160,8 @@ def escrever_doc():
           "score de propensão.",
           "- **D2 · Como avaliar** - plano em duas etapas (base e piloto): tabela de métricas com hoje, meta e etapa, e o "
           "target × win rate real por faixa de propensão.",
-          "- **D2 · Impacto em nMRR** - uplift por cenário e premissas.",
+          "- **D2 · Previsibilidade e impacto** - previsão do próximo trimestre por dois métodos (pipeline ponderado e "
+          "run-rate do CRM), lacuna do CRM frente ao nMRR oficial e a priorização como alavanca (cenários).",
           "- **D3a · Gap e risco** - meta × realizado por franquia (barra de progresso), gap das franquias abaixo da meta e "
           "atingimento por região, e a análise por EC equivalente.",
           "- **D3b · Priorização** - as 5 ondas, ondas 1 e 2 por franquia e a lista de quem atacar primeiro.",
@@ -1126,6 +1184,8 @@ def escrever_doc():
           "| Matriz 1c (Alto, Médio, Baixo × Quente, Morno, Frio) | 3-13-80 / 5-9-103 / 7-10-73 |",
           "| Melhor ROI de esforço (1b) | Evento (24,8 tentativas por ganho) |",
           "| Uplift nMRR (Conservador / Base / Otimista) | +9,5% / +25,4% / +45,6% |",
+          "| Ganhos previstos no trimestre: pipeline ponderado / run-rate do CRM | 6,9 / 8,1 |",
+          "| nMRR previsto do pipeline (R$, escala do CRM) / CRM ÷ nMRR oficial | 5.597 / 0,9% |",
           "| Gap de meta / franquias abaixo da meta | R$ 19.500 / 9 |",
           "| Correlação nº de ECs × atingimento (meses_operando dá 0,65, mas contradiz data_inicio) | 0,64 |",
           "| Gap das franquias abaixo da meta por região: Nordeste / Norte / Centro-Oeste / Sudeste / Sul | 6.500 / 4.000 / 4.000 / 4.000 / 1.000 |",

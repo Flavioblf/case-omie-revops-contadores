@@ -122,6 +122,14 @@
  ],
  "conv_canal": [
   {
+   "canal_origem": "Outreach Ativo",
+   "conversao": 0.2345679012345679
+  },
+  {
+   "canal_origem": "Indicação",
+   "conversao": 0.16666666666666666
+  },
+  {
    "canal_origem": "Franquia",
    "conversao": 0.15503875968992248
   },
@@ -132,14 +140,6 @@
   {
    "canal_origem": "Evento",
    "conversao": 0.25
-  },
-  {
-   "canal_origem": "Outreach Ativo",
-   "conversao": 0.2345679012345679
-  },
-  {
-   "canal_origem": "Indicação",
-   "conversao": 0.16666666666666666
   }
  ],
  "tiers": {
@@ -249,6 +249,93 @@
    31440.43715846995,
    56592.7868852459
   ]
+ },
+ "previsao": {
+  "estagios": [
+   {
+    "estagio": "Proposta Enviada",
+    "abertos": 15,
+    "chance": 0.19254312743461324,
+    "ganhos": 2.8881469115191987,
+    "parados": 33
+   },
+   {
+    "estagio": "Reunião Agendada",
+    "abertos": 15,
+    "chance": 0.09565938623168371,
+    "ganhos": 1.4348907934752557,
+    "parados": 26
+   },
+   {
+    "estagio": "Em Contato",
+    "abertos": 31,
+    "chance": 0.039774686745602944,
+    "ganhos": 1.2330152891136912,
+    "parados": 38
+   },
+   {
+    "estagio": "Novo",
+    "abertos": 33,
+    "chance": 0.039774686745602944,
+    "ganhos": 1.3125646626048972,
+    "parados": 24
+   },
+   {
+    "estagio": "Sem Resposta",
+    "abertos": 9,
+    "chance": 0,
+    "ganhos": 0,
+    "parados": 12
+   }
+  ],
+  "ganhos_pipeline": 6.868617656713043,
+  "abertos_90": 103,
+  "parados": 133,
+  "nmrr_pipeline": 5597.23652845546,
+  "run_rate": 8.11111111111111,
+  "faixa_trimestre": "3 a 12",
+  "trimestres": [
+   {
+    "trimestre": "2024 T1",
+    "ganhos": 3
+   },
+   {
+    "trimestre": "2024 T2",
+    "ganhos": 11
+   },
+   {
+    "trimestre": "2024 T3",
+    "ganhos": 7
+   },
+   {
+    "trimestre": "2024 T4",
+    "ganhos": 7
+   },
+   {
+    "trimestre": "2025 T1",
+    "ganhos": 5
+   },
+   {
+    "trimestre": "2025 T2",
+    "ganhos": 10
+   },
+   {
+    "trimestre": "2025 T3",
+    "ganhos": 12
+   },
+   {
+    "trimestre": "2025 T4",
+    "ganhos": 10
+   },
+   {
+    "trimestre": "2026 T1 (parcial, até 07/03)",
+    "ganhos": 8
+   }
+  ],
+  "crm_mes": 2773.0537037037043,
+  "oficial_mes": 299000,
+  "crm_pct": 0.009274427102687974,
+  "ganhos_priorizacao": 8.61016880027307
  },
  "franquias": [
   {

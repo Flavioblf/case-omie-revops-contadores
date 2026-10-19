@@ -157,8 +157,8 @@ pres.addSection({ title: "Drivers de conversão" });
   ], { x: 10.05, y: 2.0, w: 2.5, h: 2.2, fontSize: ESC.corpo, margin: 0, valign: "middle", isTextBox: true, objectName: "Alerta target texto" });
   ui.card(s, "Impacto", 9.85, 4.4, 2.88, 2.3, HEX.deep);
   s.addText([
-    { text: `+${pct(dv.uplift[1])} de nMRR`, options: { bold: true, color: S.cyan, fontSize: 22, fontFace: "+mj-lt", breakLine: true } },
-    { text: `Cenário base (${pct(dv.uplift[0])} a ${pct(dv.uplift[2])}): ≈ ${mil(dv.nmrr_oficial[1], 0)}/mês nas 9 franquias abaixo da meta, se o piloto confirmar.`, options: { color: S.branco } },
+    { text: `${num(D.previsao.ganhos_pipeline, 0)} a ${num(D.previsao.run_rate, 0)} Ganhos`, options: { bold: true, color: S.cyan, fontSize: 22, fontFace: "+mj-lt", breakLine: true } },
+    { text: `previstos no próximo trimestre: pipeline ponderado e run-rate convergem. Priorizar o topo: +${pct(dv.uplift[1])}, se o piloto confirmar.`, options: { color: S.branco } },
   ], { x: 10.05, y: 4.4, w: 2.5, h: 2.3, fontSize: ESC.corpo, margin: 0, valign: "middle", isTextBox: true, objectName: "Impacto texto" });
   ui.fonte(s, "Análise descritiva: taxa de conversão por característica (600 contadores) · Desafio2_Propensao.xlsx · Painel Omie (Power BI), págs. 2 a 4 (D2)");
   const [d1, d2, d3, d4, d5] = dv.ranking.slice(0, 5).map(r => r.variavel.toLowerCase());
@@ -169,7 +169,9 @@ pres.addSection({ title: "Drivers de conversão" });
     `O score ordena bem: a faixa Alta, Média e Baixa convertem ${dv.conv_faixas}; o top 30% converte ${num(dv.top30_lift, 1)} vezes a média e capta ${pct(dv.captura)} dos convertidos.\n\n` +
     `O ponto mais importante está no gráfico: pela base, Médio e Grande convertem quase sempre e o Autônomo quase nunca. Mas no pipeline real o fechamento não segue esse padrão: o Autônomo fecha 67% e o Médio, 46%. ` +
     `E o top 30% do score fecha ${pct(dv.win_alta)} no pipeline real, contra ${pct(dv.win_demais)} nas demais faixas. Ou seja, a coluna de conversão mede potencial, não fechamento.\n\n` +
-    `Por isso trato o impacto como hipótese: +${pct(dv.uplift[1])} de nMRR no cenário base, cerca de ${mil(dv.nmrr_oficial[1], 0)} por mês nas franquias abaixo da meta. ` +
+    `Previsibilidade: o pipeline aberto, ponderado pela chance de fechar de cada estágio, prevê ${num(D.previsao.ganhos_pipeline, 1)} Ganhos no próximo trimestre; o run-rate histórico do CRM dá ${num(D.previsao.run_rate, 1)}. Os dois métodos convergem. ` +
+    `Os ${D.previsao.parados} leads parados há mais de 90 dias entram com zero. E um alerta: os Ganhos do CRM somam ${pct(D.previsao.crm_pct, 1)} do nMRR oficial, então dá para prever o pipeline, mas não a receita oficial sem uma fonte única.\n\n` +
+    `Por isso trato o impacto da priorização como hipótese: +${pct(dv.uplift[1])} de nMRR no cenário base, cerca de ${mil(dv.nmrr_oficial[1], 0)} por mês nas franquias abaixo da meta. ` +
     `Para saber se funciona, a métrica é simples: num piloto de 90 dias, o grupo que prioriza o topo do score fecha mais do que o grupo de controle?`);
 }
 

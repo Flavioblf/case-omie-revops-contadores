@@ -1,10 +1,10 @@
 /// Contratos de clientes: ticket por porte e churn (Desafio 3).
 table clientes_ativos
-	lineageTag: fbab597a-0c47-4a05-85da-428432e50009
+	lineageTag: 36571838-b8dc-4069-9f43-10f1b028ca89
 
 	column id_cliente
 		dataType: string
-		lineageTag: b1ed8cfc-bb24-48f7-8b85-045ecd5090e0
+		lineageTag: 44db9818-af29-4ab5-9b64-746541f4a289
 		summarizeBy: none
 		sourceColumn: id_cliente
 
@@ -12,7 +12,7 @@ table clientes_ativos
 
 	column id_lead
 		dataType: string
-		lineageTag: 002637d7-3c6a-4603-a97c-ce5ea44d24e1
+		lineageTag: 4add0fc6-7f7d-48c9-87b0-6c2a87f768fb
 		summarizeBy: none
 		sourceColumn: id_lead
 
@@ -20,7 +20,7 @@ table clientes_ativos
 
 	column id_contador
 		dataType: string
-		lineageTag: 61d28121-1e77-42c8-80b9-8dfced82782a
+		lineageTag: 4dc4d270-98c7-4d1b-901a-74a2860feb02
 		summarizeBy: none
 		sourceColumn: id_contador
 
@@ -29,7 +29,7 @@ table clientes_ativos
 	column data_ativacao
 		dataType: dateTime
 		formatString: dd/mm/yyyy
-		lineageTag: 946d3a5f-bce1-48d7-b5be-df926fa1b1f5
+		lineageTag: 494ad3c9-66f7-4ba5-ba7a-4bf50586fb20
 		summarizeBy: none
 		sourceColumn: data_ativacao
 
@@ -37,7 +37,7 @@ table clientes_ativos
 
 	column plano
 		dataType: string
-		lineageTag: fbee3dac-eb8c-4da3-b99b-135de4972e08
+		lineageTag: 51687d36-c531-45ce-83ac-c5c016a59546
 		summarizeBy: none
 		sourceColumn: plano
 
@@ -45,7 +45,7 @@ table clientes_ativos
 
 	column mrr_inicial
 		dataType: double
-		lineageTag: 31c53583-db49-405e-b2f9-a80a4c455839
+		lineageTag: 869f5804-44f1-4316-bb50-9ba6539ce847
 		summarizeBy: none
 		sourceColumn: mrr_inicial
 
@@ -53,7 +53,7 @@ table clientes_ativos
 
 	column mrr_atual
 		dataType: double
-		lineageTag: 0e1ca9fd-44b8-4f4b-97cc-137638f7a8da
+		lineageTag: 5da17795-3e8a-4b87-8b24-c851fac19bd5
 		summarizeBy: none
 		sourceColumn: mrr_atual
 
@@ -61,7 +61,7 @@ table clientes_ativos
 
 	column status_cliente
 		dataType: string
-		lineageTag: c536ebad-f84d-484e-9c90-dd1495626d4d
+		lineageTag: 8422cc24-2b75-42b1-96ac-156faa4dfbfe
 		summarizeBy: none
 		sourceColumn: status_cliente
 
@@ -70,7 +70,7 @@ table clientes_ativos
 	column data_churn
 		dataType: dateTime
 		formatString: dd/mm/yyyy
-		lineageTag: 7e84db19-431e-4bb3-aa29-fc223b89938d
+		lineageTag: ee4b4c2c-1357-4146-b126-e03a4247c7d8
 		summarizeBy: none
 		sourceColumn: data_churn
 
@@ -78,7 +78,7 @@ table clientes_ativos
 
 	column meses_ativo
 		dataType: int64
-		lineageTag: a99972bb-4980-4abf-9f88-e0431152463d
+		lineageTag: 7b6cf3a3-dd08-42fd-8132-b0747aa80c19
 		summarizeBy: none
 		sourceColumn: meses_ativo
 
@@ -86,7 +86,7 @@ table clientes_ativos
 
 	column nps_score
 		dataType: int64
-		lineageTag: 574bef13-ec53-4f48-8faf-ef10d5dd053c
+		lineageTag: f211ca7a-b62f-400d-8851-2775b094a456
 		summarizeBy: none
 		sourceColumn: nps_score
 
@@ -94,7 +94,7 @@ table clientes_ativos
 
 	column upsell_realizado
 		dataType: string
-		lineageTag: 9a103bf0-e911-4d7d-90f8-fd088024101f
+		lineageTag: 928b4db5-d429-48fb-8b63-8454f4c545f6
 		summarizeBy: none
 		sourceColumn: upsell_realizado
 
@@ -104,7 +104,7 @@ table clientes_ativos
 	column porte =
 			RELATED(mercado_contadores[porte])
 		dataType: string
-		lineageTag: e9afcc0a-dff2-4a00-a580-19fd1b407d9f
+		lineageTag: 97c5b0b3-066e-4e4c-b4dd-3dde68a4caa8
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User

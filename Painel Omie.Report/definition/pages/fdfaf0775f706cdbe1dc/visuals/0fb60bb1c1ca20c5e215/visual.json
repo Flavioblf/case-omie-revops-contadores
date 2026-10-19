@@ -1,66 +1,103 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "30a0f3c74d54e0f833b8",
+  "name": "0fb60bb1c1ca20c5e215",
   "position": {
-    "x": 16,
-    "y": 115,
+    "x": 760,
+    "y": 265,
     "z": 0,
-    "width": 1248,
-    "height": 140,
-    "tabOrder": 2
+    "width": 247,
+    "height": 115,
+    "tabOrder": 5
   },
   "visual": {
-    "visualType": "textbox",
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Ganhos Previstos (Pipeline)"
+                }
+              },
+              "queryRef": "_Medidas.Ganhos Previstos (Pipeline)",
+              "nativeQueryRef": "Ganhos Previstos (Pipeline)",
+              "displayName": "Ganhos previstos (pipeline)"
+            }
+          ]
+        }
+      }
+    },
     "objects": {
-      "general": [
+      "labels": [
         {
           "properties": {
-            "paragraphs": [
-              {
-                "textRuns": [
-                  {
-                    "value": "Extra: qual o nMRR incremental se o time comercial priorizar os contadores com maior score de propensão? Que premissas você assumiu?",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "12pt",
-                      "fontWeight": "bold",
-                      "color": "#006B79"
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#00E2F4'"
                     }
                   }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "+25% de nMRR no cenário base (10% a 46%), ≈ R$ 31,4 mil/mês nas 9 franquias abaixo da meta.",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "12pt",
-                      "fontWeight": "normal",
-                      "color": "#001E27"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Premissas: 50% da capacidade dos ECs (44 ECs × 16,5 leads/mês) vai para o top 30%; lift do topo de 2,3x; 40% do lift vira Ganho real (hipótese a validar no piloto); ticket de R$ 1.026; churn de 20,5%. Com fator de realização 0, o uplift é 0.",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "12pt",
-                      "fontWeight": "normal",
-                      "color": "#001E27"
-                    }
-                  }
-                ]
+                }
               }
-            ]
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Century Gothic'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "28D"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryLabels": [
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            }
           }
         }
       ]
     },
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "background": [
         {
@@ -77,7 +114,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#EAF8FA'"
+                      "Value": "'#001E27'"
                     }
                   }
                 }
@@ -197,6 +234,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }

@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "740e1d5550047becdcd5",
+  "name": "dcbf3f6b99c3dc279e44",
   "position": {
-    "x": 16,
-    "y": 265,
+    "x": 760,
+    "y": 516,
     "z": 0,
-    "width": 787,
-    "height": 267,
-    "tabOrder": 3
+    "width": 504,
+    "height": 191,
+    "tabOrder": 9
   },
   "visual": {
     "visualType": "tableEx",
@@ -43,7 +43,7 @@
               },
               "queryRef": "_Medidas.% Capacidade Redirecionada",
               "nativeQueryRef": "% Capacidade Redirecionada",
-              "displayName": "% da capacidade"
+              "displayName": "% capacidade"
             },
             {
               "field": {
@@ -340,7 +340,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Impacto por cenário'"
+                  "Value": "'Alavanca: priorizar o topo da propensão'"
                 }
               }
             },

@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "174c16b210c6378d7431",
+  "name": "70469b77d380b686fe9f",
   "position": {
     "x": 16,
     "y": 5,
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "DESAFIO 2 · IMPACTO EM NMRR (EXTRA)",
+                    "value": "DESAFIO 2 · PREVISIBILIDADE E IMPACTO EM NMRR (EXTRA)",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "12pt",
@@ -32,7 +32,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Priorizar o topo da propensão pode render -",
+                    "value": "O pipeline prevê 7 a 8 Ganhos no próximo trimestre -",
                     "textStyle": {
                       "fontFamily": "Century Gothic",
                       "fontSize": "20pt",
@@ -45,7 +45,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "+25% de nMRR no cenário base, se o piloto confirmar",
+                    "value": "mas os Ganhos do CRM explicam só 0,9% do nMRR oficial",
                     "textStyle": {
                       "fontFamily": "Century Gothic",
                       "fontSize": "20pt",
