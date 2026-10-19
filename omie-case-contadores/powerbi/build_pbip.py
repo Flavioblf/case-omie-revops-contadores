@@ -1045,11 +1045,13 @@ def escrever_doc():
     L = ["# Painel Omie — Desafios 1, 2 e 3 no Power BI", "",
          "Projeto `Painel Omie.pbip` (modelo em TMDL, relatório em PBIR), gerado por "
          "`omie-case-contadores/powerbi/build_pbip.py`. Abordagem **descritiva** (sem modelo estatístico), com os mesmos "
-         "números do Excel `output/Desafio2_Propensao.xlsx`, e visual no design system Omie do deck.", "",
+         "números dos Excel `output/Desafio2_Propensao.xlsx` e `output/Desafio3_Capacity.xlsx`, e visual no design system Omie do deck.", "",
+         "**Versão online (sem instalar nada):** "
+         "[Painel Omie no Power BI](https://app.powerbi.com/view?r=eyJrIjoiYjRiNTRkMjItNjA1ZS00YjA5LThlM2QtYWQ5NDRmZWM1ODliIiwidCI6IjMyOGFmM2M3LTUyYjUtNDk0Yy05YWFhLWQyYTNiYTkxYWVkZiJ9).", "",
          "## 1. Como abrir e atualizar", "",
          "1. Pré-requisito: no SQL Server, rode uma vez `sql/sqlserver/anexo_analises_complementares.sql` (cria as views "
          "`dbo.vw_tiers_prospects`, `dbo.vw_desafio1a_mercado` e `dbo.vw_desafio1b_conversao`, com o mesmo texto das "
-         "consultas do Desafio 1).",
+         "consultas do Desafio 1, e `dbo.vw_propensao_d2`, com o score do Desafio 2).",
          "2. Abra `Painel Omie.pbip` no Power BI Desktop e clique em **Atualizar** (conexão **Windows** em `localhost`, banco `OMIE`).",
          "3. Outro servidor/banco: **Transformar dados → Editar parâmetros** (`ServidorSQL`, `BancoSQL`).", "",
          "## 2. Tabelas", "",
@@ -1060,20 +1062,23 @@ def escrever_doc():
          "| `tiers_1c` (oculta) | `dbo.vw_tiers_prospects` | 1 linha por endereçável (303) | Fit, engajamento, score e tier do Desafio 1c |",
          "| `d1a_mercado` | `dbo.vw_desafio1a_mercado` | região × porte + totais | Resposta do Desafio 1a |",
          "| `d1b_conversao` | `dbo.vw_desafio1b_conversao` | canal e franquia | Resposta do Desafio 1b |",
+         "| `propensao_d2` (oculta) | `dbo.vw_propensao_d2` | 1 linha por contador (600) | Score e faixa de propensão do Desafio 2 |",
          "| `Param_Variaveis` | Tabela fixa | 9 características | Lista para o ranking dos drivers |",
+         "| `Param_Avaliacao` | Tabela fixa | 6 métricas | Plano de avaliação em duas etapas (Desafio 2) |",
          "| `Param_Cenarios` | Tabela fixa | 3 cenários | Premissas do impacto |",
          "| `clientes_ativos` | `raw.clientes_ativos` | 1 linha por contrato (73) | Ticket por porte e churn (Desafio 3) |",
+         "| `Param_Ondas` | Tabela fixa | 5 ondas | Quem entra, o que o EC faz e por quê (Desafio 3b) |",
          "| `Param_Territorio` | Tabela fixa | 1 linha por estado com franquia | Franquia do estado (MT, MA, RO e MS não têm franquia) |",
          "| `execucao_comercial` (oculta) | `raw.execucao_comercial` | franquia × mês × EC | Conversão do funil e dispersão por EC (Desafio 3) |",
          "| `_Medidas` | — | — | Tabela de medidas |", "",
-         "**Por que não `execucao_comercial`?** É agregada por franquia × mês, sem `id_contador`: não se liga ao contador. "
-         "É a base do Desafio 3.", "",
          "## 3. Relacionamentos", "",
          "| De (muitos) | Para (um) | Direção |", "|---|---|---|",
          "| `leads_pipeline[id_contador]` | `mercado_contadores[id_contador]` | Única (mercado filtra leads) |",
          "| `leads_pipeline[id_franquia]` | `franquias[id_franquia]` | Única |",
-         "| `clientes_ativos[id_contador]` | `mercado_contadores[id_contador]` | Única |", "",
-         "`tiers_1c` e `Param_*` não se relacionam: o tier entra em `mercado_contadores` por `LOOKUPVALUE` e as tabelas de "
+         "| `clientes_ativos[id_contador]` | `mercado_contadores[id_contador]` | Única |",
+         "| `execucao_comercial[id_franquia]` | `franquias[id_franquia]` | Única |", "",
+         "`tiers_1c`, `propensao_d2` e `Param_*` não se relacionam: o tier e o score entram em `mercado_contadores` por "
+         "`LOOKUPVALUE` e as tabelas de "
          "parâmetros são lidas pelas medidas.", "", "## 4. Colunas calculadas", ""]
     for tab, calcs in ((MC, CALC_MERCADO), ("leads_pipeline", CALC_LEADS), ("franquias", CALC_FRANQUIAS),
                        ("clientes_ativos", CALC_CLIENTES)):
@@ -1086,7 +1091,7 @@ def escrever_doc():
         if pasta != atual:
             L += [f"### {pasta}", ""]
             atual = pasta
-        L += [f"**[{nm}]** — {desc} · formato `{fmt}`", "", "```dax", dax, "```", ""]
+        L += [f"**[{nm}]** — {desc}" + (f" · formato `{fmt}`" if fmt else " · texto"), "", "```dax", dax, "```", ""]
     L += ["## 6. Páginas (uma por pergunta do case: pergunta → resposta → evidência)", "",
           "- **D1 · Mercado, conversão e tiers** — 1a (endereçáveis por região e porte), 1b (conversão e ROI de esforço por "
           "canal e franquia) e 1c (matriz Fit × Engajamento e tiers), lidos das views do SQL.",
