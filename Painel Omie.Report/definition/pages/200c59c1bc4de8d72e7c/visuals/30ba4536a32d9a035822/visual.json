@@ -53,6 +53,21 @@
                       "Entity": "d1b_conversao"
                     }
                   },
+                  "Property": "num_ganhos"
+                }
+              },
+              "queryRef": "d1b_conversao.num_ganhos",
+              "nativeQueryRef": "num_ganhos",
+              "displayName": "Ganhos"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "d1b_conversao"
+                    }
+                  },
                   "Property": "taxa_conv_lead_ganho_pct"
                 }
               },

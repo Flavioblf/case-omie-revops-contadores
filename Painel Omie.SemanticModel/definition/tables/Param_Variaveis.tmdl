@@ -1,10 +1,10 @@
 /// Características analisadas como drivers de conversão
 table Param_Variaveis
-	lineageTag: c08ada72-4994-45f5-98fa-e0018b646c47
+	lineageTag: 18c11c18-e1ef-44a2-b8ea-788188cb0545
 
 	column ordem
 		dataType: int64
-		lineageTag: c1f655d3-91ef-4c44-9303-7210ecc97ad6
+		lineageTag: 57ec6ce9-b1d6-4dc0-8ddb-32595ec067a8
 		summarizeBy: none
 		sourceColumn: ordem
 
@@ -12,7 +12,7 @@ table Param_Variaveis
 
 	column variavel
 		dataType: string
-		lineageTag: a9504630-48c5-41a5-9b03-4bf6d488fb8a
+		lineageTag: 8622dd02-0d35-4728-a050-c33a1a6c8ca9
 		summarizeBy: none
 		sourceColumn: variavel
 		sortByColumn: ordem

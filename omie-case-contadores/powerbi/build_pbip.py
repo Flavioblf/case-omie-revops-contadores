@@ -770,7 +770,7 @@ def paginas():
         f"pequena), à frente do {roi[1]['canal_origem']} ({br(roi[1]['tentativas_por_fechamento'], 1)}). "
         f"Conversão por canal de {pc(min(conv), 1)} a {pc(max(conv), 1)}."]))
     v.append(tabela_visual(640, Y1, 800, 370,
-                           [(d1b("canal_origem"), "Canal"), (d1b("num_leads"), "Leads"),
+                           [(d1b("canal_origem"), "Canal"), (d1b("num_leads"), "Leads"), (d1b("num_ganhos"), "Ganhos"),
                             (d1b("taxa_conv_lead_ganho_pct"), "Conv. %"), (d1b("num_tentativas_contato"), "Tentativas"),
                             (d1b("tentativas_contato_por_ganho"), "Tent./ganho"), (d1b("ranking_roi_esforco"), "ROI #")],
                            "Por canal", ordem=(d1b("ranking_roi_esforco"), "Ascending"),

@@ -1,11 +1,11 @@
 /// Score de propensão do Desafio 2 por contador (view dbo.vw_propensao_d2): 600 contadores.
 table propensao_d2
-	lineageTag: 2c429e47-1b08-423d-a0a5-17280d16a8d2
+	lineageTag: 06b995d2-9768-42b6-8b40-a7f8ff040e8f
 	isHidden
 
 	column id_contador
 		dataType: string
-		lineageTag: cde20ce3-3911-4fb2-995f-eab0839aed27
+		lineageTag: fdbd3106-8b8b-44fe-b6a4-cb2c76ee03f6
 		summarizeBy: none
 		sourceColumn: id_contador
 
@@ -13,7 +13,7 @@ table propensao_d2
 
 	column propensao
 		dataType: double
-		lineageTag: bf80d9b7-a913-415f-bc88-5be27dabe553
+		lineageTag: 9b4f6d81-47ab-4275-b198-665535a42ffc
 		summarizeBy: none
 		sourceColumn: propensao
 
@@ -21,7 +21,7 @@ table propensao_d2
 
 	column faixa_propensao
 		dataType: string
-		lineageTag: a4db437d-1ca0-4c47-8332-2b6c9fcda0b1
+		lineageTag: fc11335b-4f7d-469b-b22f-fe23396b5155
 		summarizeBy: none
 		sourceColumn: faixa_propensao
 		sortByColumn: faixa_ordem
@@ -31,7 +31,7 @@ table propensao_d2
 	column faixa_ordem
 		dataType: int64
 		isHidden
-		lineageTag: 7917f0d3-4691-48f6-8729-93dba390d13e
+		lineageTag: 7e9783fa-3823-4f7c-b36d-2f7772acb219
 		summarizeBy: none
 		sourceColumn: faixa_ordem
 

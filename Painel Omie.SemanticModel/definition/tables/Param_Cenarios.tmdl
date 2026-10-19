@@ -1,10 +1,10 @@
 /// Premissas dos cenários de impacto (iguais à aba Impacto_nMRR do Excel)
 table Param_Cenarios
-	lineageTag: 78150c3b-eafd-4c4a-8c66-27dd250c83ca
+	lineageTag: 6efb3371-bdec-42ca-bcfa-ae0b03a02eb6
 
 	column ordem
 		dataType: int64
-		lineageTag: 8df0701c-86b4-43c6-966f-1c7597b39fb9
+		lineageTag: 6115a224-a481-45c6-877c-dbc03ea7a63d
 		summarizeBy: none
 		sourceColumn: ordem
 
@@ -12,7 +12,7 @@ table Param_Cenarios
 
 	column cenario
 		dataType: string
-		lineageTag: 0536a687-6313-4309-b2da-41e54d253596
+		lineageTag: f2fe8ef2-521f-478b-b099-b6013434b598
 		summarizeBy: none
 		sourceColumn: cenario
 		sortByColumn: ordem
@@ -21,7 +21,7 @@ table Param_Cenarios
 
 	column pct_redirecionado
 		dataType: double
-		lineageTag: 2bb870ea-82ce-4eb8-9bb0-3990580b08d2
+		lineageTag: 3a6aaf76-cb87-42da-a41c-c8ffd7739cde
 		summarizeBy: none
 		sourceColumn: pct_redirecionado
 
@@ -29,7 +29,7 @@ table Param_Cenarios
 
 	column fator_realizacao
 		dataType: double
-		lineageTag: 63a97751-d130-4472-8004-1e045495f73a
+		lineageTag: c1948547-c727-4b08-9b76-c5fc9228be39
 		summarizeBy: none
 		sourceColumn: fator_realizacao
 

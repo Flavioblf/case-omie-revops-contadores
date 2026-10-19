@@ -1,10 +1,10 @@
 /// Franquia de cada estado com franquia (SP é tratado por cidade); estados sem franquia não entram
 table Param_Territorio
-	lineageTag: d055f8d9-e5fd-41b4-a9a0-e41f4ad3adbf
+	lineageTag: 6498ee70-3eab-44ff-b6f0-5cda47159572
 
 	column estado
 		dataType: string
-		lineageTag: 7d75fa58-72e1-4651-8ccd-9426c6f2fd72
+		lineageTag: 6fb509fa-7cd4-44cf-a600-8c98ecb965fb
 		summarizeBy: none
 		sourceColumn: estado
 
@@ -12,7 +12,7 @@ table Param_Territorio
 
 	column id_franquia
 		dataType: string
-		lineageTag: cf06c077-f2a1-4226-aa8d-9edd4985c6f9
+		lineageTag: b4caf81a-4ad1-488e-b31e-4ba8f3fbb15a
 		summarizeBy: none
 		sourceColumn: id_franquia
 
@@ -20,7 +20,7 @@ table Param_Territorio
 
 	column tipo
 		dataType: string
-		lineageTag: 27f23706-ea39-4706-ba62-7b7479bedc28
+		lineageTag: 7d6f8be5-3198-4889-9495-1ee8df459950
 		summarizeBy: none
 		sourceColumn: tipo
 
