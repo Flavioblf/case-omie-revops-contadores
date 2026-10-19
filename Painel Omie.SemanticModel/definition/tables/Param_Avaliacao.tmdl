@@ -1,51 +1,51 @@
-/// Plano de avaliação do Desafio 2 (igual à aba Como_Avaliar do Excel)
+/// Avaliação do Desafio 2 em 3 perguntas (igual à aba Como_Avaliar do Excel)
 table Param_Avaliacao
-	lineageTag: 11a79b8e-75d3-4ec5-812a-495b63f1181d
+	lineageTag: 656d0419-30c1-40a5-a32f-16d1dcacab09
 
 	column ordem
 		dataType: int64
-		lineageTag: 96dc5eee-c72e-455f-86d7-13db33379835
+		lineageTag: 0c1725f3-7619-45e2-b6e4-e7685a8ba185
 		summarizeBy: none
 		sourceColumn: ordem
 
 		annotation SummarizationSetBy = User
 
-	column metrica
+	column pergunta
 		dataType: string
-		lineageTag: e7089cee-4286-4c2d-9a64-0b092e51005c
+		lineageTag: de717b44-ce91-474b-ada1-5007d087967d
 		summarizeBy: none
-		sourceColumn: metrica
+		sourceColumn: pergunta
 		sortByColumn: ordem
 
 		annotation SummarizationSetBy = User
 
-	column o_que_mede
+	column metrica
 		dataType: string
-		lineageTag: 45c18fb8-5a91-4030-b5c2-9ec6e1434938
+		lineageTag: bc8953db-d9a8-452d-b675-8293b36f4770
 		summarizeBy: none
-		sourceColumn: o_que_mede
+		sourceColumn: metrica
 
 		annotation SummarizationSetBy = User
 
 	column hoje
 		dataType: string
-		lineageTag: 4dc68afa-3706-46a9-a13e-0605f9f6a83b
+		lineageTag: 4a43babe-5edc-45a7-8ec8-f749bfc1c508
 		summarizeBy: none
 		sourceColumn: hoje
 
 		annotation SummarizationSetBy = User
 
-	column meta
+	column resposta
 		dataType: string
-		lineageTag: cbfd9bbd-686c-4a36-a355-a2f37610a0ce
+		lineageTag: 13795876-8b58-4ea7-b98d-71e4a2d8b198
 		summarizeBy: none
-		sourceColumn: meta
+		sourceColumn: resposta
 
 		annotation SummarizationSetBy = User
 
 	column etapa
 		dataType: string
-		lineageTag: 57a0a178-752b-4a7a-8ff1-45ef48aa5274
+		lineageTag: 9df1ac7a-951d-43ba-8c5a-5b4d0c89bff3
 		summarizeBy: none
 		sourceColumn: etapa
 
@@ -55,10 +55,9 @@ table Param_Avaliacao
 		mode: import
 		source =
 				let
-				    Fonte = #table(type table [ordem = Int64.Type, metrica = text, o_que_mede = text, hoje = text, meta = text, etapa = text],
-				        {{1, "Conversão por faixa (Alta · Média · Baixa)", "Se o score ordena quem converte (target)", "91% · 29% · 3%", "Alta > Média > Baixa", "1. Base"}, {2, "% dos convertidos no top 30%", "Quanto da conversão está no topo", "69%", "Acima de 30%", "1. Base"}, {3, "Win rate real: Alta × demais", "Se o topo fecha mais de verdade", "60% × 65%", "Alta acima das demais", "1. Base e 2. Piloto"}, {4, "Win rate: piloto × controle", "Se priorizar o topo gera mais Ganhos", "a medir", "Piloto acima do controle", "2. Piloto"}, {5, "nMRR por EC: piloto × controle", "Se o ganho vira receita", "a medir", "Piloto acima do controle", "2. Piloto"}, {6, "Ciclo do Ganho: Alta × demais", "Se priorizar não alonga a venda", "36 × 48 dias", "Alta ≤ demais", "1. Base e 2. Piloto"}})
+				    Fonte = #table(type table [ordem = Int64.Type, pergunta = text, metrica = text, hoje = text, resposta = text, etapa = text],
+				        {{1, "1. O score separa quem tem perfil para converter?", "Conversão no target, por faixa", "91% · 29% · 3%", "Sim: o top 30% capta 69% dos convertidos", "1. Base"}, {2, "2. O score separa quem fecha de verdade?", "Win rate real, por faixa", "60% · 67% · 64%", "Não: Alta 60% × demais 65%", "1. Base"}, {3, "3. Priorizar o topo gera mais receita?", "Piloto de 90 dias × controle", "a medir", "Meta: win rate ≥ 68,6% e acima do controle", "2. Piloto"}})
 				in
 				    Fonte
 
 	annotation PBI_ResultType = Table
-

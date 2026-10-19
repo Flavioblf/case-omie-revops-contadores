@@ -1,10 +1,10 @@
 /// Características analisadas como drivers de conversão
 table Param_Variaveis
-	lineageTag: f0df754e-6e13-4631-ae93-09db005c2728
+	lineageTag: 6c0d52f9-64fe-4a4b-a154-257e2e40c2be
 
 	column ordem
 		dataType: int64
-		lineageTag: a92ad6be-434a-4898-861f-71e8644ca27c
+		lineageTag: 8600779e-dd1b-4a15-8978-81460845c35a
 		summarizeBy: none
 		sourceColumn: ordem
 
@@ -12,7 +12,7 @@ table Param_Variaveis
 
 	column variavel
 		dataType: string
-		lineageTag: 3061444c-f821-4a53-8a8b-83634c015407
+		lineageTag: 018a583a-099b-442a-be44-0b00f5e2456c
 		summarizeBy: none
 		sourceColumn: variavel
 		sortByColumn: ordem
@@ -29,4 +29,3 @@ table Param_Variaveis
 				    Fonte
 
 	annotation PBI_ResultType = Table
-

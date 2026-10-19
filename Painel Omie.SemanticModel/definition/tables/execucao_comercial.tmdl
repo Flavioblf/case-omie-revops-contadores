@@ -1,11 +1,11 @@
 /// Funil mensal por franquia (execucao_comercial): conversão lead → fechamento.
 table execucao_comercial
+	lineageTag: 8bebe674-b442-4c9e-89d4-4fe1960b7364
 	isHidden
-	lineageTag: c953bec0-8d1a-459a-ae11-56cdae6a07ea
 
 	column id_executivo
 		dataType: string
-		lineageTag: f4a323f5-5742-4fb5-b42f-d1c6ae18dc38
+		lineageTag: 5ce1aa4e-61a2-4f40-ade9-87d52821cf4f
 		summarizeBy: none
 		sourceColumn: id_executivo
 
@@ -13,7 +13,7 @@ table execucao_comercial
 
 	column id_franquia
 		dataType: string
-		lineageTag: a4ff5361-3eb1-4bad-84ae-496bca50005f
+		lineageTag: 3559c214-212f-4a5c-b387-9ade4a27aa26
 		summarizeBy: none
 		sourceColumn: id_franquia
 
@@ -21,7 +21,7 @@ table execucao_comercial
 
 	column estado
 		dataType: string
-		lineageTag: d4ea58ff-9041-41a4-ab29-9b875f212106
+		lineageTag: 0a87f1a8-741c-4736-a284-83a86f09d4ff
 		summarizeBy: none
 		sourceColumn: estado
 
@@ -29,7 +29,7 @@ table execucao_comercial
 
 	column regiao
 		dataType: string
-		lineageTag: dd662b9e-8b28-440c-9ed9-7aa0fcd13286
+		lineageTag: 88a3580c-c293-4a91-b5fe-cfadee478ec9
 		summarizeBy: none
 		sourceColumn: regiao
 
@@ -37,7 +37,7 @@ table execucao_comercial
 
 	column mes_ref
 		dataType: string
-		lineageTag: fd30a0b8-4f14-4d0b-9a1f-e29f9673fba6
+		lineageTag: f682fe5a-d8ef-4984-9839-404df0cf6d2f
 		summarizeBy: none
 		sourceColumn: mes_ref
 
@@ -45,7 +45,7 @@ table execucao_comercial
 
 	column leads_trabalhados
 		dataType: int64
-		lineageTag: 756d2d9a-ec5a-4b70-a2ec-3bb5e88c524f
+		lineageTag: e59b94a5-dbd1-4174-8b2f-7667e954f61e
 		summarizeBy: none
 		sourceColumn: leads_trabalhados
 
@@ -53,7 +53,7 @@ table execucao_comercial
 
 	column reunioes_realizadas
 		dataType: int64
-		lineageTag: 42168400-6311-4878-aa0f-fb42e1e45126
+		lineageTag: 2e3b19dc-7dc6-4a2c-8cb7-51bf5ade16b9
 		summarizeBy: none
 		sourceColumn: reunioes_realizadas
 
@@ -61,7 +61,7 @@ table execucao_comercial
 
 	column propostas_enviadas
 		dataType: int64
-		lineageTag: 04c29f80-c7cd-4a9e-b7a1-267b33035f45
+		lineageTag: 4121668d-f5a6-425e-bbd0-03cbff2e3b13
 		summarizeBy: none
 		sourceColumn: propostas_enviadas
 
@@ -69,7 +69,7 @@ table execucao_comercial
 
 	column fechamentos
 		dataType: int64
-		lineageTag: fc675eae-4517-47b1-84f4-ad0d523214cb
+		lineageTag: bfd0d81b-2d04-4c5c-80cb-f471c6c3b7d9
 		summarizeBy: none
 		sourceColumn: fechamentos
 
@@ -77,7 +77,7 @@ table execucao_comercial
 
 	column nmrr_gerado
 		dataType: double
-		lineageTag: 77550430-7f6a-4b34-ad7a-ec02dde8f6c0
+		lineageTag: 47830bcb-fa5f-47c1-b5db-bef599f73d0a
 		summarizeBy: none
 		sourceColumn: nmrr_gerado
 
@@ -85,7 +85,7 @@ table execucao_comercial
 
 	column taxa_conv_lead_reuniao
 		dataType: double
-		lineageTag: 7b190431-0692-488b-bd40-7d40ddf44564
+		lineageTag: acd93f6f-331f-45de-8b34-f7187f4d8562
 		summarizeBy: none
 		sourceColumn: taxa_conv_lead_reuniao
 
@@ -93,7 +93,7 @@ table execucao_comercial
 
 	column taxa_conv_reuniao_proposta
 		dataType: double
-		lineageTag: 19cfd9dc-ad11-48dd-a97e-1b58582db137
+		lineageTag: 2e1bc712-c9e1-43c7-897e-c6f223ccf2da
 		summarizeBy: none
 		sourceColumn: taxa_conv_reuniao_proposta
 
@@ -101,7 +101,7 @@ table execucao_comercial
 
 	column taxa_conv_proposta_fechamento
 		dataType: double
-		lineageTag: 828faea4-89e7-4baf-9c4e-65417039b902
+		lineageTag: 94ea45e4-bf8d-41d1-99fb-72d8914a3a22
 		summarizeBy: none
 		sourceColumn: taxa_conv_proposta_fechamento
 
@@ -118,4 +118,3 @@ table execucao_comercial
 				    SemLinhaOrigem
 
 	annotation PBI_ResultType = Table
-

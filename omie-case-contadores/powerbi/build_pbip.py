@@ -278,23 +278,20 @@ TER_M = "{" + ", ".join("{" + f'"{uf}", "{f}", "{tp}"' + "}" for uf, (f, tp) in 
 _D = json.loads((ROOT / "deck" / "data.json").read_text(encoding="utf-8"))["drivers"]
 _pct = lambda v: f"{v * 100:.0f}%"  # noqa: E731
 AVALIACAO = [
-    (1, "Conversão por faixa (Alta · Média · Baixa)", "Se o score ordena quem converte (target)",
-     _D["conv_faixas"], "Alta > Média > Baixa", "1. Base"),
-    (2, "% dos convertidos no top 30%", "Quanto da conversão está no topo", _pct(_D["captura"]), "Acima de 30%", "1. Base"),
-    (3, "Win rate real: Alta × demais", "Se o topo fecha mais de verdade",
-     f"{_pct(_D['win_alta'])} × {_pct(_D['win_demais'])}", "Alta acima das demais", "1. Base e 2. Piloto"),
-    (4, "Win rate: piloto × controle", "Se priorizar o topo gera mais Ganhos", "a medir", "Piloto acima do controle", "2. Piloto"),
-    (5, "nMRR por EC: piloto × controle", "Se o ganho vira receita", "a medir", "Piloto acima do controle", "2. Piloto"),
-    (6, "Ciclo do Ganho: Alta × demais", "Se priorizar não alonga a venda",
-     f"{_D['ciclo_alta']:.0f} × {_D['ciclo_demais']:.0f} dias", "Alta ≤ demais", "1. Base e 2. Piloto"),
+    (1, "1. O score separa quem tem perfil para converter?", "Conversão no target, por faixa",
+     _D["conv_faixas"], f"Sim: o top 30% capta {_pct(_D['captura'])} dos convertidos", "1. Base"),
+    (2, "2. O score separa quem fecha de verdade?", "Win rate real, por faixa",
+     _D["win_faixas"], f"Não: Alta {_pct(_D['win_alta'])} × demais {_pct(_D['win_demais'])}", "1. Base"),
+    (3, "3. Priorizar o topo gera mais receita?", "Piloto de 90 dias × controle",
+     "a medir", "Meta: win rate ≥ " + _D["resposta_piloto"].split("≥ ")[1].split(" ")[0] + " e acima do controle", "2. Piloto"),
 ]
 AVA_M = "{" + ", ".join("{" + ", ".join([str(o)] + [json.dumps(x, ensure_ascii=False) for x in r]) + "}"
                         for o, *r in AVALIACAO) + "}"
 PARAM_TABLES["Param_Avaliacao"] = (
-    [("ordem", I), ("metrica", S), ("o_que_mede", S), ("hoje", S), ("meta", S), ("etapa", S)],
-    "let\n    Fonte = #table(type table [ordem = Int64.Type, metrica = text, o_que_mede = text, hoje = text, meta = text, "
+    [("ordem", I), ("pergunta", S), ("metrica", S), ("hoje", S), ("resposta", S), ("etapa", S)],
+    "let\n    Fonte = #table(type table [ordem = Int64.Type, pergunta = text, metrica = text, hoje = text, resposta = text, "
     f"etapa = text],\n        {AVA_M})\nin\n    Fonte",
-    "Plano de avaliação do Desafio 2 (igual à aba Como_Avaliar do Excel)", {"metrica": "ordem"})
+    "Avaliação do Desafio 2 em 3 perguntas (igual à aba Como_Avaliar do Excel)", {"pergunta": "ordem"})
 _ON = json.loads((ROOT / "deck" / "data.json").read_text(encoding="utf-8"))["ondas"]
 ONDAS = [
     ("1. Fechar", "Lead aberto há até 90 dias em Reunião ou Proposta", "Follow-up da proposta e negociação",
@@ -875,27 +872,29 @@ def paginas():
     ps.append(("D2 · Lógica, top 5 e propensão", v))
 
     # ---------------------------------------------------------------- 3. Desafio 2: como avaliar
-    v = cabecalho("Desafio 2 · Como avaliar", "Avaliação em duas etapas -",
-                  "o score ordena na base; o piloto prova se gera receita")
+    v = cabecalho("Desafio 2 · Como avaliar", "Avaliação em 3 perguntas -",
+                  "o score separa no papel, não no real; o piloto decide")
     v.append(bloco_qa(24, Y_QA, 1872, 210,
                       "Como você avaliaria se a abordagem está funcionando? Que métricas usaria?", [
-                          f"Etapa 1, validação na base: o score ordena quem converte (Alta · Média · Baixa = "
-                          f"{dv['conv_faixas']}) e o top 30% capta {pc(dv['captura'])} dos convertidos; no pipeline real, "
-                          f"porém, a faixa Alta fecha {pc(dv['win_alta'])} contra {pc(dv['win_demais'])} das demais "
-                          f"(mais rápido: {br(dv['ciclo_alta'])} × {br(dv['ciclo_demais'])} dias).",
-                          "Etapa 2, piloto de 90 dias com grupo de controle: win rate, nMRR por EC e ciclo do piloto "
-                          "melhores que os do controle. Se for, a priorização vira processo; senão, o perfil é revisto."]))
+                          f"1. O score separa quem tem perfil para converter? Sim: no target, Alta · Média · Baixa = "
+                          f"{dv['conv_faixas']}, e o top 30% capta {pc(dv['captura'])} dos convertidos.",
+                          f"2. Separa quem fecha de verdade? Não: o win rate real é {dv['win_faixas']}; a faixa Alta fecha "
+                          f"{pc(dv['win_alta'])}, contra {pc(dv['win_demais'])} das demais.",
+                          "3. Priorizar o topo gera mais receita? O piloto de 90 dias com grupo de controle decide: "
+                          f"{dv['resposta_piloto'][0].lower() + dv['resposta_piloto'][1:]}."]))
     pa = lambda c: coluna("Param_Avaliacao", c)  # noqa: E731
     v.append(tabela_visual(24, Y1, 1872, 400,
-                           [(pa("metrica"), "Métrica"), (pa("o_que_mede"), "O que mede"), (pa("hoje"), "Hoje"),
-                            (pa("meta"), "Meta"), (pa("etapa"), "Etapa")],
-                           "Métricas de avaliação", ordem=(pa("metrica"), "Ascending"), quebrar=True))
+                           [(pa("pergunta"), "Pergunta"), (pa("metrica"), "Métrica"), (pa("hoje"), "Hoje (Alta · Média · Baixa)"),
+                            (pa("resposta"), "Resposta")],
+                           "Avaliação em 3 perguntas", ordem=(pa("pergunta"), "Ascending"), quebrar=True))
     v.append(grafico("clusteredColumnChart", 24, 814, 1180, 246, mc("faixa_propensao"),
                      [("Taxa de Conversão", "Target"), ("Win Rate Real", "Win rate real")],
                      "Faixa de propensão: target × real", cores=[HEX["teal"], HEX["atencao"]]))
     v.append(caixa_texto(1220, 814, 676, 246, [
         [("Regra de decisão", 14, True, HEX["deep"])],
-        [("Se o piloto superar o controle, a priorização pelo score vira processo; senão, o perfil é revisto.",
+        [("Se a pergunta 3 der sim (piloto acima do controle), a priorização vira processo; senão, o perfil é revisto.",
+          10, False, HEX["deep"])],
+        [(f"Nota: o topo fecha mais rápido ({br(dv['ciclo_alta'])} × {br(dv['ciclo_demais'])} dias), mas não fecha mais.",
           10, False, HEX["deep"])],
         [("O target ordena; o real ainda não confirma.", 10, True, HEX["teal"])]], fundo=HEX["gelo"]))
     ps.append(("D2 · Como avaliar", v))
@@ -1128,7 +1127,7 @@ def escrever_doc():
          "| `d1b_conversao` | `dbo.vw_desafio1b_conversao` | canal e franquia | Resposta do Desafio 1b |",
          "| `propensao_d2` (oculta) | `dbo.vw_propensao_d2` | 1 linha por contador (600) | Score e faixa de propensão do Desafio 2 |",
          "| `Param_Variaveis` | Tabela fixa | 9 características | Lista para o ranking dos drivers |",
-         "| `Param_Avaliacao` | Tabela fixa | 6 métricas | Plano de avaliação em duas etapas (Desafio 2) |",
+         "| `Param_Avaliacao` | Tabela fixa | 3 perguntas | Avaliação do Desafio 2: target, real e piloto |",
          "| `Param_Estagios` | Tabela fixa | 5 estágios | Estágios do lead aberto para o pipeline ponderado (Desafio 2, extra) |",
          "| `Param_Cenarios` | Tabela fixa | 3 cenários | Premissas do impacto |",
          "| `clientes_ativos` | `raw.clientes_ativos` | 1 linha por contrato (73) | Ticket por porte e churn (Desafio 3) |",

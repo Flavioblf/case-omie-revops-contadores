@@ -17,18 +17,17 @@ ref table _Medidas
 ref table mercado_contadores
 ref table leads_pipeline
 ref table franquias
-ref table Param_Cenarios
-ref table tiers_1c
-ref table Param_Variaveis
+ref table execucao_comercial
 ref table clientes_ativos
-ref table Param_Territorio
+ref table tiers_1c
 ref table propensao_d2
 ref table d1a_mercado
 ref table d1b_conversao
-ref table Param_Avaliacao
-ref table execucao_comercial
-ref table Param_Ondas
+ref table Param_Variaveis
+ref table Param_Cenarios
 ref table Param_Estagios
+ref table Param_Avaliacao
+ref table Param_Ondas
+ref table Param_Territorio
 
 ref cultureInfo pt-BR
-

@@ -1,10 +1,10 @@
 /// Framework de priorização do Desafio 3b (igual à aba Ondas_Capacidade do Excel)
 table Param_Ondas
-	lineageTag: 4bd09c1c-ba36-45be-b55e-f5e8eb9af588
+	lineageTag: be443935-4302-4573-b379-e6fadf407ebe
 
 	column onda
 		dataType: string
-		lineageTag: d28ea404-2f7f-4f7f-96d8-7f5a776cc91d
+		lineageTag: dd8d1eed-ca01-43e3-a228-978013c304b5
 		summarizeBy: none
 		sourceColumn: onda
 
@@ -12,7 +12,7 @@ table Param_Ondas
 
 	column quem_entra
 		dataType: string
-		lineageTag: fdc43b70-e9a2-4b3a-be6e-c3656b5f4863
+		lineageTag: 576da07b-8f27-4d1c-afdb-135ec7f6ab46
 		summarizeBy: none
 		sourceColumn: quem_entra
 
@@ -20,7 +20,7 @@ table Param_Ondas
 
 	column contadores
 		dataType: int64
-		lineageTag: 59f63c12-b4e3-4466-838d-c4c241d092d4
+		lineageTag: 762eb69d-6c2b-477c-8ef0-7bdf303f4196
 		summarizeBy: none
 		sourceColumn: contadores
 
@@ -28,7 +28,7 @@ table Param_Ondas
 
 	column acao
 		dataType: string
-		lineageTag: b4486f36-8fa8-435d-8f13-579d81429eb7
+		lineageTag: 9ff3b58a-6a8e-498d-b569-610d977e6a39
 		summarizeBy: none
 		sourceColumn: acao
 
@@ -36,7 +36,7 @@ table Param_Ondas
 
 	column por_que
 		dataType: string
-		lineageTag: edfa8e89-d3e7-4ede-ab36-0ec0695d2c18
+		lineageTag: b66cba02-7c62-4e3e-828f-dee74e2015e6
 		summarizeBy: none
 		sourceColumn: por_que
 
@@ -52,4 +52,3 @@ table Param_Ondas
 				    Fonte
 
 	annotation PBI_ResultType = Table
-

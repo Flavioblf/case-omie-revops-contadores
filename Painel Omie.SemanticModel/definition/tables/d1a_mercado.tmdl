@@ -1,10 +1,10 @@
 /// Desafio 1a: mercado endereçável por região e porte (view dbo.vw_desafio1a_mercado).
 table d1a_mercado
-	lineageTag: 8ef6aa56-b148-4bd4-8cd1-7457563f89a2
+	lineageTag: c58cb20f-9642-474d-8836-9493f0cd41b5
 
 	column ordem_linha
 		dataType: int64
-		lineageTag: 61f89bd8-4729-4694-b057-2ff522d2be40
+		lineageTag: 0447219d-b5cc-415e-b22e-fb06586994da
 		summarizeBy: none
 		sourceColumn: ordem_linha
 
@@ -12,7 +12,7 @@ table d1a_mercado
 
 	column regiao
 		dataType: string
-		lineageTag: 05fea146-af2b-4c0b-823c-d64cda4e1986
+		lineageTag: 87bc6d83-8d01-438b-92ad-1fc63da0df2e
 		summarizeBy: none
 		sourceColumn: regiao
 
@@ -20,7 +20,7 @@ table d1a_mercado
 
 	column porte
 		dataType: string
-		lineageTag: 4e459fa2-0892-4f88-8727-c00c2b2c6452
+		lineageTag: 9f6ab99a-b3cb-47fc-a94e-363019d65a17
 		summarizeBy: none
 		sourceColumn: porte
 
@@ -28,7 +28,7 @@ table d1a_mercado
 
 	column num_contadores
 		dataType: int64
-		lineageTag: 8b02bd01-f048-455f-a6c4-17eb5d99f9e3
+		lineageTag: 0279d706-6232-44dd-a2bf-cbe9cf0e6316
 		summarizeBy: none
 		sourceColumn: num_contadores
 
@@ -37,7 +37,7 @@ table d1a_mercado
 	column participacao_regiao_pct
 		dataType: double
 		formatString: 0.0
-		lineageTag: 78ba59d6-1572-43c3-94a0-38bb1d8b0b28
+		lineageTag: 66c9b677-7860-4b8e-91a1-2c85a3e49566
 		summarizeBy: none
 		sourceColumn: participacao_regiao_pct
 
@@ -46,7 +46,7 @@ table d1a_mercado
 	column participacao_total_pct
 		dataType: double
 		formatString: 0.0
-		lineageTag: a7dda9fa-fd0d-4ea3-8279-407bb4ddb226
+		lineageTag: afd204d4-f9fa-40ed-8eba-cb1a01da09c5
 		summarizeBy: none
 		sourceColumn: participacao_total_pct
 
@@ -55,7 +55,7 @@ table d1a_mercado
 	column e_total_brasil
 		dataType: int64
 		isHidden
-		lineageTag: 77c3940a-e571-471b-992d-ffdebf80e4e4
+		lineageTag: 206508c0-9b9b-4e4b-a6e3-96f2747f04f1
 		summarizeBy: none
 		sourceColumn: e_total_brasil
 
@@ -64,7 +64,7 @@ table d1a_mercado
 	column e_total_regiao
 		dataType: int64
 		isHidden
-		lineageTag: d4cf3069-3282-4a3f-9a43-84606dd371ae
+		lineageTag: 3b94fe8a-6172-4fe2-b78b-ae592f5c9de3
 		summarizeBy: none
 		sourceColumn: e_total_regiao
 
@@ -80,4 +80,3 @@ table d1a_mercado
 				    Dados
 
 	annotation PBI_ResultType = Table
-

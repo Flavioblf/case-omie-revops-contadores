@@ -227,6 +227,8 @@
   "top30_conv": 0.907103825136612,
   "top30_lift": 2.26775956284153,
   "captura": 0.6916666666666667,
+  "win_faixas": "60% · 67% · 64%",
+  "resposta_piloto": "Meta: win rate ≥ 68,6% (Inbound, melhor canal com 30+ leads encerrados) e acima do controle",
   "win_alta": 0.6,
   "win_demais": 0.6547619047619048,
   "n_alta_desfecho": 30,

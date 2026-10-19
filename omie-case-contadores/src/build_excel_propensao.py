@@ -232,34 +232,39 @@ def cr(col):
 # ---------------------------------------------------------------- Como avaliar (plano de avaliação em 2 etapas)
 ws = wb.create_sheet("Como_Avaliar")
 ws["A1"], ws["A1"].font = "Como avaliar se a abordagem está funcionando", F_TITULO
-ws["A2"] = ("Em duas etapas: (1) validação na base — o score ordena quem converte e o topo fecha mais no pipeline real?; "
-            "(2) piloto de 90 dias com grupo de controle — priorizar o topo gera mais Ganhos e mais nMRR por EC?")
-header(ws, 4, ["Métrica", "O que mede", "Hoje", "Meta", "Etapa"])
+ws["A2"] = ("Três perguntas: (1) o score separa quem tem perfil para converter? (target); (2) separa quem fecha de verdade? "
+            "(pipeline real); (3) priorizar o topo gera mais receita? (piloto de 90 dias com grupo de controle)")
+header(ws, 4, ["Pergunta", "Métrica", "Hoje", "Resposta", "Etapa"])
 M_, AB_ = rng("M"), rng("AB")
-metricas = [
-    ("Conversão por faixa de propensão (Alta · Média · Baixa)", "Se o score ordena quem converte (target)",
-     '=FIXED(C19*100,0)&"% · "&FIXED(C20*100,0)&"% · "&FIXED(C21*100,0)&"%"', None, "Alta > Média > Baixa", "1. Base"),
-    ("Captura: % dos convertidos no top 30%", "Quanto da conversão está no topo",
-     f'=SUMIF({AB_},"Alta",{M_})/SUM({M_})', PCT, "Maior que os 30% da base que o topo representa", "1. Base"),
-    ("Win rate real: faixa Alta × demais", "Se o topo fecha mais de verdade (Ganho ÷ Ganho + Perdido)",
-     '=FIXED(G19*100,0)&"% × "&FIXED(G22*100,0)&"%"', None, "Alta acima das demais", "1. Base e 2. Piloto"),
-    ("Win rate: piloto × controle", "Se priorizar o topo gera mais Ganhos", "", None, "Piloto acima do controle", "2. Piloto"),
-    ("nMRR por EC: piloto × controle", "Se o ganho de conversão vira receita", "", None, "Piloto acima do controle", "2. Piloto"),
-    ("Ciclo médio do Ganho (dias): faixa Alta × demais", "Se priorizar não alonga a venda",
-     '=FIXED(H19,0)&" × "&FIXED(H22,0)&" dias"', None, "Alta ≤ demais", "1. Base e 2. Piloto"),
+win_inbound = (f'COUNTIFS({lr("C")},"Inbound",{lr("D")},"Ganho")/'
+               f'(COUNTIFS({lr("C")},"Inbound",{lr("D")},"Ganho")+COUNTIFS({lr("C")},"Inbound",{lr("D")},"Perdido"))')
+perguntas = [
+    ("1. O score separa quem tem perfil para converter?", "Conversão no target (converteu_omie) por faixa: Alta · Média · Baixa",
+     '=FIXED(C19*100,0)&"% · "&FIXED(C20*100,0)&"% · "&FIXED(C21*100,0)&"%"',
+     '="Sim: o top 30% capta "&FIXED(B9*100,0)&"% dos convertidos"', "1. Base"),
+    ("2. O score separa quem fecha de verdade?", "Win rate real (Ganho ÷ Ganho + Perdido) por faixa: Alta · Média · Baixa",
+     '=FIXED(G19*100,0)&"% · "&FIXED(G20*100,0)&"% · "&FIXED(G21*100,0)&"%"',
+     '="Não: a faixa Alta fecha "&FIXED(G19*100,0)&"%, contra "&FIXED(G22*100,0)&"% das demais"', "1. Base"),
+    ("3. Priorizar o topo gera mais receita?", "Piloto de 90 dias × grupo de controle: win rate e nMRR por EC",
+     "a medir no piloto",
+     f'="Meta: win rate ≥ "&FIXED(({win_inbound})*100,1)&"% (Inbound, melhor canal com 30+ leads encerrados) e acima do controle"',
+     "2. Piloto"),
 ]
-for k, (nome, mede, f, fmt, meta, etapa) in enumerate(metricas):
+for k, (perg, metr, hoje, resp, etapa) in enumerate(perguntas):
     r = 5 + k
-    ws.cell(row=r, column=1, value=nome).alignment = WRAP
-    ws.cell(row=r, column=2, value=mede).alignment = WRAP
-    c = ws.cell(row=r, column=3, value=f if f else "a medir no piloto")
-    if f:
+    ws.cell(row=r, column=1, value=perg).alignment = WRAP
+    ws.cell(row=r, column=2, value=metr).alignment = WRAP
+    c = ws.cell(row=r, column=3, value=hoje)
+    if hoje.startswith("="):
         c.fill = FILL_DESTAQUE
-        if fmt:
-            c.number_format = fmt
-    ws.cell(row=r, column=4, value=meta)
+    ws.cell(row=r, column=4, value=resp).alignment = WRAP
     ws.cell(row=r, column=5, value=etapa)
-ws["A12"] = ("Regra de decisão: se o piloto superar o controle, a priorização pelo score vira processo; "
+ws["A9"] = "Captura: % dos convertidos (target) que estão no top 30% do score"
+ws["B9"] = f'=SUMIF({AB_},"Alta",{M_})/SUM({M_})'
+ws["B9"].number_format = PCT
+ws["A10"] = "Nota: ciclo médio do Ganho, faixa Alta × demais (o topo fecha mais rápido, mas não fecha mais)"
+ws["B10"] = '=FIXED(H19,0)&" × "&FIXED(H22,0)&" dias"'
+ws["A12"] = ("Regra de decisão: se a pergunta 3 der sim (piloto acima do controle), a priorização pelo score vira processo; "
              "senão, o perfil é revisto.")
 ws["A12"].font = F_SUB
 
@@ -513,13 +518,13 @@ linhas = [
     ("• O topo da propensão já foi quase todo convertido: entre os 303 endereçáveis, poucos estão na faixa Alta.",
      None, None),
     ("", None, None),
-    ("2. Como avaliar se está funcionando — em duas etapas", F_SUB, None),
-    ("Etapa 1 (base): conversão por faixa — Alta · Média · Baixa (meta: Alta > Média > Baixa)", None, ("=Como_Avaliar!C5", None)),
-    ("Etapa 1 (base): % dos convertidos captados pelo top 30% (meta: acima de 30%)", None, ("=Como_Avaliar!C6", PCT)),
-    ("Etapa 1 (base): win rate real — faixa Alta × demais (meta: Alta acima)", None, ("=Como_Avaliar!C7", None)),
-    ("Etapa 1 (base): ciclo médio do Ganho — faixa Alta × demais (meta: Alta ≤ demais)", None, ("=Como_Avaliar!C10", None)),
-    ("• Etapa 2 (piloto de 90 dias com grupo de controle): win rate, nMRR por EC e ciclo do grupo piloto melhores que os do controle. "
-     "Se superar, a priorização vira processo; senão, o perfil é revisto.", None, None),
+    ("2. Como avaliar se está funcionando: três perguntas", F_SUB, None),
+    ("Pergunta 1 · O score separa quem tem perfil para converter? Conversão no target, Alta · Média · Baixa", None, ("=Como_Avaliar!C5", None)),
+    ("Pergunta 2 · O score separa quem fecha de verdade? Win rate real, Alta · Média · Baixa", None, ("=Como_Avaliar!C6", None)),
+    ("Pergunta 3 · Priorizar o topo gera mais receita? Piloto de 90 dias × grupo de controle", None, ("=Como_Avaliar!D7", None)),
+    ("Nota: ciclo médio do Ganho, faixa Alta × demais (fecha mais rápido, não mais)", None, ("=Como_Avaliar!B10", None)),
+    ("• Sim na pergunta 1, não na pergunta 2: o score mede potencial, não fechamento. A pergunta 3 (piloto) decide: "
+     "se superar o controle, a priorização vira processo; senão, o perfil é revisto.", None, None),
     ("", None, None),
     ("3. Top 5 características (amplitude da taxa de conversão)", F_SUB, None),
 ]

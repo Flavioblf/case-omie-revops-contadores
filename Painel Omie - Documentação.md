@@ -22,7 +22,7 @@ Projeto `Painel Omie.pbip` (modelo em TMDL, relatório em PBIR), gerado por `omi
 | `d1b_conversao` | `dbo.vw_desafio1b_conversao` | canal e franquia | Resposta do Desafio 1b |
 | `propensao_d2` (oculta) | `dbo.vw_propensao_d2` | 1 linha por contador (600) | Score e faixa de propensão do Desafio 2 |
 | `Param_Variaveis` | Tabela fixa | 9 características | Lista para o ranking dos drivers |
-| `Param_Avaliacao` | Tabela fixa | 6 métricas | Plano de avaliação em duas etapas (Desafio 2) |
+| `Param_Avaliacao` | Tabela fixa | 3 perguntas | Avaliação do Desafio 2: target, real e piloto |
 | `Param_Estagios` | Tabela fixa | 5 estágios | Estágios do lead aberto para o pipeline ponderado (Desafio 2, extra) |
 | `Param_Cenarios` | Tabela fixa | 3 cenários | Premissas do impacto |
 | `clientes_ativos` | `raw.clientes_ativos` | 1 linha por contrato (73) | Ticket por porte e churn (Desafio 3) |

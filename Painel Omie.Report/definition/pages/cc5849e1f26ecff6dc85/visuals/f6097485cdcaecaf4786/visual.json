@@ -23,6 +23,21 @@
                       "Entity": "Param_Avaliacao"
                     }
                   },
+                  "Property": "pergunta"
+                }
+              },
+              "queryRef": "Param_Avaliacao.pergunta",
+              "nativeQueryRef": "pergunta",
+              "displayName": "Pergunta"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Param_Avaliacao"
+                    }
+                  },
                   "Property": "metrica"
                 }
               },
@@ -38,27 +53,12 @@
                       "Entity": "Param_Avaliacao"
                     }
                   },
-                  "Property": "o_que_mede"
-                }
-              },
-              "queryRef": "Param_Avaliacao.o_que_mede",
-              "nativeQueryRef": "o_que_mede",
-              "displayName": "O que mede"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Param_Avaliacao"
-                    }
-                  },
                   "Property": "hoje"
                 }
               },
               "queryRef": "Param_Avaliacao.hoje",
               "nativeQueryRef": "hoje",
-              "displayName": "Hoje"
+              "displayName": "Hoje (Alta · Média · Baixa)"
             },
             {
               "field": {
@@ -68,27 +68,12 @@
                       "Entity": "Param_Avaliacao"
                     }
                   },
-                  "Property": "meta"
+                  "Property": "resposta"
                 }
               },
-              "queryRef": "Param_Avaliacao.meta",
-              "nativeQueryRef": "meta",
-              "displayName": "Meta"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Param_Avaliacao"
-                    }
-                  },
-                  "Property": "etapa"
-                }
-              },
-              "queryRef": "Param_Avaliacao.etapa",
-              "nativeQueryRef": "etapa",
-              "displayName": "Etapa"
+              "queryRef": "Param_Avaliacao.resposta",
+              "nativeQueryRef": "resposta",
+              "displayName": "Resposta"
             }
           ]
         }
@@ -103,7 +88,7 @@
                     "Entity": "Param_Avaliacao"
                   }
                 },
-                "Property": "metrica"
+                "Property": "pergunta"
               }
             },
             "direction": "Ascending"
@@ -354,7 +339,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Métricas de avaliação'"
+                  "Value": "'Avaliação em 3 perguntas'"
                 }
               }
             },

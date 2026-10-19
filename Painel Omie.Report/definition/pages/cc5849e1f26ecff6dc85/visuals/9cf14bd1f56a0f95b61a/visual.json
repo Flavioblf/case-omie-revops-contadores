@@ -32,7 +32,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Etapa 1, validação na base: o score ordena quem converte (Alta · Média · Baixa = 91% · 29% · 3%) e o top 30% capta 69% dos convertidos; no pipeline real, porém, a faixa Alta fecha 60% contra 65% das demais (mais rápido: 36 × 48 dias).",
+                    "value": "1. O score separa quem tem perfil para converter? Sim: no target, Alta · Média · Baixa = 91% · 29% · 3%, e o top 30% capta 69% dos convertidos.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "12pt",
@@ -45,7 +45,20 @@
               {
                 "textRuns": [
                   {
-                    "value": "Etapa 2, piloto de 90 dias com grupo de controle: win rate, nMRR por EC e ciclo do piloto melhores que os do controle. Se for, a priorização vira processo; senão, o perfil é revisto.",
+                    "value": "2. Separa quem fecha de verdade? Não: o win rate real é 60% · 67% · 64%; a faixa Alta fecha 60%, contra 65% das demais.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "12pt",
+                      "fontWeight": "normal",
+                      "color": "#001E27"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "3. Priorizar o topo gera mais receita? O piloto de 90 dias com grupo de controle decide: meta: win rate ≥ 68,6% (Inbound, melhor canal com 30+ leads encerrados) e acima do controle.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "12pt",

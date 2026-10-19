@@ -32,7 +32,20 @@
               {
                 "textRuns": [
                   {
-                    "value": "Se o piloto superar o controle, a priorização pelo score vira processo; senão, o perfil é revisto.",
+                    "value": "Se a pergunta 3 der sim (piloto acima do controle), a priorização vira processo; senão, o perfil é revisto.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "12pt",
+                      "fontWeight": "normal",
+                      "color": "#001E27"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Nota: o topo fecha mais rápido (36 × 48 dias), mas não fecha mais.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "12pt",

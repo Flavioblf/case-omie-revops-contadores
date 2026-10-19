@@ -32,7 +32,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Avaliação em duas etapas -",
+                    "value": "Avaliação em 3 perguntas -",
                     "textStyle": {
                       "fontFamily": "Century Gothic",
                       "fontSize": "20pt",
@@ -45,7 +45,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "o score ordena na base; o piloto prova se gera receita",
+                    "value": "o score separa no papel, não no real; o piloto decide",
                     "textStyle": {
                       "fontFamily": "Century Gothic",
                       "fontSize": "20pt",

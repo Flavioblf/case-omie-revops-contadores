@@ -95,7 +95,7 @@ d["drivers"] = {  # Desafio 2 descritivo (sem modelo estatístico)
     "icp_conv": dr["J29"].value, "fora_icp_conv": dr["J30"].value,
     "icp_lift": dr["J31"].value, "icp_lift_fora": dr["J32"].value,
     "conv_faixas": cr["C5"].value, "top30_conv": cr["C19"].value, "top30_lift": cr["D19"].value,
-    "captura": cr["C6"].value, "win_alta": cr["G19"].value, "win_demais": cr["G22"].value,
+    "captura": cr["B9"].value, "win_faixas": cr["C6"].value, "resposta_piloto": cr["D7"].value, "win_alta": cr["G19"].value, "win_demais": cr["G22"].value,
     "n_alta_desfecho": cr["E19"].value, "ciclo_alta": cr["H19"].value, "ciclo_demais": cr["H22"].value,
     "alta_enderecaveis": wb2["Respostas"]["B7"].value,
     "premissas": {"ecs": imp["C5"].value, "leads_ec": imp["C6"].value, "ticket": imp["C11"].value,
