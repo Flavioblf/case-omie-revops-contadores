@@ -328,7 +328,8 @@ for k, (nome, col) in enumerate(etapas):
     r = 5 + k
     ws.cell(row=r, column=1, value=nome)
     ws.cell(row=r, column=2, value=f"={GAP}!{col}{br}").number_format = PCT1
-    c = ws.cell(row=r, column=3, value=0.05 if col == "T" else 0)
+    # referência da base: o P→F da melhor franquia da rede (não um ganho arbitrário)
+    c = ws.cell(row=r, column=3, value=f"=MAX({GAP}!$T${F0}:$T${F1})-B{r}" if col == "T" else 0)
     c.number_format, c.fill = '+0.0%;-0.0%;0.0%', FILL_INPUT
     ws.cell(row=r, column=4, value=f"=B{r}+C{r}").number_format = PCT1
 res = [
@@ -348,10 +349,41 @@ for k, (nome, f, fmt) in enumerate(res):
     if r >= 11:
         c.fill = FILL_DESTAQUE
 ws["A16"] = ("Leitura: a etapa Proposta → Fechamento é a de menor taxa (~19%) — cada p.p. ali vale mais que nas outras etapas. "
+             "O ganho simulado (C7) leva a rede ao P→F da melhor franquia, já praticado na própria base. "
              "Alavancas: qualificação antes da proposta, proposta padronizada e follow-up.")
 ws["A16"].alignment = WRAP
-ws.merge_cells("A16:D18")
-larguras(ws, {"A": 60, "B": 16, "C": 14, "D": 14})
+ws.merge_cells("A16:F18")
+
+# Receita do plano: cada franquia abaixo da meta no P→F da melhor franquia da rede
+ws["A20"], ws["A20"].font = "Receita do plano: levar o proposta → fechamento de cada franquia abaixo da meta ao nível da melhor franquia da rede", F_SUB
+ws["A21"] = "Melhor proposta → fechamento da rede"
+ws["B21"] = f"=MAX({GAP}!$T${F0}:$T${F1})"
+ws["B21"].number_format = PCT1
+ws["C21"] = f"=INDEX({GAP}!$B${F0}:$B${F1},MATCH(B21,{GAP}!$T${F0}:$T${F1},0))"
+header(ws, 23, ["Franquia", "Proposta → fechamento hoje", "Realizado (R$/mês)", "Gap (R$/mês)",
+                "nMRR adicional no nível da melhor (R$/mês)", "Fecha o gap?"])
+for k in range(NF):
+    r, g = 24 + k, F0 + k
+    ws.cell(row=r, column=1, value=f"={GAP}!B{g}")
+    ws.cell(row=r, column=2, value=f"={GAP}!T{g}").number_format = PCT1
+    ws.cell(row=r, column=3, value=f"={GAP}!H{g}").number_format = BRL
+    ws.cell(row=r, column=4, value=f"={GAP}!J{g}").number_format = BRL
+    ws.cell(row=r, column=5, value=f"=IF({GAP}!I{g}<1,MAX(0,$B$21/B{r}-1)*C{r},0)").number_format = BRL
+    ws.cell(row=r, column=6, value=f'=IF({GAP}!I{g}>=1,"Na meta",IF(E{r}>=D{r},"Sim","Não"))')
+RT = 24 + NF
+ws.cell(row=RT, column=1, value="Total das franquias abaixo da meta").font = F_SUB
+for col in "DE":
+    ws[f"{col}{RT}"] = f"=SUM({col}24:{col}{RT - 1})"
+    ws[f"{col}{RT}"].number_format = BRL
+ws[f"E{RT}"].fill = FILL_DESTAQUE
+ws.cell(row=RT + 1, column=1, value="Cobertura do gap de meta pelo playbook")
+ws[f"E{RT + 1}"] = f"=E{RT}/D{RT}"
+ws[f"E{RT + 1}"].number_format = PCT
+ws[f"E{RT + 1}"].fill = FILL_DESTAQUE
+ws.cell(row=RT + 3, column=1, value=(
+    "Mesma lógica do simulador: mesmo volume de leads e ticket; o fechamento por lead sobe na proporção do P→F. "
+    "Onde não fecha o gap: BA recebe o EC adicional (3c); no CE o gap é de meta (maior meta por EC da rede)."))
+larguras(ws, {"A": 60, "B": 16, "C": 16, "D": 14, "E": 20, "F": 14})
 
 # ---------------------------------------------------------------- Priorizacao (3b)
 ws = wb.create_sheet("Priorizacao")

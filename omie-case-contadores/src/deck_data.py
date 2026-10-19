@@ -139,6 +139,12 @@ d["regioes_gap"] = [{"regiao": reg[f"A{r}"].value, "gap": reg[f"I{r}"].value, "p
                     for r in range(4, 9)]
 d["ondas"] = [{"onda": oc[f"A{r}"].value, "n": oc[f"F{r}"].value, "ve": oc[f"G{r}"].value} for r in range(5, 10)]
 d["sim_pf"] = {"pp": sim["C7"].value, "uplift": sim["B11"].value, "cobertura": sim["B14"].value}
+d["plano"] = {  # receita do plano: franquias abaixo da meta no P→F da melhor franquia da rede (Simulador_Funil)
+    "bench_pf": sim["B21"].value, "bench_nome": sim["C21"].value.replace("Franquia ", ""),
+    "incremento": sim["E39"].value, "gap": sim["D39"].value, "cobertura": sim["E40"].value,
+    "franquias": [{"nome": sim[f"A{r}"].value.replace("Franquia ", ""), "pf": sim[f"B{r}"].value, "inc": sim[f"E{r}"].value,
+                   "gap": sim[f"D{r}"].value, "fecha": sim[f"F{r}"].value} for r in range(24, 39) if sim[f"F{r}"].value != "Na meta"],
+}
 pz = wb3["Priorizacao"]
 cart_prop = [(r[5], r[23]) for r in pz.iter_rows(min_row=2, values_only=True) if r[23] is not None]
 mc_, mp_ = (sum(x) / len(cart_prop) for x in zip(*cart_prop))

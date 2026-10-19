@@ -261,7 +261,7 @@ pres.addSection({ title: "Ações imediatas" });
       `Potencial de +${pct(D.drivers.uplift[1])} de nMRR, a ser provado`],
     ["Playbook de proposta → fechamento",
       `É a etapa de menor conversão (${pct(D.bench_pf)}). Proposta padrão por porte, decisor mapeado e follow-up.`,
-      `+${num(D.sim_pf.pp * 100)} p.p. nessa etapa = +${pct(D.sim_pf.uplift)} de nMRR`],
+      `No nível do ${D.plano.bench_nome} (${pct(D.plano.bench_pf, 1)}): +${mil(D.plano.incremento, 0)}/mês nas ${D.abaixo_meta.n} franquias`],
   ];
   acoes.forEach(([h, t, imp], i) => {
     const x = M + i * 4.13;
@@ -285,7 +285,9 @@ pres.addSection({ title: "Ações imediatas" });
     `Primeira: fechar o que já está quente. São ${on[0].n} contadores com lead ativo em reunião ou proposta, o único sinal real de compra que temos, independente de qualquer perfil. ` +
     `Junto com isso, limpar o pipeline: ${pct(pl.parados / pl.abertos)} dos leads abertos estão parados há mais de 90 dias, o dobro do ciclo médio de um ganho. Isso libera tempo de EC e torna a cobertura confiável.\n\n` +
     `Segunda: o piloto do tier Alta, a lista priorizada da pergunta C: carteira acima de 24 clientes com lead em andamento, ou de 15 a 24 com lead em reunião ou proposta. São ${D.tiers.alta} contadores; ${D.tiers.alta_quente} já estão em negociação, então o piloto ataca os outros ${on[1].n}. Metade dos ECs ataca essa lista, a outra metade é o grupo de controle. Em 90 dias eu sei se o perfil gera receita de verdade.\n\n` +
-    `Terceira: proposta → fechamento é a etapa de menor conversão, ${pct(D.bench_pf)}. Cinco pontos percentuais a mais nela valem ${pct(D.sim_pf.uplift)} de nMRR.\n\n` +
+    `Terceira: proposta → fechamento é a etapa de menor conversão, ${pct(D.bench_pf)}, e o ${D.plano.bench_nome} já fecha ${pct(D.plano.bench_pf, 1)}. ` +
+    `Se as ${D.abaixo_meta.n} franquias abaixo da meta chegarem a esse nível, são ${mil(D.plano.incremento, 0)} a mais por mês, ${pct(D.plano.cobertura)} do gap, sem contratar ninguém. ` +
+    `Na BA isso não basta, por isso o EC adicional; no CE o gap é de meta, não de execução.\n\n` +
     `Embaixo estão as três decisões de gestão que sustentam isso: meta revista nas franquias pequenas, plano para o RJ e o EC adicional em ${D.ec_adicional.franquia}.`);
 }
 
@@ -302,7 +304,8 @@ pres.addSection({ title: "KPI de 90 dias" });
     { text: `${pct(ab.realizado / ab.meta)} → 100%`, options: { bold: true, color: S.branco, fontSize: 36, fontFace: "+mj-lt", breakLine: true } },
     { text: `atingimento de nMRR das ${ab.n} franquias abaixo da meta (${mil(ab.realizado, 0)} de ${mil(ab.meta)} por mês)`, options: { color: HEX.texto2Escuro, fontSize: ESC.corpo, breakLine: true } },
     { text: " ", options: { fontSize: 10, breakLine: true } },
-    { text: "Acompanhamento por franquia no Painel Omie (Power BI), a mesma base do case.", options: { color: S.branco, fontSize: ESC.corpo } },
+    { text: `Receita do plano: +${mil(ab.meta - ab.realizado)}/mês. `, options: { bold: true, color: S.cyan, fontSize: ESC.corpo } },
+    { text: `Só o playbook de fechamento rende até +${mil(D.plano.incremento, 0)}/mês.`, options: { color: S.branco, fontSize: ESC.corpo } },
   ], { x: M + 0.3, y: 2.15, w: 3.5, h: 3.0, margin: 0, valign: "top", isTextBox: true, objectName: "KPI norte texto" });
 
   // barra de progresso: atingimento atual vs a meta das próprias franquias (100%)
@@ -319,14 +322,15 @@ pres.addSection({ title: "KPI de 90 dias" });
     align: "right", margin: 0, isTextBox: true, objectName: "Progresso rótulo alvo" });
 
   const Hd = (t) => ({ text: t, options: { bold: true, color: HEX.branco, fill: { color: HEX.teal } } });
+  const winInbound = D.win_rate_canal.find(c => c.canal_origem === "Inbound").win_rate;
   const rowsT = [
-    [Hd("KPI de suporte"), Hd("Hoje"), Hd("Sinal de sucesso"), Hd("Por quê")],
-    ["Win rate do tier Alta (piloto vs controle)", `${pct(D.pipeline.win_rate_rede)} (rede)`, "Piloto acima do controle", "Valida o perfil"],
-    ["Conversão proposta → fechamento", pct(D.bench_pf), "Subir", "Maior alavanca do funil"],
-    ["Leads abertos parados há +90 dias", pct(D.pipeline.parados / D.pipeline.abertos), "Cair", "Pipeline confiável"],
-    ["Tier Alta com lead em Reunião/Proposta", `${D.tiers.alta_quente} de ${D.tiers.alta}`, "Todos", "Cobertura do tier Alta"],
+    [Hd("KPI de suporte"), Hd("Hoje"), Hd("Meta 90 dias"), Hd("De onde vem a meta")],
+    ["Win rate do tier Alta (piloto)", `${pct(D.pipeline.win_rate_rede)} (rede)`, `≥ ${pct(winInbound, 1)} e acima do controle`, "Inbound: melhor canal com 30+ leads encerrados"],
+    ["Conversão proposta → fechamento", pct(D.bench_pf, 1), pct(D.plano.bench_pf, 1), `${D.plano.bench_nome}: melhor franquia da rede`],
+    ["Leads abertos parados há +90 dias", pct(D.pipeline.parados / D.pipeline.abertos), "0%", "Nenhum Ganho fechou depois de 89 dias"],
+    ["Tier Alta com lead em Reunião/Proposta", `${D.tiers.alta_quente} de ${D.tiers.alta}`, `${D.tiers.alta} de ${D.tiers.alta}`, "Cobertura total do tier Alta"],
   ];
-  s.addTable(rowsT, { x: 5.0, y: 1.95, w: 7.73, colW: [2.95, 1.35, 1.65, 1.78], fontSize: 13, color: HEX.deep,
+  s.addTable(rowsT, { x: 5.0, y: 1.95, w: 7.73, colW: [2.55, 1.15, 1.75, 2.28], fontSize: 12, color: HEX.deep,
     fontFace: THEME.bodyFontFace, border: { type: "solid", pt: 0.5, color: HEX.linha }, rowH: 0.52, valign: "middle",
     margin: [0.04, 0.08, 0.04, 0.08], objectName: "Tabela KPIs de suporte" });
 
@@ -337,12 +341,15 @@ pres.addSection({ title: "KPI de 90 dias" });
     { text: `Hoje o mesmo KPI vale ${mil(rf[0], 0)}, ${mil(rf[1], 0)} ou ${mil(rf[2], 0)} por mês, conforme a tabela (franquias, execução ou CRM). `, options: { color: S.deep } },
     { text: "Junto: ID único de EC no CRM e definição canônica de conversão, para que o piloto meça a mesma coisa em todas as franquias.", options: { color: S.deep } },
   ], { x: 5.25, y: 5.0, w: 7.3, h: 1.6, fontSize: ESC.corpo, margin: 0, valign: "middle", isTextBox: true, objectName: "Governança texto" });
-  ui.fonte(s, "Hoje: franquias, leads_pipeline e Desafio 3 · Painel Omie (Power BI) · sinais de sucesso a validar com a liderança");
+  ui.fonte(s, "Hoje: franquias, leads_pipeline e Desafio 3 · metas: referências da própria base · receita: Desafio3_Capacity.xlsx (Simulador_Funil)");
   s.addNotes(
     `Para fechar: como medir o sucesso em 90 dias. Proponho um único KPI norte, o atingimento de nMRR das ${ab.n} franquias que hoje estão abaixo da meta. ` +
-    `Elas estão em ${pct(ab.realizado / ab.meta)} e a meta é chegar à meta delas, 100%, acompanhado no painel de Power BI que montei sobre a mesma base do case: drivers, contraste com o real, priorização e capacity, tudo lendo direto do SQL Server.\n\n` +
-    `Os quatro indicadores de suporte medem se as ações estão funcionando: o win rate do piloto contra o grupo de controle, a conversão de proposta para fechamento, ` +
-    `o percentual de pipeline parado e a cobertura dos contadores do tier Alta.\n\n` +
+    `Elas estão em ${pct(ab.realizado / ab.meta)} e a meta é chegar à meta delas, 100%: são ${mil(ab.meta - ab.realizado)} a mais por mês, de ${mil(ab.realizado, 0)} para ${mil(ab.meta)}. ` +
+    `E o plano sustenta esse número: só o playbook de proposta → fechamento, no nível que o ${D.plano.bench_nome} já pratica, rende até ${mil(D.plano.incremento, 0)} por mês; a priorização pelo score é upside, que só conto depois do piloto. ` +
+    `Acompanho tudo no painel de Power BI que montei sobre a mesma base do case.\n\n` +
+    `Os quatro indicadores de suporte têm meta numérica, e toda meta vem da própria base: win rate do piloto de pelo menos ${pct(winInbound, 1)}, o do Inbound, e acima do controle; ` +
+    `proposta → fechamento de ${pct(D.bench_pf, 1)} para ${pct(D.plano.bench_pf, 1)}, o nível do ${D.plano.bench_nome}; pipeline parado de ${pct(D.pipeline.parados / D.pipeline.abertos)} para zero, porque nenhum Ganho fechou depois de 89 dias; ` +
+    `e os ${D.tiers.alta} contadores do tier Alta em negociação.\n\n` +
     `E o pré-requisito, que é o que eu faria primeiro: hoje o nMRR do canal vale ${mil(rf[0], 0)}, ${mil(rf[1], 0)} ou ${mil(rf[2], 0)} por mês, dependendo da tabela que se consulta. ` +
     `Sem uma fonte única, não dá para medir o piloto, calibrar meta nem decidir headcount com segurança. É exatamente o papel da camada semântica de Parcerias.`);
 }

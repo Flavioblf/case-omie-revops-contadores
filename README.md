@@ -105,6 +105,14 @@ Score = nível do fit (1 a 3) + nível do engajamento (0 a 2): ≥ 4 Alta, 3 Mé
 1. Tamanho da oportunidade · 2. Onde está o dinheiro · 3. Propensão e impacto · 4. Capacity e EC adicional ·
 5. Três ações imediatas · 6. KPI de 90 dias: levar as 9 franquias abaixo da meta de 86% para 100% da meta delas.
 
+**Receita do plano:** o KPI norte vale **+R$ 19,5 mil/mês** (de R$ 124 mil para R$ 143,5 mil nas 9 franquias abaixo da
+meta). Só o playbook de proposta → fechamento, levando cada uma dessas franquias ao nível que o ES já pratica (23,7%,
+contra 19,3% da rede), rende até **+R$ 26,3 mil/mês** (135% do gap), mantendo volume de leads e ticket (aba
+Simulador_Funil). Na BA isso não basta, por isso o EC adicional; no CE o gap é de meta. A priorização pelo score (+25%) é
+upside que só se conta depois do piloto. As metas de 90 dias do slide 6 também vêm da base: proposta → fechamento de
+19,3% para 23,7% (ES), pipeline parado de 56% para 0% (nenhum Ganho depois de 89 dias), win rate do piloto ≥ 68,6%
+(Inbound, melhor canal com 30+ leads encerrados) e os 21 contadores do tier Alta em negociação.
+
 ## Escolhas metodológicas
 
 | Tema | Escolha |
