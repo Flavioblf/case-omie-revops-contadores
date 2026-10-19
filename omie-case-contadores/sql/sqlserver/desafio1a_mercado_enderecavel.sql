@@ -1,16 +1,6 @@
-﻿/* =====================================================================
-   DESAFIO 1a — Mercado endereçável por região e porte
-   Pergunta: tamanho do mercado endereçável (contadores ainda não clientes da Omie)
-             por região, segmentado por porte, com volumetria e % do total por região.
-
-   Endereçável = status_omie diferente de 'Cliente Ativo' E converteu_omie = 0
-   (premissa: converteu_omie = 1 já é convertido).
-   Colunas: regiao e porte vêm de mercado_contadores;
-            num_contadores = contagem de id_contador;
-            participacao_regiao_pct = peso do porte dentro da região;
-            participacao_total_pct  = peso no Brasil (na linha 'Total da região' = participação da região).
-   T-SQL (SQL Server) · banco OMIE · esquema raw
-   ===================================================================== */
+﻿-- Desafio 1a · Mercado endereçável por região e porte
+-- Endereçável: status_omie <> 'Cliente Ativo' e converteu_omie = 0 (converteu_omie = 1 conta como já convertido)
+-- participacao_regiao_pct: peso do porte na região | participacao_total_pct: peso no Brasil
 USE OMIE;
 GO
 

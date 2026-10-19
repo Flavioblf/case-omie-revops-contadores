@@ -1,16 +1,6 @@
-﻿/* =====================================================================
-   DESAFIO 1b — Conversão lead → cliente por canal e por franquia; ROI de esforço
-   Pergunta: taxa de conversão (status_lead = 'Ganho') por canal de origem e por franquia.
-             Qual canal tem melhor ROI de esforço (menos tentativas de contato por fechamento)?
-
-   Colunas: canal_origem (leads_pipeline) e nome_franquia (franquias);
-            linhas com nome_franquia vazio = total do canal; preenchido = franquia (canal 'Franquia').
-            taxa_conv_lead_ganho_pct     = Ganhos / total de leads
-            num_tentativas_contato       = soma das tentativas de TODOS os leads
-            tentativas_contato_por_ganho = num_tentativas_contato / num_ganhos -> menor = melhor ROI
-   Só leads do canal 'Franquia' têm id_franquia (4 a 13 leads por franquia).
-   T-SQL (SQL Server) · banco OMIE · esquema raw
-   ===================================================================== */
+﻿-- Desafio 1b · Conversão lead -> Ganho por canal e por franquia; ROI de esforço
+-- Conversão: Ganhos / total de leads | ROI de esforço: tentativas de todos os leads / Ganhos (menor = melhor)
+-- nome_franquia vazio = total do canal; só o canal 'Franquia' tem id_franquia
 USE OMIE;
 GO
 

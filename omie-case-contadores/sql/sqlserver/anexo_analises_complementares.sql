@@ -1,24 +1,10 @@
-﻿/* =====================================================================
-   ANEXO — Análises complementares do Desafio 1 (apoio ao deck e à governança)
-   As respostas das perguntas a, b e c estão em desafio1a/1b/1c_*.sql (autocontidas).
-   Regra de endereçável usada em todo o case (igual ao 1a):
-     status_omie diferente de 'Cliente Ativo'  E  converteu_omie = 0  -> 303 contadores
-   Conteúdo:
-     A0 views de apoio
-     A1 penetração e carteira endereçável por porte      (slide 1)
-     A2 sensibilidade da definição de cliente            (governança, slides 1 e 6)
-     A3 higiene do pipeline                              (slides 5 e 6)
-     A4 validação dos tiers do 1c
-     A5 tiers por região
-     A6/A7 reconciliação de receita entre fontes         (slide 6)
-   T-SQL (SQL Server 2016 SP1+) · banco OMIE · tabelas no esquema raw · views criadas no dbo
-   Notas de dialeto: CREATE OR ALTER VIEW + GO entre lotes; AVG(1.0 * coluna) porque
-   AVG de inteiro devolve inteiro no SQL Server; literais com acento como N'...'
-   ===================================================================== */
+﻿-- Anexo · views do Power BI e análises de apoio (governança)
+-- A0 views | A1 penetração por porte | A2 definições de cliente | A3 leads parados
+-- A4 validação dos tiers | A5 tiers por região | A6/A7 reconciliação de receita
+USE OMIE;
+GO
 
-/* ---------------------------------------------------------------------
-   A0) VIEWS DE APOIO — rodar uma vez
-   --------------------------------------------------------------------- */
+-- A0 Views (rodar uma vez)
 CREATE OR ALTER VIEW dbo.stg_lead AS
 SELECT
     l.*,
@@ -69,9 +55,9 @@ SELECT
     m.status_omie                               AS status_omie_origem,
     m.converteu_omie,
     m.score_potencial_latente,
-    -- regra de endereçável adotada no case (igual ao 1a)
+    -- endereçável (regra do 1a)
     CASE WHEN m.status_omie <> 'Cliente Ativo' AND m.converteu_omie = 0 THEN 1 ELSE 0 END AS is_enderecavel,
-    -- contrato ativo em clientes_ativos (usado só para comparar definições — governança)
+    -- contrato ativo em clientes_ativos
     COALESCE(c.is_cliente_ativo, 0)             AS is_cliente_ativo,
     COALESCE(c.mrr_atual, 0)                    AS mrr_atual,
     COALESCE(l.n_leads, 0)                      AS n_leads,
@@ -110,15 +96,14 @@ GROUP BY e.id_franquia, f.nome_franquia, e.estado, e.regiao, e.mes_ref, f.num_ex
 GO
 
 CREATE OR ALTER VIEW dbo.vw_tiers_prospects AS
--- fonte única do tier: mesma matriz Fit x Engajamento de desafio1c_tiers_prioridade.sql
--- (lida pelo Power BI e pelo Desafio 3)
+-- Tier do 1c (mesma regra de desafio1c_tiers_prioridade.sql)
 WITH niveis AS (
     SELECT
         c.*,
         CASE WHEN num_clientes_ativos > 24  THEN 3
              WHEN num_clientes_ativos >= 15 THEN 2
              ELSE 1 END                                            AS nivel_fit,
-        -- estagio_aberto_ordem já ignora leads parados (> 90 dias) e 'Sem Resposta'
+        -- estagio_aberto_ordem já exclui leads parados (> 90 dias) e 'Sem Resposta'
         CASE WHEN estagio_aberto_ordem >= 3 THEN 2
              WHEN estagio_aberto_ordem >= 1 THEN 1
              ELSE 0 END                                            AS nivel_engajamento
@@ -136,9 +121,8 @@ SELECT
 FROM niveis;
 GO
 
--- Desafio 2: score de propensão de cada contador (mesma fórmula do Excel Desafio2_Propensao.xlsx, aba Base)
--- propensão = média das taxas de conversão (converteu_omie) das categorias do contador nos 5 drivers do top 5;
--- faixa Alta = a partir do percentil 70 (top 30%), Média = a partir do percentil 30
+-- Desafio 2: propensão = média das taxas de conversão das categorias do contador nos 5 drivers
+-- (fórmula da aba Base do Excel); Alta >= P70, Média >= P30
 CREATE OR ALTER VIEW dbo.vw_propensao_d2 AS
 WITH b AS (
     SELECT
@@ -154,7 +138,7 @@ p AS (
     SELECT
         id_contador,
         converteu_omie,
-        -- arredondada em 10 casas para os empates no percentil não dependerem da ordem da soma
+        -- 10 casas: evita empate de ponto flutuante no percentil
         ROUND(( AVG(CAST(converteu_omie AS FLOAT)) OVER (PARTITION BY porte)
               + AVG(CAST(converteu_omie AS FLOAT)) OVER (PARTITION BY f_funcionarios)
               + AVG(CAST(converteu_omie AS FLOAT)) OVER (PARTITION BY f_clientes)
@@ -177,8 +161,7 @@ SELECT
 FROM c;
 GO
 
--- Desafio 1a para o Power BI: mesma lógica de desafio1a_mercado_enderecavel.sql
--- (view não aceita ORDER BY: ordem_linha reproduz a ordem da consulta no painel)
+-- Desafio 1a para o Power BI (ordem_linha substitui o ORDER BY)
 CREATE OR ALTER VIEW dbo.vw_desafio1a_mercado AS
 WITH totais AS (
     SELECT
@@ -216,7 +199,7 @@ SELECT
 FROM bases;
 GO
 
--- Desafio 1b para o Power BI: mesma lógica de desafio1b_conversao_canal_franquia.sql
+-- Desafio 1b para o Power BI
 CREATE OR ALTER VIEW dbo.vw_desafio1b_conversao AS
 WITH por_canal AS (
     SELECT
@@ -265,9 +248,7 @@ SELECT (SELECT COUNT(*) FROM dbo.stg_lead)                  AS stg_lead,
        (SELECT COUNT(*) FROM dbo.vw_tiers_prospects)        AS vw_tiers_prospects;
 GO
 
-/* ---------------------------------------------------------------------
-   A1) Penetração e carteira endereçável por porte (slide 1)
-   --------------------------------------------------------------------- */
+-- A1 Penetração e carteira endereçável por porte
 SELECT
     porte,
     COUNT(*)                                                               AS universo_contadores,
@@ -282,10 +263,7 @@ GROUP BY porte
 ORDER BY carteira_enderecavel DESC;
 GO
 
-/* ---------------------------------------------------------------------
-   A2) Sensibilidade da definição de "cliente" (governança)
-   Mesmo universo de 600 contadores, três réguas diferentes para "quem já é cliente".
-   --------------------------------------------------------------------- */
+-- A2 Endereçáveis em cada definição de "cliente"
 -- A2.1 Endereçáveis por região em cada régua
 SELECT
     COALESCE(regiao, 'Total')                                                       AS regiao,
@@ -307,9 +285,7 @@ SELECT
 FROM dbo.stg_contador;
 GO
 
-/* ---------------------------------------------------------------------
-   A3) Higiene do pipeline: leads abertos parados há mais de 90 dias (slides 5 e 6)
-   --------------------------------------------------------------------- */
+-- A3 Leads abertos parados há mais de 90 dias
 SELECT
     status_lead,
     COUNT(*)                                                   AS leads_abertos,
@@ -322,12 +298,7 @@ GROUP BY status_lead, estagio_ordem
 ORDER BY estagio_ordem DESC;
 GO
 
-/* ---------------------------------------------------------------------
-   A4) Validação dos tiers do 1c
-   A4.1 a matriz com as contagens; A4.2 resumo por tier.
-   converteu_omie não serve aqui (vale 0 para todo o universo, por definição);
-   o score_potencial_latente é usado só para validar, nunca para pontuar.
-   --------------------------------------------------------------------- */
+-- A4 Validação dos tiers do 1c (score_potencial_latente só valida, não pontua)
 SELECT
     fit_carteira,
     SUM(CASE WHEN engajamento = 'Quente' THEN 1 ELSE 0 END) AS quente,
@@ -350,9 +321,7 @@ GROUP BY tier_prioridade
 ORDER BY CASE tier_prioridade WHEN 'Alta' THEN 1 WHEN N'Média' THEN 2 ELSE 3 END;
 GO
 
-/* ---------------------------------------------------------------------
-   A5) Tiers por região
-   --------------------------------------------------------------------- */
+-- A5 Tiers por região
 SELECT
     regiao,
     SUM(CASE WHEN tier_prioridade = 'Alta'   THEN 1 ELSE 0 END) AS alta,
@@ -364,9 +333,7 @@ GROUP BY regiao
 ORDER BY alta DESC;
 GO
 
-/* ---------------------------------------------------------------------
-   A6/A7) Reconciliação de receita entre fontes (governança, slide 6)
-   --------------------------------------------------------------------- */
+-- A6/A7 Reconciliação do nMRR entre as fontes
 -- A6 Rede
 SELECT 'franquias.realizado_nmrr_mes' AS fonte, 'Snapshot mensal (oficial de meta)' AS granularidade,
        CAST(SUM(1.0 * realizado_nmrr_mes) AS DECIMAL(12,0)) AS nmrr_mensal, CAST(NULL AS DECIMAL(8,1)) AS fechamentos_mes

@@ -1,37 +1,8 @@
-﻿/* =====================================================================
-   DESAFIO 1c — Tiers de prioridade (Alta / Média / Baixa) para contadores prospect
-   Pergunta: classificar os prospects em 3 tiers com base em pelo menos 3 critérios
-             de potencial de conversão, apresentando o critério de score.
-
-   Universo: mesma regra do 1a (303 contadores). score_potencial_latente e status_omie NÃO entram.
-
-   Método: matriz Fit x Engajamento, o padrão de lead scoring do mercado
-   (Salesforce Account Engagement / HubSpot): o perfil (fit) e o interesse (engajamento)
-   são avaliados separadamente e o tier sai do cruzamento dos dois, sem pesos arbitrários.
-
-   Critérios:
-     1. Fit da carteira       num_clientes_ativos, cortado nos tercis da própria base:
-                              Alto > 24 | Médio 15 a 24 | Baixo < 15
-                              (programas de parceria para contadores, como QuickBooks e Xero,
-                              classificam o escritório pelo nº de clientes que ele leva à plataforma)
-     2. Estágio do funil      status_lead do lead aberto mais avançado:
-                              Quente = Reunião Agendada ou Proposta Enviada
-                              Morno  = Novo ou Em Contato
-                              Frio   = sem lead aberto ou Sem Resposta
-     3. Recência              lead aberto há mais de 90 dias (tempo_ciclo_dias, ~2x o ciclo médio
-                              de Ganho) perde o engajamento e conta como Frio
-
-   Score = nível do fit (Baixo 1 | Médio 2 | Alto 3) + nível do engajamento (Frio 0 | Morno 1 | Quente 2)
-   Tier pela matriz:          Quente     Morno      Frio
-            Fit Alto          Alta (5)   Alta (4)   Média (3)
-            Fit Médio         Alta (4)   Média (3)  Baixa (2)
-            Fit Baixo         Média (3)  Baixa (2)  Baixa (1)
-   Score >= 4 = Alta | 3 = Média | <= 2 = Baixa
-
-   Joins: mercado_contadores + leads_pipeline (engajamento) + clientes_ativos (status_cliente = 'Ativo':
-          prospects que já têm contrato, divergência a corrigir na origem).
-   T-SQL (SQL Server) · banco OMIE · esquema raw
-   ===================================================================== */
+﻿-- Desafio 1c · Tiers de prioridade dos prospects (matriz Fit x Engajamento)
+-- Universo: o mesmo do 1a (303); score_potencial_latente e status_omie não entram
+-- Fit: num_clientes_ativos em tercis (> 24 Alto = 3 | 15-24 Médio = 2 | < 15 Baixo = 1)
+-- Engajamento: lead aberto até 90 dias em Reunião/Proposta = 2, Novo/Em Contato = 1, demais = 0
+-- Tier: fit + engajamento -> >= 4 Alta | 3 Média | <= 2 Baixa
 USE OMIE;
 GO
 
