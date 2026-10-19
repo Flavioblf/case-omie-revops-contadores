@@ -1,0 +1,63 @@
+{
+  "name": "Omie",
+  "dataColors": [
+    "#006B79",
+    "#FFB547",
+    "#00E2F4",
+    "#F0505A",
+    "#00535E",
+    "#72E4F5",
+    "#4E6B74",
+    "#001E27"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#001E27",
+  "tableAccent": "#006B79",
+  "good": "#006B79",
+  "neutral": "#FFB547",
+  "bad": "#F0505A",
+  "textClasses": {
+    "title": {
+      "fontFace": "Century Gothic",
+      "color": "#001E27",
+      "fontSize": 14
+    },
+    "callout": {
+      "fontFace": "Century Gothic",
+      "color": "#006B79",
+      "fontSize": 30
+    },
+    "header": {
+      "fontFace": "Century Gothic",
+      "color": "#001E27",
+      "fontSize": 13
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "color": "#001E27",
+      "fontSize": 12
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#D5E3E7"
+              }
+            },
+            "radius": 14
+          }
+        ]
+      }
+    }
+  }
+}

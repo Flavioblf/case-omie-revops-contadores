@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Painel Omie"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7283e47a-af27-47b4-a7b3-d6363f3ca831"
+  }
+}

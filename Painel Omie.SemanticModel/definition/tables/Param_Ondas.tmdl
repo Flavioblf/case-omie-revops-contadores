@@ -1,0 +1,55 @@
+/// Framework de priorização do Desafio 3b (igual à aba Ondas_Capacidade do Excel)
+table Param_Ondas
+	lineageTag: 92a5a9ca-5ddc-4035-a052-2e7c37c49b7e
+
+	column onda
+		dataType: string
+		lineageTag: d6944aba-883f-455c-9a4e-1914e04e6ce1
+		summarizeBy: none
+		sourceColumn: onda
+
+		annotation SummarizationSetBy = User
+
+	column quem_entra
+		dataType: string
+		lineageTag: 639d9971-444e-42af-962b-e6a7572add36
+		summarizeBy: none
+		sourceColumn: quem_entra
+
+		annotation SummarizationSetBy = User
+
+	column contadores
+		dataType: int64
+		lineageTag: b2ff31e4-c337-4e5f-b39c-1dcdbe7ccb83
+		summarizeBy: none
+		sourceColumn: contadores
+
+		annotation SummarizationSetBy = User
+
+	column acao
+		dataType: string
+		lineageTag: 080fc753-675e-4b09-ac7e-92541ef08ad3
+		summarizeBy: none
+		sourceColumn: acao
+
+		annotation SummarizationSetBy = User
+
+	column por_que
+		dataType: string
+		lineageTag: 89f20951-fe03-4445-9822-5e4017afbeac
+		summarizeBy: none
+		sourceColumn: por_que
+
+		annotation SummarizationSetBy = User
+
+	partition Param_Ondas = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [onda = text, quem_entra = text, contadores = Int64.Type, acao = text, por_que = text],
+				        {{"1. Fechar", "Lead aberto há até 90 dias em Reunião ou Proposta", 15, "Follow-up da proposta e negociação", "Único sinal real de compra; nenhum Ganho da base fechou depois de 89 dias"}, {"2. Prospectar tier Alta", "Tier Alta do 1c fora da onda 1", 13, "Outbound do EC: diagnóstico e reunião", "Carteira > 24 clientes (driver do D2) e lead em andamento"}, {"3. Requalificar parado", "Lead aberto há mais de 90 dias", 54, "Requalificar ou encerrar como Perdido", "Lead com mais de 89 dias nunca virou Ganho: limpar libera tempo de EC"}, {"4. Nutrir", "Tier Média fora das ondas 1 a 3", 66, "Marketing; EC só se o contador levantar a mão", "Fit ou engajamento parcial: ainda não justifica tempo de EC"}, {"5. Régua automatizada", "Tier Baixa fora das ondas 1 a 3", 155, "Comunicação automatizada", "Sem fit e sem engajamento"}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+

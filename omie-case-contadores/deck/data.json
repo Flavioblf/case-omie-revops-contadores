@@ -1,0 +1,564 @@
+{
+ "mercado": {
+  "universo": 600,
+  "clientes": 297,
+  "enderecaveis": 303,
+  "carteira_enderecavel": 8201,
+  "penetracao": 0.495,
+  "ex_clientes": 18
+ },
+ "porte": [
+  {
+   "porte": "Pequeno Escritório",
+   "enderecaveis": 104,
+   "penetracao": 0.5251141552511416,
+   "carteira": 4812
+  },
+  {
+   "porte": "Autônomo",
+   "enderecaveis": 196,
+   "penetracao": 0.21285140562248997,
+   "carteira": 2878
+  },
+  {
+   "porte": "Médio Escritório",
+   "enderecaveis": 3,
+   "penetracao": 0.963855421686747,
+   "carteira": 511
+  },
+  {
+   "porte": "Grande Escritório",
+   "enderecaveis": 0,
+   "penetracao": 1.0,
+   "carteira": 0
+  }
+ ],
+ "regiao": [
+  {
+   "regiao": "Sudeste",
+   "enderecaveis": 156,
+   "carteira": 4529
+  },
+  {
+   "regiao": "Nordeste",
+   "enderecaveis": 53,
+   "carteira": 1257
+  },
+  {
+   "regiao": "Sul",
+   "enderecaveis": 40,
+   "carteira": 764
+  },
+  {
+   "regiao": "Centro-Oeste",
+   "enderecaveis": 37,
+   "carteira": 1234
+  },
+  {
+   "regiao": "Norte",
+   "enderecaveis": 17,
+   "carteira": 417
+  }
+ ],
+ "icp_mercado": {
+  "enderecaveis": 24,
+  "pct_carteira": 0.22009511035239604,
+  "mt_ms": 15,
+  "total": 185
+ },
+ "converteu_vs_status": {
+  "cliente_ativo_com_0": 57,
+  "sem_contato_com_1": 17
+ },
+ "divergencia_cliente": {
+  "contrato_sem_status": 48,
+  "status_sem_contrato": 87
+ },
+ "prospeccao": {
+  "lista": 303,
+  "com_contrato_ativo": 35
+ },
+ "pipeline": {
+  "abertos": 236,
+  "parados": 133,
+  "win_rate_rede": 0.6403508771929824
+ },
+ "abaixo_meta": {
+  "n": 9,
+  "realizado": 124000,
+  "meta": 143500
+ },
+ "receita_fontes": [
+  299000.0,
+  17011.0,
+  3120.0
+ ],
+ "win_rate_canal": [
+  {
+   "canal_origem": "Evento",
+   "win_rate": 0.625,
+   "tentativas_por_fechamento": 24.8
+  },
+  {
+   "canal_origem": "Inbound",
+   "win_rate": 0.6857142857142857,
+   "tentativas_por_fechamento": 25.625
+  },
+  {
+   "canal_origem": "Outreach Ativo",
+   "win_rate": 0.6785714285714286,
+   "tentativas_por_fechamento": 28.0
+  },
+  {
+   "canal_origem": "Franquia",
+   "win_rate": 0.5555555555555556,
+   "tentativas_por_fechamento": 44.6
+  },
+  {
+   "canal_origem": "Indicação",
+   "win_rate": 0.7142857142857143,
+   "tentativas_por_fechamento": 49.4
+  }
+ ],
+ "conv_canal": [
+  {
+   "canal_origem": "Franquia",
+   "conversao": 0.15503875968992248
+  },
+  {
+   "canal_origem": "Inbound",
+   "conversao": 0.26666666666666666
+  },
+  {
+   "canal_origem": "Evento",
+   "conversao": 0.25
+  },
+  {
+   "canal_origem": "Outreach Ativo",
+   "conversao": 0.2345679012345679
+  },
+  {
+   "canal_origem": "Indicação",
+   "conversao": 0.16666666666666666
+  }
+ ],
+ "tiers": {
+  "alta": 21,
+  "media": 96,
+  "baixa": 186,
+  "alta_quente": 8
+ },
+ "drivers": {
+  "taxa_media": 0.4,
+  "ranking": [
+   {
+    "variavel": "Porte",
+    "amplitude": 93.17269076305222,
+    "rank": 1
+   },
+   {
+    "variavel": "Nº de funcionários",
+    "amplitude": 88.59348198970841,
+    "rank": 2
+   },
+   {
+    "variavel": "Nº de clientes da carteira",
+    "amplitude": 87.62886597938144,
+    "rank": 3
+   },
+   {
+    "variavel": "ERP atual",
+    "amplitude": 58.69565217391305,
+    "rank": 4
+   },
+   {
+    "variavel": "Anos de mercado",
+    "amplitude": 34.33214593373845,
+    "rank": 5
+   },
+   {
+    "variavel": "Região",
+    "amplitude": 22.833649588867804,
+    "rank": 6
+   },
+   {
+    "variavel": "Segmento",
+    "amplitude": 19.230167422938504,
+    "rank": 7
+   },
+   {
+    "variavel": "Tem site",
+    "amplitude": 11.25871005389078,
+    "rank": 8
+   },
+   {
+    "variavel": "LinkedIn",
+    "amplitude": 0.5669001192852352,
+    "rank": 9
+   }
+  ],
+  "porte": [
+   {
+    "porte": "Autônomo",
+    "target": 0.06827309236947791,
+    "win_real": 0.6730769230769231
+   },
+   {
+    "porte": "Pequeno Escritório",
+    "target": 0.4383561643835616,
+    "win_real": 0.6428571428571429
+   },
+   {
+    "porte": "Médio Escritório",
+    "target": 0.9397590361445783,
+    "win_real": 0.46153846153846156
+   },
+   {
+    "porte": "Grande Escritório",
+    "target": 1,
+    "win_real": 0.7142857142857143
+   }
+  ],
+  "icp_conv": 0.8378378378378378,
+  "fora_icp_conv": 0.20481927710843373,
+  "icp_lift": 2.0945945945945943,
+  "icp_lift_fora": 4.090620031796503,
+  "conv_faixas": "91% · 29% · 3%",
+  "top30_conv": 0.907103825136612,
+  "top30_lift": 2.26775956284153,
+  "captura": 0.6916666666666667,
+  "win_alta": 0.6,
+  "win_demais": 0.6547619047619048,
+  "n_alta_desfecho": 30,
+  "ciclo_alta": 35.666666666666664,
+  "ciclo_demais": 47.61818181818182,
+  "alta_enderecaveis": 14,
+  "premissas": {
+   "ecs": 44,
+   "leads_ec": 16.5,
+   "ticket": 1025.65,
+   "churn": 0.2054794520547945
+  },
+  "uplift": [
+   0.09508196721311471,
+   0.25355191256830606,
+   0.4563934426229508
+  ],
+  "nmrr_oficial": [
+   11790.163934426224,
+   31440.43715846995,
+   56592.7868852459
+  ]
+ },
+ "franquias": [
+  {
+   "nome": "PA",
+   "regiao": "Norte",
+   "meses": 3,
+   "atingimento": 0.7333333333333333,
+   "gap": 2000,
+   "real_ec": 5500,
+   "meta_ec": 7500,
+   "diag": "Abaixo da meta",
+   "tendencia": -0.05945898967952201,
+   "meta": 7500,
+   "realizado": 5500,
+   "ecs": 1,
+   "sem_fech": 0.5
+  },
+  {
+   "nome": "AM",
+   "regiao": "Norte",
+   "meses": 3,
+   "atingimento": 0.75,
+   "gap": 2000,
+   "real_ec": 6000,
+   "meta_ec": 8000,
+   "diag": "Abaixo da meta",
+   "tendencia": 1.7166333766631792,
+   "meta": 8000,
+   "realizado": 6000,
+   "ecs": 1,
+   "sem_fech": 0.5833333333333334
+  },
+  {
+   "nome": "BA",
+   "regiao": "Nordeste",
+   "meses": 6,
+   "atingimento": 0.7857142857142857,
+   "gap": 3000,
+   "real_ec": 5500,
+   "meta_ec": 7000,
+   "diag": "Abaixo da meta",
+   "tendencia": -0.08589335885640192,
+   "meta": 14000,
+   "realizado": 11000,
+   "ecs": 2,
+   "sem_fech": 0.4583333333333333
+  },
+  {
+   "nome": "PE",
+   "regiao": "Nordeste",
+   "meses": 5,
+   "atingimento": 0.8333333333333334,
+   "gap": 2000,
+   "real_ec": 5000,
+   "meta_ec": 6000,
+   "diag": "Abaixo da meta",
+   "tendencia": 0.06841474270466175,
+   "meta": 12000,
+   "realizado": 10000,
+   "ecs": 2,
+   "sem_fech": 0.4583333333333333
+  },
+  {
+   "nome": "CE",
+   "regiao": "Nordeste",
+   "meses": 4,
+   "atingimento": 0.85,
+   "gap": 1500,
+   "real_ec": 8500,
+   "meta_ec": 10000,
+   "diag": "Abaixo da meta",
+   "tendencia": -0.054860281398790955,
+   "meta": 10000,
+   "realizado": 8500,
+   "ecs": 1,
+   "sem_fech": 0.5
+  },
+  {
+   "nome": "RJ",
+   "regiao": "Sudeste",
+   "meses": 14,
+   "atingimento": 0.875,
+   "gap": 4000,
+   "real_ec": 5600,
+   "meta_ec": 6400,
+   "diag": "Abaixo da meta",
+   "tendencia": 0.5616507962426629,
+   "meta": 32000,
+   "realizado": 28000,
+   "ecs": 5,
+   "sem_fech": 0.45
+  },
+  {
+   "nome": "GO",
+   "regiao": "Centro-Oeste",
+   "meses": 7,
+   "atingimento": 0.875,
+   "gap": 2000,
+   "real_ec": 7000,
+   "meta_ec": 8000,
+   "diag": "Abaixo da meta",
+   "tendencia": 0.283437335187787,
+   "meta": 16000,
+   "realizado": 14000,
+   "ecs": 2,
+   "sem_fech": 0.4583333333333333
+  },
+  {
+   "nome": "DF",
+   "regiao": "Centro-Oeste",
+   "meses": 9,
+   "atingimento": 0.9,
+   "gap": 2000,
+   "real_ec": 6000,
+   "meta_ec": 6666.666666666667,
+   "diag": "Abaixo da meta",
+   "tendencia": -0.38478870854315095,
+   "meta": 20000,
+   "realizado": 18000,
+   "ecs": 3,
+   "sem_fech": 0.5
+  },
+  {
+   "nome": "RS",
+   "regiao": "Sul",
+   "meses": 11,
+   "atingimento": 0.9583333333333334,
+   "gap": 1000,
+   "real_ec": 5750,
+   "meta_ec": 6000,
+   "diag": "Abaixo da meta",
+   "tendencia": 0.25445338272621965,
+   "meta": 24000,
+   "realizado": 23000,
+   "ecs": 4,
+   "sem_fech": 0.5208333333333334
+  },
+  {
+   "nome": "ES",
+   "regiao": "Sudeste",
+   "meses": 5,
+   "atingimento": 1.0909090909090908,
+   "gap": 0,
+   "real_ec": 6000,
+   "meta_ec": 5500,
+   "diag": "Na meta",
+   "tendencia": 0.4549624440381499,
+   "meta": 11000,
+   "realizado": 12000,
+   "ecs": 2,
+   "sem_fech": 0.3333333333333333
+  },
+  {
+   "nome": "SP Interior",
+   "regiao": "Sudeste",
+   "meses": 12,
+   "atingimento": 1.1071428571428572,
+   "gap": 0,
+   "real_ec": 7750,
+   "meta_ec": 7000,
+   "diag": "Na meta",
+   "tendencia": -0.23654879925832395,
+   "meta": 28000,
+   "realizado": 31000,
+   "ecs": 4,
+   "sem_fech": 0.625
+  },
+  {
+   "nome": "PR",
+   "regiao": "Sul",
+   "meses": 16,
+   "atingimento": 1.1333333333333333,
+   "gap": 0,
+   "real_ec": 6800,
+   "meta_ec": 6000,
+   "diag": "Na meta",
+   "tendencia": -0.002675594462205222,
+   "meta": 30000,
+   "realizado": 34000,
+   "ecs": 5,
+   "sem_fech": 0.5666666666666667
+  },
+  {
+   "nome": "MG",
+   "regiao": "Sudeste",
+   "meses": 10,
+   "atingimento": 1.1363636363636365,
+   "gap": 0,
+   "real_ec": 8333.333333333334,
+   "meta_ec": 7333.333333333333,
+   "diag": "Na meta",
+   "tendencia": -0.33668796354213204,
+   "meta": 22000,
+   "realizado": 25000,
+   "ecs": 3,
+   "sem_fech": 0.4166666666666667
+  },
+  {
+   "nome": "SP Capital",
+   "regiao": "Sudeste",
+   "meses": 18,
+   "atingimento": 1.1555555555555554,
+   "gap": 0,
+   "real_ec": 8666.666666666666,
+   "meta_ec": 7500,
+   "diag": "Na meta",
+   "tendencia": 0.018257434112663784,
+   "meta": 45000,
+   "realizado": 52000,
+   "ecs": 6,
+   "sem_fech": 0.4861111111111111
+  },
+  {
+   "nome": "SC",
+   "regiao": "Sul",
+   "meses": 8,
+   "atingimento": 1.1666666666666667,
+   "gap": 0,
+   "real_ec": 7000,
+   "meta_ec": 6000,
+   "diag": "Na meta",
+   "tendencia": -0.23386118046317617,
+   "meta": 18000,
+   "realizado": 21000,
+   "ecs": 3,
+   "sem_fech": 0.4722222222222222
+  }
+ ],
+ "gap_total": 19500,
+ "real_ec_rede": 6795.454545454545,
+ "sem_fech_rede": 0.4943181818181818,
+ "corr_maturidade": 0.6482051289118302,
+ "corr_funil": 0.15015811270334503,
+ "bench_pf": 0.19254312743461324,
+ "regioes_gap": [
+  {
+   "regiao": "Sudeste",
+   "gap": 4000,
+   "pct_abaixo": 0.2,
+   "atingimento": 1.0724637681159421
+  },
+  {
+   "regiao": "Sul",
+   "gap": 1000,
+   "pct_abaixo": 0.3333333333333333,
+   "atingimento": 1.0833333333333333
+  },
+  {
+   "regiao": "Centro-Oeste",
+   "gap": 4000,
+   "pct_abaixo": 1,
+   "atingimento": 0.8888888888888888
+  },
+  {
+   "regiao": "Nordeste",
+   "gap": 6500,
+   "pct_abaixo": 1,
+   "atingimento": 0.8194444444444444
+  },
+  {
+   "regiao": "Norte",
+   "gap": 4000,
+   "pct_abaixo": 1,
+   "atingimento": 0.7419354838709677
+  }
+ ],
+ "ondas": [
+  {
+   "onda": "1. Fechar",
+   "n": 15,
+   "ve": 11760.189
+  },
+  {
+   "onda": "2. Prospectar tier Alta",
+   "n": 13,
+   "ve": 11432.855
+  },
+  {
+   "onda": "3. Requalificar parado",
+   "n": 54,
+   "ve": 43477.42350000003
+  },
+  {
+   "onda": "4. Nutrir",
+   "n": 66,
+   "ve": 57709.30200000001
+  },
+  {
+   "onda": "5. Régua automatizada",
+   "n": 155,
+   "ve": 116820.89649999977
+  }
+ ],
+ "sim_pf": {
+  "pp": 0.05,
+  "uplift": 0.25968208092485545,
+  "cobertura": 1.6513116940862602
+ },
+ "corr_prop_carteira": 0.7969830462473425,
+ "ec_adicional": {
+  "franquia": "BA",
+  "meses": 6,
+  "demanda_ec": 12.5,
+  "demanda_rede": 6.569999999999999,
+  "conv": 0.044642857142857144,
+  "conv_rede": 0.039774686745602944,
+  "gap": 3000,
+  "rank_demanda": 2,
+  "rank_conv": 3,
+  "segunda": "MG",
+  "sem_franquia": 27
+ }
+}

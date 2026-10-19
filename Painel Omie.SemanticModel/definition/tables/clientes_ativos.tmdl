@@ -1,0 +1,126 @@
+/// Contratos de clientes: ticket por porte e churn (Desafio 3).
+table clientes_ativos
+	lineageTag: d6e5e03a-d087-436c-ba5b-f9233392b9ac
+
+	column id_cliente
+		dataType: string
+		lineageTag: b8e00403-85c8-452b-9a35-d15b733efe60
+		summarizeBy: none
+		sourceColumn: id_cliente
+
+		annotation SummarizationSetBy = User
+
+	column id_lead
+		dataType: string
+		lineageTag: 0e39390d-0f6c-440a-9e0e-bee109f19366
+		summarizeBy: none
+		sourceColumn: id_lead
+
+		annotation SummarizationSetBy = User
+
+	column id_contador
+		dataType: string
+		lineageTag: fd00f2fc-b342-49fd-9cf7-694da81c64b1
+		summarizeBy: none
+		sourceColumn: id_contador
+
+		annotation SummarizationSetBy = User
+
+	column data_ativacao
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 270642b3-b30e-4fac-828a-14c328c9cd7f
+		summarizeBy: none
+		sourceColumn: data_ativacao
+
+		annotation SummarizationSetBy = User
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column plano
+		dataType: string
+		lineageTag: 7459d4bd-85b2-4d2a-8d76-be0ec9280729
+		summarizeBy: none
+		sourceColumn: plano
+
+		annotation SummarizationSetBy = User
+
+	column mrr_inicial
+		dataType: double
+		lineageTag: a51291a3-4615-48e5-99c0-630c564722a7
+		summarizeBy: none
+		sourceColumn: mrr_inicial
+
+		annotation SummarizationSetBy = User
+
+	column mrr_atual
+		dataType: double
+		lineageTag: fd1b9c28-eb87-4d17-8fdf-f567717bebab
+		summarizeBy: none
+		sourceColumn: mrr_atual
+
+		annotation SummarizationSetBy = User
+
+	column status_cliente
+		dataType: string
+		lineageTag: 799304ee-b7a6-48dd-9d32-2c76e712e6ba
+		summarizeBy: none
+		sourceColumn: status_cliente
+
+		annotation SummarizationSetBy = User
+
+	column data_churn
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 7e44a6e6-341f-4e51-9f57-70d89164a1f5
+		summarizeBy: none
+		sourceColumn: data_churn
+
+		annotation SummarizationSetBy = User
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column meses_ativo
+		dataType: int64
+		lineageTag: ab012a31-3c0e-42a0-adb2-29042f6b4983
+		summarizeBy: none
+		sourceColumn: meses_ativo
+
+		annotation SummarizationSetBy = User
+
+	column nps_score
+		dataType: int64
+		lineageTag: 7f39c1bc-ccae-4f35-8fec-e4a95e3d48fb
+		summarizeBy: none
+		sourceColumn: nps_score
+
+		annotation SummarizationSetBy = User
+
+	column upsell_realizado
+		dataType: string
+		lineageTag: 32920049-c2b1-4d3d-9c9d-58df8bdca3ef
+		summarizeBy: none
+		sourceColumn: upsell_realizado
+
+		annotation SummarizationSetBy = User
+
+	/// Porte do contador (para o ticket por porte)
+	column porte = RELATED(mercado_contadores[porte])
+		dataType: string
+		lineageTag: e98e02a3-55d7-4a6d-82fe-ebf8c17bc4fa
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	partition clientes_ativos = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database(ServidorSQL, BancoSQL),
+				    Dados = Fonte{[Schema="raw", Item="clientes_ativos"]}[Data],
+				    SemLinhaOrigem = Table.RemoveColumns(Dados, {"linha_origem"})
+				in
+				    SemLinhaOrigem
+
+	annotation PBI_ResultType = Table
+

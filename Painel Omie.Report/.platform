@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Painel Omie"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "131297b1-e217-469d-9da6-ba3850d50bfd"
+  }
+}

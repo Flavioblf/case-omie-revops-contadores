@@ -1,0 +1,39 @@
+/// Franquia de cada estado com franquia (SP é tratado por cidade); estados sem franquia não entram
+table Param_Territorio
+	lineageTag: fd80001b-f263-4f4e-a221-3c7f6bb51bbf
+
+	column estado
+		dataType: string
+		lineageTag: 754f9a6a-eafc-4a0c-939e-e64141d066b0
+		summarizeBy: none
+		sourceColumn: estado
+
+		annotation SummarizationSetBy = User
+
+	column id_franquia
+		dataType: string
+		lineageTag: 3672233c-76aa-4b33-8d3f-f56a1220a5b1
+		summarizeBy: none
+		sourceColumn: id_franquia
+
+		annotation SummarizationSetBy = User
+
+	column tipo
+		dataType: string
+		lineageTag: 961502b6-941d-46b3-a23c-d89cbe8694b2
+		summarizeBy: none
+		sourceColumn: tipo
+
+		annotation SummarizationSetBy = User
+
+	partition Param_Territorio = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [estado = text, id_franquia = text, tipo = text],
+				        {{"AM", "FRQ013", "Própria"}, {"BA", "FRQ010", "Própria"}, {"CE", "FRQ012", "Própria"}, {"DF", "FRQ008", "Própria"}, {"ES", "FRQ015", "Própria"}, {"GO", "FRQ009", "Própria"}, {"MG", "FRQ004", "Própria"}, {"PA", "FRQ014", "Própria"}, {"PE", "FRQ011", "Própria"}, {"PR", "FRQ005", "Própria"}, {"RJ", "FRQ003", "Própria"}, {"RS", "FRQ007", "Própria"}, {"SC", "FRQ006", "Própria"}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+

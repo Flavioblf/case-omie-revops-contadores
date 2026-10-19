@@ -1,0 +1,121 @@
+/// Funil mensal por franquia (execucao_comercial): conversão lead → fechamento.
+table execucao_comercial
+	isHidden
+	lineageTag: cb6f2a83-0e58-4307-b53d-a7a6a32e101f
+
+	column id_executivo
+		dataType: string
+		lineageTag: f4ce3708-5e75-4049-be3a-71439432b4aa
+		summarizeBy: none
+		sourceColumn: id_executivo
+
+		annotation SummarizationSetBy = User
+
+	column id_franquia
+		dataType: string
+		lineageTag: 89707ba7-6578-4a4b-94ca-4b07253a521a
+		summarizeBy: none
+		sourceColumn: id_franquia
+
+		annotation SummarizationSetBy = User
+
+	column estado
+		dataType: string
+		lineageTag: d9df6c0c-1b38-49e8-8cd1-1af34b8087f1
+		summarizeBy: none
+		sourceColumn: estado
+
+		annotation SummarizationSetBy = User
+
+	column regiao
+		dataType: string
+		lineageTag: 1c042761-eade-40bc-b55d-54231a4d6986
+		summarizeBy: none
+		sourceColumn: regiao
+
+		annotation SummarizationSetBy = User
+
+	column mes_ref
+		dataType: string
+		lineageTag: 357478e1-df83-4b47-aab1-d70a8ce417e4
+		summarizeBy: none
+		sourceColumn: mes_ref
+
+		annotation SummarizationSetBy = User
+
+	column leads_trabalhados
+		dataType: int64
+		lineageTag: c13f1b45-9fd2-4d25-a35d-eed710b823c6
+		summarizeBy: none
+		sourceColumn: leads_trabalhados
+
+		annotation SummarizationSetBy = User
+
+	column reunioes_realizadas
+		dataType: int64
+		lineageTag: 14de7876-797d-4c5c-aab8-0ea2ccb98e60
+		summarizeBy: none
+		sourceColumn: reunioes_realizadas
+
+		annotation SummarizationSetBy = User
+
+	column propostas_enviadas
+		dataType: int64
+		lineageTag: e076cba4-fa8e-405c-a535-51c26842d8fe
+		summarizeBy: none
+		sourceColumn: propostas_enviadas
+
+		annotation SummarizationSetBy = User
+
+	column fechamentos
+		dataType: int64
+		lineageTag: c42e6e33-c7b9-479a-be55-a2153586d421
+		summarizeBy: none
+		sourceColumn: fechamentos
+
+		annotation SummarizationSetBy = User
+
+	column nmrr_gerado
+		dataType: double
+		lineageTag: 435aca9e-edd9-4764-ba79-34ff4c79b20e
+		summarizeBy: none
+		sourceColumn: nmrr_gerado
+
+		annotation SummarizationSetBy = User
+
+	column taxa_conv_lead_reuniao
+		dataType: double
+		lineageTag: a3133959-7dea-4786-a0d2-0d2eecf44b6e
+		summarizeBy: none
+		sourceColumn: taxa_conv_lead_reuniao
+
+		annotation SummarizationSetBy = User
+
+	column taxa_conv_reuniao_proposta
+		dataType: double
+		lineageTag: 68ad7e97-4340-4bd0-8e30-64e696940bb2
+		summarizeBy: none
+		sourceColumn: taxa_conv_reuniao_proposta
+
+		annotation SummarizationSetBy = User
+
+	column taxa_conv_proposta_fechamento
+		dataType: double
+		lineageTag: 7b9bbc18-c62c-4a9c-88af-bc4431a7fd44
+		summarizeBy: none
+		sourceColumn: taxa_conv_proposta_fechamento
+
+		annotation SummarizationSetBy = User
+
+	partition execucao_comercial = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database(ServidorSQL, BancoSQL),
+				    Dados = Fonte{[Schema="raw", Item="execucao_comercial"]}[Data],
+				    SemLinhaOrigem = Table.RemoveColumns(Dados, {"linha_origem"})
+				in
+				    SemLinhaOrigem
+
+	annotation PBI_ResultType = Table
+

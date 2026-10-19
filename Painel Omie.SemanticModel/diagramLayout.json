@@ -1,0 +1,217 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 922.38305001469371,
+            "y": 3
+          },
+          "nodeIndex": "_Medidas",
+          "nodeLineageTag": "3ee88aac-dda0-451f-938b-4e3461297cc5",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 633.38305001469371,
+            "y": 1
+          },
+          "nodeIndex": "franquias",
+          "nodeLineageTag": "b446ed23-b88f-4359-9d0e-32bbf4fdbbb4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 310.20156119318517,
+            "y": 0
+          },
+          "nodeIndex": "leads_pipeline",
+          "nodeLineageTag": "2eca0908-6196-4bc4-a5ce-e5f3c7859def",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 7,
+            "y": 0
+          },
+          "nodeIndex": "mercado_contadores",
+          "nodeLineageTag": "2566cbc6-c888-4263-b84b-b9c004d15705",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1208.3830500146937,
+            "y": 132
+          },
+          "nodeIndex": "Param_Cenarios",
+          "nodeLineageTag": "ef93e4a6-459c-4b96-82af-5907ae24f04d",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1485.3830500146937,
+            "y": 90
+          },
+          "nodeIndex": "Param_Variaveis",
+          "nodeLineageTag": "e3bbb1a8-3a1e-4703-8be9-0213bca9fa96",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1769.3830500146937,
+            "y": 6
+          },
+          "nodeIndex": "tiers_1c",
+          "nodeLineageTag": "fd491adb-2b00-49ec-9966-e84b11405fbe",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2046.3830500146937,
+            "y": 4
+          },
+          "nodeIndex": "clientes_ativos",
+          "nodeLineageTag": "c6bac27c-5aae-4543-ab32-ac70c55fb195",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2330.3830500146937,
+            "y": 78
+          },
+          "nodeIndex": "Param_Territorio",
+          "nodeLineageTag": "3c599ec6-2684-4059-af16-c6bb85c8bfa8",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2607.3830500146937,
+            "y": 18
+          },
+          "nodeIndex": "d1a_mercado",
+          "nodeLineageTag": "a4d153a5-089a-447c-8d7e-29c96f1a6dc2",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2891.3830500146937,
+            "y": 4
+          },
+          "nodeIndex": "d1b_conversao",
+          "nodeLineageTag": "31816157-ede1-4812-ba5e-a17057c1e723",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3175.3830500146937,
+            "y": 42
+          },
+          "nodeIndex": "Param_Avaliacao",
+          "nodeLineageTag": "07eda3d4-4432-4a87-bc1e-5b1fe2298824",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3459.3830500146937,
+            "y": 66
+          },
+          "nodeIndex": "propensao_d2",
+          "nodeLineageTag": "2bf6e443-049b-4da3-9c47-8cc00426598d",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3736.3830500146937,
+            "y": 4
+          },
+          "nodeIndex": "execucao_comercial",
+          "nodeLineageTag": "6b1ba9c9-29c8-41cc-9bba-d26241ab96f4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4020.3830500146937,
+            "y": 54
+          },
+          "nodeIndex": "Param_Ondas",
+          "nodeLineageTag": "73fec1df-93c3-4308-8027-73f754c57418",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas as tabelas",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas as tabelas",
+  "defaultDiagram": "Todas as tabelas"
+}

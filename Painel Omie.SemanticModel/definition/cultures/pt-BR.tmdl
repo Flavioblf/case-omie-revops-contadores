@@ -1,0 +1,2050 @@
+cultureInfo pt-BR
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "table_medidas.contadores": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Contadores"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.taxa_de_conversão_teste": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Taxa de Conversão (Teste)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.lift_top_30_teste": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Lift Top 30% (Teste)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.precision_teste": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Precision (Teste)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.recall_teste": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Recall (Teste)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.contadores_teste": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Contadores (Teste)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.lift_por_decil_teste": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Lift por Decil (Teste)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.taxa_de_conversão": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Taxa de Conversão"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Conversão": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Target": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.auc_teste": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "AUC (Teste)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.coeficiente_β": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Coeficiente (β)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.odds_ratio": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Odds Ratio"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.importância_βσ": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Importância (|β|·σ)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.ranking_de_importância": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Ranking de Importância"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.leads_com_desfecho": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Leads com Desfecho"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.ganhos_real": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Ganhos (Real)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.win_rate_real": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Win Rate Real"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Win rate real": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.carteira_endereçável": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Carteira Endereçável"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.endereçáveis": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Endereçáveis"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.fit_alto_endereçáveis": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Fit Alto (Endereçáveis)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.icp_endereçáveis": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "ICP Endereçáveis"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.capacidade_redirecionada": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "% Capacidade Redirecionada"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% da capacidade": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.fator_de_realização": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Fator de Realização"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Fator": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.uplift_nmrr": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Uplift nMRR"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Uplift": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.nmrr_incremental_franquias_abaixo_da_meta": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "nMRR Incremental (Franquias Abaixo da Meta)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "R$/mês": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.cobertura_do_gap": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Cobertura do Gap"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "mercado_contadores.decil_teste": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "decil_teste"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "mercado_contadores.porte": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "porte"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Porte": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mercado_contadores.icp": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "icp"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "mercado_contadores.id_contador": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "id_contador"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Contador": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mercado_contadores.estado": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "estado"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "UF": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mercado_contadores.num_clientes_ativos": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "num_clientes_ativos"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Clientes": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mercado_contadores.erp_atual": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "erp_atual"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ERP": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mercado_contadores.prob_conversao": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "prob_conversao"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "mercado_contadores.faixa_fit": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "faixa_fit"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "param_coeficientes.variavel": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Param_Coeficientes",
+			          "ConceptualProperty": "variavel"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "param_cenarios.cenario": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Param_Cenarios",
+			          "ConceptualProperty": "cenario"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Cenário": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.amplitude_p_p_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Amplitude (p.p.)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "p.p.": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ranking_do_driver": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Ranking do Driver"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "#": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.taxa_de_conversão_icp": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Taxa de Conversão ICP"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.taxa_média": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Taxa Média"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.lift_do_icp": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Lift do ICP"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.win_rate_real_fora_do_icp": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Win Rate Real Fora do ICP"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.win_rate_real_icp": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Win Rate Real ICP"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.tier_alta": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Tier Alta"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Alta": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "param_variaveis.variavel": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Param_Variaveis",
+			          "ConceptualProperty": "variavel"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Característica": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mercado_contadores.situacao_pipeline": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "situacao_pipeline"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Pipeline": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mercado_contadores.score_prioridade": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "score_prioridade"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "mercado_contadores.tier_prioridade": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "tier_prioridade"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Tier 1c": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.atingimento_abaixo_da_meta": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Atingimento (abaixo da meta)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.atingimento_na_meta": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Atingimento (na meta)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.gap_r": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Gap (R$)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Gap das franquias abaixo da meta (R$)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Gap": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.franquias_abaixo_da_meta": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Franquias Abaixo da Meta"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.ecs": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "ECs"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ECs": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.prospects_no_território": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Prospects no Território"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Endereçáveis": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.tier_alta_por_ec": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Tier Alta por EC"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.valor_ponderado_por_ec": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Valor Ponderado por EC"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.realizado_por_ec": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Realizado por EC"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Realizado/EC": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.score_ec_adicional": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Score EC Adicional"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.ranking_ec_adicional": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Ranking EC Adicional"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "#": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.correlação_maturidade__atingimento": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Correlação Maturidade × Atingimento"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.payback_ec_meses": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Payback EC (meses)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.franquia_recomendada": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Franquia Recomendada"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "EC adicional vai para": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mercado_contadores.onda_nome": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "onda_nome"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Onda": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "franquias.nome_franquia": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "franquias",
+			          "ConceptualProperty": "nome_franquia"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Franquia": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "franquias.elegivel_ec": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "franquias",
+			          "ConceptualProperty": "elegivel_ec"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.tier_média": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Tier Média"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Média": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.tier_baixa": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Tier Baixa"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Baixa": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.quente": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Quente"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Quente": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.morno": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Morno"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Morno": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.frio": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Frio"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Frio": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.contadores_ondas_1_e_2": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Contadores Ondas 1 e 2"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.mrr_esperado": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "MRR Esperado"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.mrr_esperado_por_ec": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "MRR Esperado por EC"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.prospects_por_ec": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Prospects por EC"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Endereç./EC": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.métricas_em_1": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Métricas em 1º"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "d1b_conversao.canal_origem": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "d1b_conversao",
+			          "ConceptualProperty": "canal_origem"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Canal": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "d1b_conversao.num_leads": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "d1b_conversao",
+			          "ConceptualProperty": "num_leads"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Leads": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "d1b_conversao.taxa_conv_lead_ganho_pct": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "d1b_conversao",
+			          "ConceptualProperty": "taxa_conv_lead_ganho_pct"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Conv. %": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "d1b_conversao.tentativas_contato_por_ganho": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "d1b_conversao",
+			          "ConceptualProperty": "tentativas_contato_por_ganho"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Tent./ganho": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "d1b_conversao.ranking_roi_esforco": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "d1b_conversao",
+			          "ConceptualProperty": "ranking_roi_esforco"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ROI #": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "d1b_conversao.nome_franquia": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "d1b_conversao",
+			          "ConceptualProperty": "nome_franquia"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Franquia": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "d1b_conversao.num_ganhos": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "d1b_conversao",
+			          "ConceptualProperty": "num_ganhos"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Ganhos": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "d1b_conversao.alerta_amostra": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "d1b_conversao",
+			          "ConceptualProperty": "alerta_amostra"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Alerta": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mercado_contadores.fit_carteira": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "fit_carteira"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Fit": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mercado_contadores.num_funcionarios": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "num_funcionarios"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Func.": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mercado_contadores.anos_mercado": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "anos_mercado"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Anos": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mercado_contadores.propensao": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "propensao"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Propensão": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mercado_contadores.faixa_propensao": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "faixa_propensao"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Faixa": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mercado_contadores.franquia_nome": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "franquia_nome"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Franquia": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mercado_contadores.mrr_esperado": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mercado_contadores",
+			          "ConceptualProperty": "mrr_esperado"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "MRR esperado": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "d1a_mercado.ordem_linha": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "d1a_mercado",
+			          "ConceptualProperty": "ordem_linha"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "#": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "d1a_mercado.regiao": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "d1a_mercado",
+			          "ConceptualProperty": "regiao"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Região": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "d1a_mercado.porte": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "d1a_mercado",
+			          "ConceptualProperty": "porte"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Porte": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "d1a_mercado.num_contadores": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "d1a_mercado",
+			          "ConceptualProperty": "num_contadores"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Qtd.": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "d1a_mercado.participacao_regiao_pct": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "d1a_mercado",
+			          "ConceptualProperty": "participacao_regiao_pct"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% reg.": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "d1a_mercado.participacao_total_pct": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "d1a_mercado",
+			          "ConceptualProperty": "participacao_total_pct"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% total": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "param_avaliacao.metrica": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Param_Avaliacao",
+			          "ConceptualProperty": "metrica"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Métrica": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "param_avaliacao.o_que_mede": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Param_Avaliacao",
+			          "ConceptualProperty": "o_que_mede"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "O que mede": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "param_avaliacao.hoje": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Param_Avaliacao",
+			          "ConceptualProperty": "hoje"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Hoje": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "param_avaliacao.meta": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Param_Avaliacao",
+			          "ConceptualProperty": "meta"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Meta": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "param_avaliacao.etapa": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Param_Avaliacao",
+			          "ConceptualProperty": "etapa"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Etapa": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "franquias.regiao": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "franquias",
+			          "ConceptualProperty": "regiao"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "franquias.meses_operando": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "franquias",
+			          "ConceptualProperty": "meses_operando"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Meses": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "franquias.atingimento": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "franquias",
+			          "ConceptualProperty": "atingimento"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Atingimento": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "franquias.diagnostico": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "franquias",
+			          "ConceptualProperty": "diagnostico"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.meta_r": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Meta (R$)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.realizado_r": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Realizado (R$)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.meta_por_ec": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Meta por EC"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Meta/EC": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.conversão_do_funil": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Conversão do Funil"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Conversão do funil": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.fechamentos_potenciais_por_ec": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Fechamentos Potenciais por EC"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Fech. potenciais/EC": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "d1b_conversao.num_tentativas_contato": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "d1b_conversao",
+			          "ConceptualProperty": "num_tentativas_contato"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Tentativas": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "param_ondas.onda": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Param_Ondas",
+			          "ConceptualProperty": "onda"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Onda": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "param_ondas.quem_entra": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Param_Ondas",
+			          "ConceptualProperty": "quem_entra"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Quem entra": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "param_ondas.contadores": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Param_Ondas",
+			          "ConceptualProperty": "contadores"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Contadores": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "param_ondas.acao": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Param_Ondas",
+			          "ConceptualProperty": "acao"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "O que o EC faz": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "param_ondas.por_que": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Param_Ondas",
+			          "ConceptualProperty": "por_que"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Por quê": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.realizado_até_a_meta": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Realizado até a Meta"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Realizado": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.falta_para_a_meta": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Falta para a Meta"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Falta para a meta": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.acima_da_meta": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Acima da Meta"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Acima da meta": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.realizado_por_ec_vs_rede": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Realizado por EC vs Rede"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "vs rede": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.fechamentos_por_ecmês": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Fechamentos por EC-mês"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Fech./mês": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ecmês_sem_fechamento": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "% EC-mês sem Fechamento"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% sem fech.": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.atingimento": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Atingimento"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Atingimento da região": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

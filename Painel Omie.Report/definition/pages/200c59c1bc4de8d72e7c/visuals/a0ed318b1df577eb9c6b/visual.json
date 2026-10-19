@@ -1,0 +1,65 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "a0ed318b1df577eb9c6b",
+  "position": {
+    "x": 16,
+    "y": 5,
+    "z": 0,
+    "width": 1053,
+    "height": 104,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "DESAFIO 1 · SQL",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "12pt",
+                      "fontWeight": "bold",
+                      "color": "#006B79"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Mercado endereçável, conversão por canal e prioridade —",
+                    "textStyle": {
+                      "fontFamily": "Century Gothic",
+                      "fontSize": "20pt",
+                      "fontWeight": "bold",
+                      "color": "#001E27"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "303 endereçáveis · Evento lidera o ROI · 21 contadores na Alta",
+                    "textStyle": {
+                      "fontFamily": "Century Gothic",
+                      "fontSize": "20pt",
+                      "fontWeight": "bold",
+                      "color": "#006B79"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

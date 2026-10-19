@@ -1,0 +1,64 @@
+/// Plano de avaliação do Desafio 2 (igual à aba Como_Avaliar do Excel)
+table Param_Avaliacao
+	lineageTag: db538cca-d65b-4763-86d7-ad4312198c00
+
+	column ordem
+		dataType: int64
+		lineageTag: 92993fe5-908b-44aa-8938-76efc992bf54
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = User
+
+	column metrica
+		dataType: string
+		lineageTag: 3b18a22a-4a87-4126-b7c3-ebe477d59211
+		summarizeBy: none
+		sourceColumn: metrica
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = User
+
+	column o_que_mede
+		dataType: string
+		lineageTag: 9e25665c-e0f0-4cb3-98f3-883521a9b5df
+		summarizeBy: none
+		sourceColumn: o_que_mede
+
+		annotation SummarizationSetBy = User
+
+	column hoje
+		dataType: string
+		lineageTag: b214cf57-1407-4b5c-9c60-2758ebfe4fe7
+		summarizeBy: none
+		sourceColumn: hoje
+
+		annotation SummarizationSetBy = User
+
+	column meta
+		dataType: string
+		lineageTag: ff680d4c-607c-4e30-9ca0-5eb24c932660
+		summarizeBy: none
+		sourceColumn: meta
+
+		annotation SummarizationSetBy = User
+
+	column etapa
+		dataType: string
+		lineageTag: 2ba61f9b-a41d-4c44-9615-4b20239375fb
+		summarizeBy: none
+		sourceColumn: etapa
+
+		annotation SummarizationSetBy = User
+
+	partition Param_Avaliacao = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [ordem = Int64.Type, metrica = text, o_que_mede = text, hoje = text, meta = text, etapa = text],
+				        {{1, "Conversão por faixa (Alta · Média · Baixa)", "Se o score ordena quem converte (target)", "91% · 29% · 3%", "Alta > Média > Baixa", "1. Base"}, {2, "% dos convertidos no top 30%", "Quanto da conversão está no topo", "69%", "Acima de 30%", "1. Base"}, {3, "Win rate real: Alta × demais", "Se o topo fecha mais de verdade", "60% × 65%", "Alta acima das demais", "1. Base e 2. Piloto"}, {4, "Win rate: piloto × controle", "Se priorizar o topo gera mais Ganhos", "a medir", "Piloto acima do controle", "2. Piloto"}, {5, "nMRR por EC: piloto × controle", "Se o ganho vira receita", "a medir", "Piloto acima do controle", "2. Piloto"}, {6, "Ciclo do Ganho: Alta × demais", "Se priorizar não alonga a venda", "36 × 48 dias", "Alta ≤ demais", "1. Base e 2. Piloto"}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+

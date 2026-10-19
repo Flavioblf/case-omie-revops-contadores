@@ -1,0 +1,33 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_ProTooling = ["DevMode"]
+
+annotation PBI_QueryOrder = ["ServidorSQL","BancoSQL","_Medidas","mercado_contadores","leads_pipeline","franquias","execucao_comercial","clientes_ativos","tiers_1c","propensao_d2","d1a_mercado","d1b_conversao","Param_Variaveis","Param_Cenarios","Param_Avaliacao","Param_Ondas","Param_Territorio"]
+
+ref table _Medidas
+ref table mercado_contadores
+ref table leads_pipeline
+ref table franquias
+ref table Param_Cenarios
+ref table tiers_1c
+ref table Param_Variaveis
+ref table clientes_ativos
+ref table Param_Territorio
+ref table propensao_d2
+ref table d1a_mercado
+ref table d1b_conversao
+ref table Param_Avaliacao
+ref table execucao_comercial
+ref table Param_Ondas
+
+ref cultureInfo pt-BR
+

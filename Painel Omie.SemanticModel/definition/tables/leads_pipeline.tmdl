@@ -1,0 +1,130 @@
+/// Pipeline comercial: resultado real (Ganho/Perdido) para contrastar com o target.
+table leads_pipeline
+	lineageTag: 07ca64c7-a12f-4289-94e7-552e8ce4772a
+
+	column id_lead
+		dataType: string
+		lineageTag: e8faed47-44b8-472c-bfd8-4c2b457cda21
+		summarizeBy: none
+		sourceColumn: id_lead
+
+		annotation SummarizationSetBy = User
+
+	column id_contador
+		dataType: string
+		lineageTag: c65eccb7-ebff-4e0c-a938-9f56c55c0926
+		summarizeBy: none
+		sourceColumn: id_contador
+
+		annotation SummarizationSetBy = User
+
+	column canal_origem
+		dataType: string
+		lineageTag: a4739489-c874-47a9-8077-b00d54a362cf
+		summarizeBy: none
+		sourceColumn: canal_origem
+
+		annotation SummarizationSetBy = User
+
+	column id_franquia
+		dataType: string
+		lineageTag: 1279d37f-5804-4fd7-818c-c4112f05fbe1
+		summarizeBy: none
+		sourceColumn: id_franquia
+
+		annotation SummarizationSetBy = User
+
+	column data_entrada
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: eaec4ccc-bb5f-4c49-901e-755eb69133f0
+		summarizeBy: none
+		sourceColumn: data_entrada
+
+		annotation SummarizationSetBy = User
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column status_lead
+		dataType: string
+		lineageTag: 6f5224b4-b3d6-4f29-9878-3c716e289ea6
+		summarizeBy: none
+		sourceColumn: status_lead
+
+		annotation SummarizationSetBy = User
+
+	column data_conversao
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 66e43c02-8052-4e3b-b00e-73aecc32fdba
+		summarizeBy: none
+		sourceColumn: data_conversao
+
+		annotation SummarizationSetBy = User
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column mrr_inicial
+		dataType: double
+		lineageTag: 06c235fd-8524-4a7b-a577-1f9ba414c3ec
+		summarizeBy: none
+		sourceColumn: mrr_inicial
+
+		annotation SummarizationSetBy = User
+
+	column motivo_perda
+		dataType: string
+		lineageTag: 2747c901-1c74-4942-a5a5-79281bcfa02a
+		summarizeBy: none
+		sourceColumn: motivo_perda
+
+		annotation SummarizationSetBy = User
+
+	column num_tentativas_contato
+		dataType: int64
+		lineageTag: bae37f75-8387-4523-9714-bf370a20b7a7
+		summarizeBy: none
+		sourceColumn: num_tentativas_contato
+
+		annotation SummarizationSetBy = User
+
+	column tempo_ciclo_dias
+		dataType: int64
+		lineageTag: 662cfc21-6dd5-41e7-9bf3-51654bdc8f23
+		summarizeBy: none
+		sourceColumn: tempo_ciclo_dias
+
+		annotation SummarizationSetBy = User
+
+	/// 1 = lead Ganho
+	column ganho = IF(leads_pipeline[status_lead] = "Ganho", 1, 0)
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f78b3302-d5c3-4b3d-8a20-2fafc5b62f60
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	/// 1 = lead encerrado (Ganho ou Perdido)
+	column com_desfecho = IF(leads_pipeline[status_lead] IN {"Ganho", "Perdido"}, 1, 0)
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8e1eeeb4-f5c8-4913-9e1b-59bdeec03eba
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	partition leads_pipeline = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database(ServidorSQL, BancoSQL),
+				    Dados = Fonte{[Schema="raw", Item="leads_pipeline"]}[Data],
+				    SemLinhaOrigem = Table.RemoveColumns(Dados, {"linha_origem"})
+				in
+				    SemLinhaOrigem
+
+	annotation PBI_ResultType = Table
+

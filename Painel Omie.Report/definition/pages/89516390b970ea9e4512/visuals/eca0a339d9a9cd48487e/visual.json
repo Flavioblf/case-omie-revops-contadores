@@ -1,0 +1,65 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "eca0a339d9a9cd48487e",
+  "position": {
+    "x": 16,
+    "y": 5,
+    "z": 0,
+    "width": 1053,
+    "height": 104,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "DESAFIO 3B · FRAMEWORK DE PRIORIZAÇÃO",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "12pt",
+                      "fontWeight": "bold",
+                      "color": "#006B79"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Primeiro quem já está comprando, depois o perfil —",
+                    "textStyle": {
+                      "fontFamily": "Century Gothic",
+                      "fontSize": "20pt",
+                      "fontWeight": "bold",
+                      "color": "#001E27"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "5 ondas: 15 para fechar, 13 para prospectar, 54 para limpar",
+                    "textStyle": {
+                      "fontFamily": "Century Gothic",
+                      "fontSize": "20pt",
+                      "fontWeight": "bold",
+                      "color": "#006B79"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

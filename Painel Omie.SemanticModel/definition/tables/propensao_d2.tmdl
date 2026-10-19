@@ -1,0 +1,50 @@
+/// Score de propensão do Desafio 2 por contador (view dbo.vw_propensao_d2): 600 contadores.
+table propensao_d2
+	isHidden
+	lineageTag: cb73f130-0394-4fcd-ad67-fb1c89c37496
+
+	column id_contador
+		dataType: string
+		lineageTag: 0d0b0729-6e7b-46d1-81d0-00c3327081f9
+		summarizeBy: none
+		sourceColumn: id_contador
+
+		annotation SummarizationSetBy = User
+
+	column propensao
+		dataType: double
+		lineageTag: d033d5e5-aa83-4ca2-8010-e9ec66b3eaf1
+		summarizeBy: none
+		sourceColumn: propensao
+
+		annotation SummarizationSetBy = User
+
+	column faixa_propensao
+		dataType: string
+		lineageTag: 3eef4971-acca-4451-b049-29e3bb5b8365
+		summarizeBy: none
+		sourceColumn: faixa_propensao
+		sortByColumn: faixa_ordem
+
+		annotation SummarizationSetBy = User
+
+	column faixa_ordem
+		dataType: int64
+		isHidden
+		lineageTag: 8ba5fdfa-6796-49a2-a6e4-26190ca8d5df
+		summarizeBy: none
+		sourceColumn: faixa_ordem
+
+		annotation SummarizationSetBy = User
+
+	partition propensao_d2 = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database(ServidorSQL, BancoSQL),
+				    Dados = Fonte{[Schema="dbo", Item="vw_propensao_d2"]}[Data]
+				in
+				    Dados
+
+	annotation PBI_ResultType = Table
+

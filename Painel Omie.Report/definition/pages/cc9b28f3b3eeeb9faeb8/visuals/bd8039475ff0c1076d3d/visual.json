@@ -1,0 +1,65 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "bd8039475ff0c1076d3d",
+  "position": {
+    "x": 16,
+    "y": 5,
+    "z": 0,
+    "width": 1053,
+    "height": 104,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "DESAFIO 3A · FRANQUIAS E ECS VS META",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "12pt",
+                      "fontWeight": "bold",
+                      "color": "#006B79"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Gap de R$ 19,5 mil/mês nas 9 franquias abaixo da meta —",
+                    "textStyle": {
+                      "fontFamily": "Century Gothic",
+                      "fontSize": "20pt",
+                      "fontWeight": "bold",
+                      "color": "#001E27"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "risco em Norte, Nordeste e Centro-Oeste",
+                    "textStyle": {
+                      "fontFamily": "Century Gothic",
+                      "fontSize": "20pt",
+                      "fontWeight": "bold",
+                      "color": "#006B79"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

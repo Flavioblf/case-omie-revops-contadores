@@ -1,0 +1,83 @@
+/// Desafio 1a: mercado endereçável por região e porte (view dbo.vw_desafio1a_mercado).
+table d1a_mercado
+	lineageTag: 681617cb-7405-4dd3-a07d-013de6abec0b
+
+	column ordem_linha
+		dataType: int64
+		lineageTag: 4e3ee9f6-a038-4cba-8097-4d8adf5b0faa
+		summarizeBy: none
+		sourceColumn: ordem_linha
+
+		annotation SummarizationSetBy = User
+
+	column regiao
+		dataType: string
+		lineageTag: 0ddf3e63-d891-4647-9fbb-836edfb90a26
+		summarizeBy: none
+		sourceColumn: regiao
+
+		annotation SummarizationSetBy = User
+
+	column porte
+		dataType: string
+		lineageTag: 05d6c881-e4c0-4549-a67d-8b2ea57e610a
+		summarizeBy: none
+		sourceColumn: porte
+
+		annotation SummarizationSetBy = User
+
+	column num_contadores
+		dataType: int64
+		lineageTag: 0f80cc09-aa72-4ef4-be68-87c3a1041418
+		summarizeBy: none
+		sourceColumn: num_contadores
+
+		annotation SummarizationSetBy = User
+
+	column participacao_regiao_pct
+		dataType: double
+		formatString: 0.0
+		lineageTag: e890993b-177f-4b16-b319-7b1e68407e37
+		summarizeBy: none
+		sourceColumn: participacao_regiao_pct
+
+		annotation SummarizationSetBy = User
+
+	column participacao_total_pct
+		dataType: double
+		formatString: 0.0
+		lineageTag: 0a330b28-e854-4e9f-9e34-6207e9929726
+		summarizeBy: none
+		sourceColumn: participacao_total_pct
+
+		annotation SummarizationSetBy = User
+
+	column e_total_brasil
+		dataType: int64
+		isHidden
+		lineageTag: 10e8e854-fa8b-4a2f-a714-b3776f148e32
+		summarizeBy: none
+		sourceColumn: e_total_brasil
+
+		annotation SummarizationSetBy = User
+
+	column e_total_regiao
+		dataType: int64
+		isHidden
+		lineageTag: 660ca067-507f-495c-9491-0c91f3baa613
+		summarizeBy: none
+		sourceColumn: e_total_regiao
+
+		annotation SummarizationSetBy = User
+
+	partition d1a_mercado = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database(ServidorSQL, BancoSQL),
+				    Dados = Fonte{[Schema="dbo", Item="vw_desafio1a_mercado"]}[Data]
+				in
+				    Dados
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,17 @@
+# material do case e anotações internas (não publicar)
+*.docx
+base_case_contador_omie*.xlsx
+CLAUDE.md
+imagem*.png
+omie-case-contadores/output/Design_System_Omie.pptx
+omie-case-contadores/data/
+
+# dependências e artefatos locais
+omie-case-contadores/deck/node_modules/
+**/__pycache__/
+.ipynb_checkpoints/
+~$*
+
+# Power BI: configurações locais e cache de dados do .pbip
+**/.pbi/localSettings.json
+**/.pbi/cache.abf

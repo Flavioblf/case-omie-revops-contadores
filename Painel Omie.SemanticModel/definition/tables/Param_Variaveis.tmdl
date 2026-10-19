@@ -1,0 +1,32 @@
+/// Características analisadas como drivers de conversão
+table Param_Variaveis
+	lineageTag: 70426fb3-efe0-4ce5-a28e-750095c6f44a
+
+	column ordem
+		dataType: int64
+		lineageTag: e477fa8b-9fa6-4d3a-842a-2e45aa432144
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = User
+
+	column variavel
+		dataType: string
+		lineageTag: adf803f6-c782-48a6-aac5-6d716952cd37
+		summarizeBy: none
+		sourceColumn: variavel
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = User
+
+	partition Param_Variaveis = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [ordem = Int64.Type, variavel = text],
+				        {{1, "Porte"}, {2, "Nº de funcionários"}, {3, "Nº de clientes da carteira"}, {4, "ERP atual"}, {5, "Anos de mercado"}, {6, "Região"}, {7, "Segmento"}, {8, "Tem site"}, {9, "LinkedIn"}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+

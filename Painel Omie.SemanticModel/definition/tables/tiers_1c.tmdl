@@ -1,0 +1,86 @@
+/// Tier do Desafio 1c (view dbo.vw_tiers_prospects, matriz Fit x Engajamento): 303 endereçáveis.
+table tiers_1c
+	isHidden
+	lineageTag: c04bcf82-290b-4a54-8ee5-89a4136af430
+
+	column id_contador
+		dataType: string
+		lineageTag: 09fabc00-d260-4f29-bb55-cdfe5a468a5e
+		summarizeBy: none
+		sourceColumn: id_contador
+
+		annotation SummarizationSetBy = User
+
+	column score_prioridade
+		dataType: int64
+		lineageTag: bdc806f3-7a5e-49c0-bdcd-ace387cc9179
+		summarizeBy: none
+		sourceColumn: score_prioridade
+
+		annotation SummarizationSetBy = User
+
+	column tier_prioridade
+		dataType: string
+		lineageTag: 3c0a79bd-4853-42bb-a7ef-027597aef39e
+		summarizeBy: none
+		sourceColumn: tier_prioridade
+
+		annotation SummarizationSetBy = User
+
+	column estagio_aberto
+		dataType: string
+		lineageTag: 4b04cab1-1040-49df-af58-9648b9899563
+		summarizeBy: none
+		sourceColumn: estagio_aberto
+
+		annotation SummarizationSetBy = User
+
+	column nivel_fit
+		dataType: int64
+		isHidden
+		lineageTag: 5721be3e-95c3-4402-9cbd-0ff30c25136d
+		summarizeBy: none
+		sourceColumn: nivel_fit
+
+		annotation SummarizationSetBy = User
+
+	column fit_carteira
+		dataType: string
+		lineageTag: ea12c5be-51d2-4d07-b7e1-8f6bcd391359
+		summarizeBy: none
+		sourceColumn: fit_carteira
+		sortByColumn: nivel_fit
+
+		annotation SummarizationSetBy = User
+
+	column nivel_engajamento
+		dataType: int64
+		isHidden
+		lineageTag: 66f808c7-2aa3-4b87-a33c-db37d7ca9553
+		summarizeBy: none
+		sourceColumn: nivel_engajamento
+
+		annotation SummarizationSetBy = User
+
+	column engajamento
+		dataType: string
+		lineageTag: 13fa4388-39c3-4eb2-83c3-86e4041f805f
+		summarizeBy: none
+		sourceColumn: engajamento
+		sortByColumn: nivel_engajamento
+
+		annotation SummarizationSetBy = User
+
+	partition tiers_1c = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database(ServidorSQL, BancoSQL),
+				    Dados = Fonte{[Schema="dbo", Item="vw_tiers_prospects"]}[Data],
+				    Colunas = Table.SelectColumns(Dados, {"id_contador", "nivel_fit", "fit_carteira", "nivel_engajamento",
+				        "engajamento", "score_prioridade", "tier_prioridade", "estagio_aberto"})
+				in
+				    Colunas
+
+	annotation PBI_ResultType = Table
+

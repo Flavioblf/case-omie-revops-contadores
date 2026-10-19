@@ -1,0 +1,153 @@
+/// Franquias: meta e realizado de nMRR (impacto e Desafio 3).
+table franquias
+	lineageTag: 8910fe95-0485-4ce9-a254-1cbfd4fdbfec
+
+	column id_franquia
+		dataType: string
+		lineageTag: 71a47619-7c06-476b-8ae7-65702574472e
+		summarizeBy: none
+		sourceColumn: id_franquia
+
+		annotation SummarizationSetBy = User
+
+	column nome_franquia
+		dataType: string
+		lineageTag: d8f31850-97d9-4276-8129-95ee3aa6bff8
+		summarizeBy: none
+		sourceColumn: nome_franquia
+
+		annotation SummarizationSetBy = User
+
+	column estado
+		dataType: string
+		lineageTag: 47e096e5-91dc-43e9-9873-f1a7ea129d0f
+		summarizeBy: none
+		sourceColumn: estado
+
+		annotation SummarizationSetBy = User
+
+	column regiao
+		dataType: string
+		lineageTag: 9696afb6-9d9d-4bba-845a-b7aa17efdf60
+		summarizeBy: none
+		sourceColumn: regiao
+
+		annotation SummarizationSetBy = User
+
+	column meses_operando
+		dataType: int64
+		lineageTag: f4fa4708-1fbb-49c1-bc07-3ba0e577902d
+		summarizeBy: none
+		sourceColumn: meses_operando
+
+		annotation SummarizationSetBy = User
+
+	column meta_nmrr_mes
+		dataType: int64
+		lineageTag: e09d6fd5-988c-4b03-96db-2e822d1b9617
+		summarizeBy: none
+		sourceColumn: meta_nmrr_mes
+
+		annotation SummarizationSetBy = User
+
+	column realizado_nmrr_mes
+		dataType: int64
+		lineageTag: 3b063053-4337-4404-978d-9f6e44705346
+		summarizeBy: none
+		sourceColumn: realizado_nmrr_mes
+
+		annotation SummarizationSetBy = User
+
+	column num_executivos
+		dataType: int64
+		lineageTag: 6b7fbff9-dfdf-418c-b38b-7893d06403bc
+		summarizeBy: none
+		sourceColumn: num_executivos
+
+		annotation SummarizationSetBy = User
+
+	column atingimento_pct
+		dataType: double
+		lineageTag: 1b2379f4-20d4-41bb-beec-3156505b45fd
+		summarizeBy: none
+		sourceColumn: atingimento_pct
+
+		annotation SummarizationSetBy = User
+
+	column data_inicio
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: d5cd7031-ac2d-4ee1-aa0c-30a140725ba8
+		summarizeBy: none
+		sourceColumn: data_inicio
+
+		annotation SummarizationSetBy = User
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Realizado ÷ meta de nMRR
+	column atingimento = DIVIDE(franquias[realizado_nmrr_mes], franquias[meta_nmrr_mes])
+		dataType: double
+		formatString: 0%
+		lineageTag: 6ed658c6-6087-4084-b1f4-d685f7734a4f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	/// Meta − realizado (R$/mês), zero para quem bateu a meta
+	column gap = MAX(0, franquias[meta_nmrr_mes] - franquias[realizado_nmrr_mes])
+		dataType: double
+		formatString: #,0
+		lineageTag: bd73cc91-2e78-4606-933c-6865f294fb3e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	/// Realizado de nMRR por EC
+	column realizado_por_ec = DIVIDE(franquias[realizado_nmrr_mes], franquias[num_executivos])
+		dataType: double
+		formatString: #,0
+		lineageTag: 47eec769-aa2a-44db-bec0-1f634b96d628
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	/// Ordem do menor para o maior atingimento (desempate pelo id)
+	column ordem_atingimento = RANKX(ALLNOBLANKROW(franquias), franquias[atingimento] + VALUE(RIGHT(franquias[id_franquia], 3)) / 1000000, , ASC, DENSE)
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4ec38999-3e18-4c4b-afec-4f7b5e0e76bc
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	/// Franquia, meses de operação e atingimento, ordenada pelo atingimento
+	column rotulo = SUBSTITUTE(franquias[nome_franquia], "Franquia ", "") & " · " & franquias[meses_operando] & "m · " & FORMAT(franquias[atingimento], "0%")
+		dataType: string
+		lineageTag: 20f048f5-bd24-4440-b24f-34f119f55a56
+		summarizeBy: none
+		sortByColumn: ordem_atingimento
+
+		annotation SummarizationSetBy = User
+
+	/// Na meta ou abaixo da meta
+	column situacao = IF(franquias[atingimento] >= 1, "Na meta", "Abaixo da meta")
+		dataType: string
+		lineageTag: 71d65ec3-cd4d-4636-92d2-240d0bcd125b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	partition franquias = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database(ServidorSQL, BancoSQL),
+				    Dados = Fonte{[Schema="raw", Item="franquias"]}[Data],
+				    SemLinhaOrigem = Table.RemoveColumns(Dados, {"linha_origem"})
+				in
+				    SemLinhaOrigem
+
+	annotation PBI_ResultType = Table
+

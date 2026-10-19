@@ -1,0 +1,49 @@
+/// Premissas dos cenários de impacto (iguais à aba Impacto_nMRR do Excel)
+table Param_Cenarios
+	lineageTag: e348a2b9-cfad-41be-8dd6-4371e50cbc36
+
+	column ordem
+		dataType: int64
+		lineageTag: 38e4377c-d77f-4fd8-a051-ba5dc3196b59
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = User
+
+	column cenario
+		dataType: string
+		lineageTag: 47146182-d2b0-4b6c-85b9-955f85357c96
+		summarizeBy: none
+		sourceColumn: cenario
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = User
+
+	column pct_redirecionado
+		dataType: double
+		lineageTag: 11c3c948-8891-42d6-ae9b-12d82aa36247
+		summarizeBy: none
+		sourceColumn: pct_redirecionado
+
+		annotation SummarizationSetBy = User
+
+	column fator_realizacao
+		dataType: double
+		lineageTag: 136f1ecb-cd9a-4584-b92d-4570bafcfcf0
+		summarizeBy: none
+		sourceColumn: fator_realizacao
+
+		annotation SummarizationSetBy = User
+
+	partition Param_Cenarios = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(
+				        type table [ordem = Int64.Type, cenario = text, pct_redirecionado = number, fator_realizacao = number],
+				        {{1, "Conservador", 0.3, 0.25}, {2, "Base", 0.5, 0.4}, {3, "Otimista", 0.6, 0.6}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+
